@@ -7,7 +7,19 @@ var mongoose = require('mongoose');
 var timestamps = require('mongoose-timestamp');
 var collecAgent='agent';
 var url = 'mongodb://localhost:27017/chezheng';
+var sign = require('./sign.js');
 
+console.log(sign('jsapi_ticket', 'http://example.com'));
+/*
+ *something like this
+ *{
+ *  jsapi_ticket: 'jsapi_ticket',
+ *  nonceStr: '82zklqj7ycoywrk',
+ *  timestamp: '1415171822',
+ *  url: 'http://example.com',
+ *  signature: '1316ed92e0827786cfda3ae355f33760c4f70c1f'
+ *}
+ */
 mongoose.connect(url);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -43,6 +55,8 @@ app.all('*',function (req, res, next) {
   }
 });
 
+require('./weixin.js').init(app);
+
 app.get("/texts", function(req, res) {
 	res.send(texts);
 });
@@ -70,7 +84,7 @@ app.post("/storeAgent", function(req, res) {
   agentEntity.save(); 
 });
 
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 80;
 
 app.listen(port, function() {
 	console.log("Listening on " + port);
