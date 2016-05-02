@@ -7,8 +7,10 @@ exports.init = function (app) {
 	var signature = require('./signature.js');
 
 	
-	app.get('/weixin',function(req,res){
-		var url = req.protocol + '://' + req.host + req.path; //获取当前url
+	app.post('/weixin',function(req,res){
+		var url=req.body.targetUrl;
+		console.log('[url]'+url);
+		//var url = req.protocol + '://' + req.host + req.path; //获取当前url
 		signature.sign(url,function(signatureMap){
 			signatureMap.appId = wechat_cfg.appid;
 			console.log(signatureMap);
