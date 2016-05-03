@@ -78,10 +78,11 @@ app.post("/storeAgent", function(req, res) {
   console.log('rece data uid:'+req.body.json.uid);
   var ua = parser(req.body.json.agent);
   console.log(ua);
-  var data={ua:ua,uid:req.body.json.uid};
+  var data={ua:ua,uid:req.body.json.uid,app:req.body.json.app};
 
   var agentEntity = new AgentModel(data);
   agentEntity.save(); 
+  res.send('ok');
 });
 
 var port = process.env.PORT || 8080;
