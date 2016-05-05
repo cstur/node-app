@@ -45,7 +45,7 @@ function Report(app){
 
 	app.get("/pv-test.gif", function(req, res) {
 		var json = getQueryString(req);
-		var appName=json.app||'ubt-pv';
+		var appName=JSON.parse(json).app||'ubt-pv';
 		appName=appName+'-test';
 		var data={app:appName,data:json};
 		db.saveApp(data);
