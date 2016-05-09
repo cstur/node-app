@@ -196,14 +196,14 @@ Summary.prototype={
       var browsersLegend=[];
       _.map(groupByBrowser, function(value,key){ 
           browsersLegend.push(key);
-          pieDataBrowser.push({name:key,y:value.length});
+          pieDataBrowser.push({name:key,value:value.length});
       });
       this.sum.Browser.legend.data=Object.keys(groupByBrowser);
 
       var deviceLegend=[];
       _.map(groupByDevice, function(value,key){ 
           deviceLegend.push(key);
-          pieDataDevice.push({name:key,y:value.length});
+          pieDataDevice.push({name:key,value:value.length});
       });
       this.sum.Device.legend.data=Object.keys(groupByDevice);
 
@@ -211,14 +211,12 @@ Summary.prototype={
             name:'Vist source',
             type:'pie',
             radius : '55%',
-            center: ['50%', '60%'],
             data:pieDataBrowser
       }];
       this.sum.Device.series=[{
             name:'Vist source',
             type:'pie',
             radius : '55%',
-            center: ['50%', '60%'],
             data:pieDataDevice
       }];
 
