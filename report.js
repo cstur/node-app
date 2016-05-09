@@ -1,8 +1,11 @@
 var database = require('./mongodb.js');
+var summary = require('./report.summary.js');
 
 function Report(app){
 	var db=new database();
+	var sum=new summary();
 	var hourMapList={};
+	var i=1;
 
 	function increase(appName){
 		if (appname in hourMapList) {
@@ -13,6 +16,7 @@ function Report(app){
 	}
 
 	function getQueryString(req){
+		console.log(req.url);
 		var queryString=require('url').parse(req.url).query;
 		var json=decodeURIComponent(queryString);
 		return json;
@@ -38,6 +42,7 @@ function Report(app){
 	app.get("/pv.gif", function(req, res) {
 		var json = getQueryString(req);
 		var appName=JSON.parse(json).app||'ubt-pv';
+		console.log("appName:"+appName);
 		var data={app:appName,data:json};
 		db.saveApp(data);
 		res.send('200');
@@ -53,12 +58,27 @@ function Report(app){
 	});
 
 	app.get("/query", function(req, res) {
+		console.log('['+new Date().toLocaleString()+']query'+i++);
 		var appid=req.query.appid||"";
 		var gte=decodeURIComponent(req.query.gte);
 		var lte=decodeURIComponent(req.query.lte);
 
-	    db.getApp(appid,gte,lte,function(err,appData){
+	    //db.getAppCached(appid,gte,lte,function(err,appData){
+	   	db.getApp(appid,gte,lte,function(err,appData){
+	    	//console.log('res:'+appData);
 	     	res.send(appData);
+	  	});
+	});
+
+	app.get("/report.json", function(req, res) {
+		console.log('['+new Date().toLocaleString()+']query'+i++);
+		var appid=req.query.appid||"";
+		var gte=decodeURIComponent(req.query.gte);
+		var lte=decodeURIComponent(req.query.lte);
+
+	    //db.getAppCached(appid,gte,lte,function(err,appData){
+	   	db.getApp(appid,gte,lte,function(err,appData){
+	     	res.send(sum.getOption(appData));
 	  	});
 	});
 

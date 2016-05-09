@@ -1,8 +1,10 @@
 var MongoClient = require('mongodb').MongoClient,
 	assert      = require('assert'),
     mongoose    = require('mongoose'),
-    timestamps = require('mongoose-timestamp'),
+    timestamps  = require('mongoose-timestamp'),
 	config      = require('./config/db.cfg.js');
+	//redisClient = require('redis').createClient,
+    //redis       = redisClient(6379, 'localhost');
 
 function Database(){
 	mongoose.connect(config.connStr);
@@ -17,7 +19,6 @@ function Database(){
 }
 
 Database.prototype={
-	offset:0,
 
 	saveApp : function(data){
   		var appEntity = new this.AppModel(data);
@@ -26,14 +27,39 @@ Database.prototype={
 	},
 
 	getApp : function(appid,gte,lte,callback){
-		console.log("gte:"+lte);
-		console.log("new gte:"+new Date(lte));
-		console.log("parse gte:"+Date.parse(lte));
-		
 		var option={app:appid,updatedAt:{'$gte':new Date(gte),'$lte':new Date(lte)}};
 		console.log(option);
 		this.AppModel.find(option,callback);
 	}
+	/*
+	getAppCached : function(appid,gte,lte,callback){
+		var key=appid+gte+lte;
+		var dbModel=this.AppModel;
+		redis.get(key, function (err, reply) {
+	        if (err) {
+	        	callback(err,'null');
+	        }
+	        else if (reply){
+	        	callback(err,JSON.parse(reply));
+	        }
+	        else {
+				var option={app:appid,updatedAt:{'$gte':new Date(gte),'$lte':new Date(lte)}};
+				dbModel.find(option,function (err, doc) {
+
+	                if (err || !doc) {
+	                	callback(err,'null');
+	                }
+	                else {
+	                    redis.set(key, JSON.stringify(doc), function () {
+	                        console.log('set finish');
+	                    });
+	                    callback(err,doc);
+	                }
+	            });
+	        }
+		});
+	}
+	*/
 }
 
 module.exports=Database;
