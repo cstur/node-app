@@ -78,7 +78,9 @@ function Report(app){
 
 	    //db.getAppCached(appid,gte,lte,function(err,appData){
 	   	db.getApp(appid,gte,lte,function(err,appData){
-	     	res.send(sum.getOption(appData));
+	   		var result=sum.getOption(appData);
+	   		console.log(result);
+	     	res.send(result);
 	  	});
 	});
 

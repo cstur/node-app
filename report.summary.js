@@ -3,7 +3,7 @@ var uaparser = require('ua-parser-js');
 
 function Summary(){
   this.sum={};
-  this.sum.PUPV = {
+  this.sum.PVUV = {
       tooltip : {
           trigger: 'axis'
       },
@@ -45,8 +45,7 @@ function Summary(){
     },
     legend: {
         orient : 'vertical',
-        x : 'left',
-        data:['Direct','Email','Affiliate','Video Ads','Search']
+        x : 'left'
     },
     toolbox: {
         show : true,
@@ -69,8 +68,7 @@ function Summary(){
     },
     legend: {
         orient : 'vertical',
-        x : 'left',
-        data:['Direct','Email','Affiliate','Video Ads','Search']
+        x : 'left'
     },
     toolbox: {
         show : true,
@@ -85,14 +83,7 @@ function Summary(){
             name:'Vist source',
             type:'pie',
             radius : '55%',
-            center: ['50%', '60%'],
-            data:[
-                {value:335, name:'Direct'},
-                {value:310, name:'Email'},
-                {value:234, name:'Affiliate'},
-                {value:135, name:'Video Ads'},
-                {value:1548, name:'Search'}
-            ]
+            center: ['50%', '60%']
         }
     ]
   };
@@ -183,36 +174,53 @@ Summary.prototype={
 
       /* Pie */
       var pieDataBrowser=[];
+      var pieDataDevice=[];
+
       var arrBrowser=_.map(data, function(pv){ 
           var json=JSON.parse(pv.data);
-          uaparser.setUA(json.data.agent);
-          var result = uaparser.getResult();
-
-          return result.browser; 
+          var ua = uaparser(json.data.agent);
+          return ua.browser; 
       });
 
       var arrDevice=_.map(data, function(pv){ 
           var json=JSON.parse(pv.data);
-          uaparser.setUA(json.data.agent);
-          var result = uaparser.getResult();          
-          return result.os;
+          var ua = uaparser(json.data.agent);   
+          return ua.os;
       });
 
       var groupByBrowser=[];
       groupByBrowser = _.groupBy(arrBrowser, 'name');
-      
+      var groupByDevice=[];
+      groupByDevice = _.groupBy(arrDevice, 'name');
+
+      var browsersLegend=[];
       _.map(groupByBrowser, function(value,key){ 
+          browsersLegend.push(key);
           pieDataBrowser.push({name:key,y:value.length});
       });
+      this.sum.Browser.legend.data=Object.keys(groupByBrowser);
+
+      var deviceLegend=[];
+      _.map(groupByDevice, function(value,key){ 
+          deviceLegend.push(key);
+          pieDataDevice.push({name:key,y:value.length});
+      });
+      this.sum.Device.legend.data=Object.keys(groupByDevice);
 
       this.sum.Browser.series=[{
             name:'Vist source',
             type:'pie',
             radius : '55%',
             center: ['50%', '60%'],
-            data:groupByBrowser
+            data:pieDataBrowser
       }];
-      
+      this.sum.Device.series=[{
+            name:'Vist source',
+            type:'pie',
+            radius : '55%',
+            center: ['50%', '60%'],
+            data:pieDataDevice
+      }];
 
       return this.sum;
   }
