@@ -1,8 +1,9 @@
 var _ = require('underscore');
+var uaparser = require('ua-parser-js');
 
 function Summary(){
-  this.PVUV={};
-  this.PVUV.options = {
+  this.sum={};
+  this.sum.PUPV = {
       tooltip : {
           trigger: 'axis'
       },
@@ -31,6 +32,69 @@ function Summary(){
               }
           }
       ]
+  };
+
+  this.sum.Browser = {
+    title : {
+        text: '浏览器分布',
+        x:'center'
+    },
+    tooltip : {
+        trigger: 'item',
+        formatter: "{a} <br/>{b} : {c} ({d}%)"
+    },
+    legend: {
+        orient : 'vertical',
+        x : 'left',
+        data:['Direct','Email','Affiliate','Video Ads','Search']
+    },
+    toolbox: {
+        show : true,
+        feature : {
+            restore : {show: true, title: "restore"},
+            saveAsImage : {show: true, title: "save as image"}
+        }
+    },
+    calculable : true
+  };
+
+  this.sum.Device = {
+    title : {
+        text: '设备分布',
+        x:'center'
+    },
+    tooltip : {
+        trigger: 'item',
+        formatter: "{a} <br/>{b} : {c} ({d}%)"
+    },
+    legend: {
+        orient : 'vertical',
+        x : 'left',
+        data:['Direct','Email','Affiliate','Video Ads','Search']
+    },
+    toolbox: {
+        show : true,
+        feature : {
+            restore : {show: true, title: "restore"},
+            saveAsImage : {show: true, title: "save as image"}
+        }
+    },
+    calculable : true,
+    series : [
+        {
+            name:'Vist source',
+            type:'pie',
+            radius : '55%',
+            center: ['50%', '60%'],
+            data:[
+                {value:335, name:'Direct'},
+                {value:310, name:'Email'},
+                {value:234, name:'Affiliate'},
+                {value:135, name:'Video Ads'},
+                {value:1548, name:'Search'}
+            ]
+        }
+    ]
   };
 }
 
@@ -68,7 +132,7 @@ Summary.prototype={
               boundaryGap : false
       };
       xobj.data=keys;
-      this.PVUV.options.xAxis=[xobj];
+      this.sum.PVUV.xAxis=[xobj];
       var pv= {
           name:'PV',
           type:'line',
@@ -114,8 +178,43 @@ Summary.prototype={
       });
       uv.data=chartDataUV;
       console.log(chartDataUV);
-      this.PVUV.options.series=[pv,uv];
-      return this.PVUV.options;
+      this.sum.PVUV.series=[pv,uv];
+
+
+      /* Pie */
+      var pieDataBrowser=[];
+      var arrBrowser=_.map(data, function(pv){ 
+          var json=JSON.parse(pv.data);
+          uaparser.setUA(json.data.agent);
+          var result = uaparser.getResult();
+
+          return result.browser; 
+      });
+
+      var arrDevice=_.map(data, function(pv){ 
+          var json=JSON.parse(pv.data);
+          uaparser.setUA(json.data.agent);
+          var result = uaparser.getResult();          
+          return result.os;
+      });
+
+      var groupByBrowser=[];
+      groupByBrowser = _.groupBy(arrBrowser, 'name');
+      
+      _.map(groupByBrowser, function(value,key){ 
+          pieDataBrowser.push({name:key,y:value.length});
+      });
+
+      this.sum.Browser.series=[{
+            name:'Vist source',
+            type:'pie',
+            radius : '55%',
+            center: ['50%', '60%'],
+            data:groupByBrowser
+      }];
+      
+
+      return this.sum;
   }
 }
 
