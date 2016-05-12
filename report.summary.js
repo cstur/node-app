@@ -2,8 +2,65 @@ var _ = require('underscore');
 var uaparser = require('ua-parser-js');
 
 function Summary(){
+  this.guanggao = {
+    title: {
+        text: '首页广告点击量',
+    },
+    tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'shadow'
+        }
+    },
+    legend: {
+        data: ['总点击量', '用户点击量']
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    xAxis: {
+        type: 'value',
+        boundaryGap: [0, 0.01]
+    }
+};
+
+
   this.sum={};
   this.sum.PVUV = {
+      tooltip : {
+          trigger: 'axis'
+      },
+      legend: {
+          data:['PV','UV']
+      },
+      toolbox: {
+          show : true,
+          feature : {
+              restore : {show: true, title: "restore"},
+              saveAsImage : {show: true, title: "save as image"}
+          }
+      },
+      calculable : true,
+      xAxis : [
+          {
+              type : 'category',
+              boundaryGap : false
+          }
+      ],
+      yAxis : [
+          {
+              type : 'value',
+              axisLabel : {
+                  formatter: '{value}'
+              }
+          }
+      ]
+  };
+
+  this.sum.Click = {
       tooltip : {
           trigger: 'axis'
       },
@@ -105,6 +162,53 @@ Summary.prototype={
       })
       .value();
       return dateGroups;
+  },
+  getOptionGuangGao : function(data){
+    var dateGroups = _.chain(data)
+      .groupBy(function(obj) { 
+          var json = JSON.parse(obj.target);
+          return json.title; 
+      })
+      .value();
+    var keys=Object.keys(dateGroups);
+    var yobj={
+        type: 'category'
+    }
+    yobj.data=keys;
+    this.guanggao.yAxis=yobj;
+    var chartData=[];
+    _.each(dateGroups, function(value, key) {
+        var clickCount = value.length;
+        chartData.push(clickCount);
+    });
+    var sum={
+      name: '总点击量',
+      type: 'bar'
+    };
+    sum.data=chartData;
+
+    var uniqueList = _.uniq(data, function(item, key, a) { 
+        var json=JSON.parse(item.target);
+        return json.uid;
+    });   
+    var dateGroupsUserSum = _.chain(uniqueList)
+      .groupBy(function(obj) { 
+          var json = JSON.parse(obj.target);
+          return json.title; 
+      })
+      .value();
+    var chartDataUserSum=[];
+    _.each(dateGroupsUserSum, function(value, key) {
+        var clickCount = value.length;
+        chartDataUserSum.push(clickCount);
+    });
+    var userSum={
+        name: '用户点击量',
+        type: 'bar'
+    };
+    userSum.data=chartDataUserSum;
+    this.guanggao.series=[sum,userSum];
+    return this.guanggao;
   },
   getOption : function(data){
       var model="day";

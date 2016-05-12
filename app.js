@@ -1,7 +1,9 @@
 var express     = require("express"),
     bodyParser  = require('body-parser'),
-    report      = require('./report.js');
-
+    report      = require('./report.js'),
+    items       = require('./app.items.js'),
+    ubtconfig   = require('./ubtconfig.js');
+var item= new items();
 var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -20,8 +22,8 @@ app.all('*',function (req, res, next) {
 });
 
 require('./weixin.js').init(app);
-
-new report(app);
+new report(app,item);
+new ubtconfig(app,item);
 
 app.post("/editText", function(req, res) {
 	texts=req.body.json;

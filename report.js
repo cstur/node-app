@@ -1,11 +1,11 @@
 var database = require('./mongodb.js');
 var summary = require('./report.summary.js');
+var _ = require('underscore');
 
-function Report(app){
+function Report(app,item){
 	var db=new database();
 	var sum=new summary();
 	var hourMapList={};
-	var i=1;
 
 	function increase(appName){
 		if (appname in hourMapList) {
@@ -13,6 +13,17 @@ function Report(app){
 		} else {
 		   hourMapList[appName] = 1;
 		}
+	}
+
+	function validateApp(appName){
+
+		var find=0;
+		_.map(item.getAppItem(),function(obj){
+			if (appName==obj.data.id) {
+				find=1;
+			}
+		});
+		return find;
 	}
 
 	function getQueryString(req){
@@ -41,8 +52,14 @@ function Report(app){
 
 	app.get("/pv.gif", function(req, res) {
 		var json = getQueryString(req);
+		console.log(json);
 		var appName=JSON.parse(json).app||'ubt-pv';
 		console.log("appName:"+appName);
+		if(validateApp(appName)==0){
+			console.log('not valid appname:'+appName);
+			res.send('500');
+			return;
+		}
 		var data={app:appName,data:json};
 		db.saveApp(data);
 		res.send('200');
@@ -58,7 +75,6 @@ function Report(app){
 	});
 
 	app.get("/query", function(req, res) {
-		console.log('['+new Date().toLocaleString()+']query'+i++);
 		var appid=req.query.appid||"";
 		var gte=decodeURIComponent(req.query.gte);
 		var lte=decodeURIComponent(req.query.lte);
@@ -71,15 +87,28 @@ function Report(app){
 	});
 
 	app.get("/report.json", function(req, res) {
-		console.log('['+new Date().toLocaleString()+']query'+i++);
 		var appid=req.query.appid||"";
 		var gte=decodeURIComponent(req.query.gte);
 		var lte=decodeURIComponent(req.query.lte);
 
 	    //db.getAppCached(appid,gte,lte,function(err,appData){
 	   	db.getApp(appid,gte,lte,function(err,appData){
+	   		console.log(appData.length);
+	   		console.log(appData[0]);
 	   		var result=sum.getOption(appData);
-	   		console.log(result);
+	     	res.send(result);
+	  	});
+	});
+
+	app.get("/guanggao.json", function(req, res) {
+		var appid=req.query.appid||"";
+		var gte=decodeURIComponent(req.query.gte);
+		var lte=decodeURIComponent(req.query.lte);
+
+	   	db.getApp(appid,gte,lte,function(err,appData){
+	   		console.log(appData.length);
+	   		console.log(appData[0]);
+	   		var result=sum.getOptionGuangGao(appData);
 	     	res.send(result);
 	  	});
 	});
