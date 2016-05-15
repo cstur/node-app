@@ -2,7 +2,8 @@ var _ = require('underscore');
 var uaparser = require('ua-parser-js');
 
 function Summary(){
-  this.guanggao = {
+  this.gSum={};
+  this.gSum.guanggao = {
     title: {
         text: '首页广告点击量',
     },
@@ -25,7 +26,7 @@ function Summary(){
         type: 'value',
         boundaryGap: [0, 0.01]
     }
-};
+  };
 
 
   this.sum={};
@@ -163,19 +164,23 @@ Summary.prototype={
       .value();
       return dateGroups;
   },
+
   getOptionGuangGao : function(data){
+    this.gSum.doc=data;
     var dateGroups = _.chain(data)
-      .groupBy(function(obj) { 
-          var json = JSON.parse(obj.target);
-          return json.title; 
+      .groupBy(function(obj) {           
+          var json = JSON.parse(obj.data);
+          return json.target.title; 
       })
       .value();
+
+    delete dateGroups.undefined;
     var keys=Object.keys(dateGroups);
     var yobj={
         type: 'category'
     }
     yobj.data=keys;
-    this.guanggao.yAxis=yobj;
+    this.gSum.guanggao.yAxis=yobj;
     var chartData=[];
     _.each(dateGroups, function(value, key) {
         var clickCount = value.length;
@@ -188,15 +193,18 @@ Summary.prototype={
     sum.data=chartData;
 
     var uniqueList = _.uniq(data, function(item, key, a) { 
-        var json=JSON.parse(item.target);
-        return json.uid;
+        var json=JSON.parse(item.data);
+        if (json.target) {
+          return json.target.uid; 
+        }
     });   
     var dateGroupsUserSum = _.chain(uniqueList)
       .groupBy(function(obj) { 
-          var json = JSON.parse(obj.target);
-          return json.title; 
+          var json = JSON.parse(obj.data);
+          return json.target.title; 
       })
       .value();
+    delete dateGroupsUserSum.undefined;
     var chartDataUserSum=[];
     _.each(dateGroupsUserSum, function(value, key) {
         var clickCount = value.length;
@@ -207,8 +215,8 @@ Summary.prototype={
         type: 'bar'
     };
     userSum.data=chartDataUserSum;
-    this.guanggao.series=[sum,userSum];
-    return this.guanggao;
+    this.gSum.guanggao.series=[sum,userSum];
+    return this.gSum;
   },
   getOption : function(data){
       var model="day";

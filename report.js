@@ -106,8 +106,6 @@ function Report(app,item){
 		var lte=decodeURIComponent(req.query.lte);
 
 	   	db.getApp(appid,gte,lte,function(err,appData){
-	   		console.log(appData.length);
-	   		console.log(appData[0]);
 	   		var result=sum.getOptionGuangGao(appData);
 	     	res.send(result);
 	  	});
