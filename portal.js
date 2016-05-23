@@ -1,16 +1,10 @@
 var express     = require("express"),
     bodyParser  = require('body-parser'),
-    report      = require('./report.js'),
-    items       = require('./app.items.js'),
-    auth        = require('./modules/authenticate/auth.js'),
-    morgan      = require("morgan"),
-    ubtconfig   = require('./ubtconfig.js');
+    auth        = require('./modules/authenticate/auth.js');
 
-var item= new items();
 var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(morgan("dev"));
 
 app.all('*',function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
@@ -25,20 +19,12 @@ app.all('*',function (req, res, next) {
   }
 });
 
-require('./weixin.js').init(app);
-new report(app,item);
-new ubtconfig(app,item);
 new auth(app);
-
-app.post("/editText", function(req, res) {
-	texts=req.body.json;
-	res.send(texts);
-});
 
 var port = process.env.PORT || 8080;
 
 process.on('uncaughtException', function(err) {
-    console.log(err);
+  console.log(err);
 });
 
 app.listen(port, function() {
