@@ -214,7 +214,8 @@ Summary.prototype={
     var chartData=[];
     _.each(dateGroups, function(value, key) {
         var clickCount = value.length;
-        chartData.push(clickCount);
+        var obj={name:key,value:clickCount};
+        chartData.push(obj);
     });
     var sum={
       name: '总点击量',
@@ -238,7 +239,8 @@ Summary.prototype={
     var chartDataUserSum=[];
     _.each(dateGroupsUserSum, function(value, key) {
         var clickCount = value.length;
-        chartDataUserSum.push(clickCount);
+        var obj={name:key,value:clickCount};
+        chartDataUserSum.push(obj);
     });
     var userSum={
         name: '用户点击量',
