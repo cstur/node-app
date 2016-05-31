@@ -205,24 +205,34 @@ Summary.prototype={
       .value();
 
     //delete dateGroups.undefined;
+    
     var keys=Object.keys(dateGroups);
     var yobj={
         type: 'category'
     }
     yobj.data=keys;
     r.guanggao.yAxis=yobj;
+
     var chartData=[];
+    var chartDataUserSum=[];
     _.each(dateGroups, function(value, key) {
-        var clickCount = value.length;
-        var obj={name:key,value:clickCount};
+        var obj={name:key,value:value.length};
+        var uniqueList = _.uniq(value, function(item, key, a) { 
+            var json=JSON.parse(item.data);
+            if (json.target) {
+              return json.target.uid; 
+            }
+        });
+        var obj1={name:key,value:uniqueList.length};
         chartData.push(obj);
+        chartDataUserSum.push(obj1);
     });
     var sum={
       name: '总点击量',
       type: 'bar'
     };
     sum.data=chartData;
-
+    /*
     var uniqueList = _.uniq(data, function(item, key, a) { 
         var json=JSON.parse(item.data);
         if (json.target) {
@@ -242,10 +252,12 @@ Summary.prototype={
         var obj={name:key,value:clickCount};
         chartDataUserSum.push(obj);
     });
+    */
     var userSum={
         name: '用户点击量',
         type: 'bar'
     };
+
     userSum.data=chartDataUserSum;
     r.guanggao.series=[sum,userSum];
     
