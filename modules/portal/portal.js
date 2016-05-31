@@ -1,6 +1,6 @@
 var express     = require("express"),
     bodyParser  = require('body-parser'),
-    auth        = require('./modules/authenticate/auth.js');
+    auth        = require('../authenticate/auth.js');
 
 var app = express();
 app.use(bodyParser.json());

@@ -117,7 +117,6 @@ function Authenticate(app) {
     });   
 }
 
-
 Authenticate.prototype={
 
 }

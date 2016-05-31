@@ -1,10 +1,12 @@
 var express     = require("express"),
     bodyParser  = require('body-parser'),
-    report      = require('./report.js'),
+    morgan      = require("morgan"),
+    report      = require('./modules/report/report.js'),
     items       = require('./app.items.js'),
     auth        = require('./modules/authenticate/auth.js'),
-    morgan      = require("morgan"),
-    ubtconfig   = require('./ubtconfig.js');
+    schedule    = require('./modules/schedule/schedule.js'),
+    database    = require('./modules/db/mongodb.js'),
+    ubtconfig   = require('./config/ubtconfig.js');
 
 var item= new items();
 var app = express();
@@ -25,10 +27,12 @@ app.all('*',function (req, res, next) {
   }
 });
 
-require('./weixin.js').init(app);
-new report(app,item);
+require('./modules/weixin/weixin.js').init(app);
+var db=new database();
+new report(app,item,db);
 new ubtconfig(app,item);
 new auth(app);
+new schedule(db,app);
 
 app.post("/editText", function(req, res) {
 	texts=req.body.json;

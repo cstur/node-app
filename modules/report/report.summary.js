@@ -166,7 +166,33 @@ Summary.prototype={
   },
 
   getOptionGuangGao : function(data){
-    this.gSum.doc=data;
+    var r={};
+    r.guanggao = {
+      title: {
+          text: '首页广告点击量',
+      },
+      tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+              type: 'shadow'
+          }
+      },
+      legend: {
+          data: ['总点击量', '用户点击量']
+      },
+      grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+      },
+      xAxis: {
+          type: 'value',
+          boundaryGap: [0, 0.01]
+      }
+    };
+    r.doc=data;
+
     var dateGroups = _.chain(data)
       .groupBy(function(obj) {           
           var json = JSON.parse(obj.data);
@@ -180,7 +206,7 @@ Summary.prototype={
         type: 'category'
     }
     yobj.data=keys;
-    this.gSum.guanggao.yAxis=yobj;
+    r.guanggao.yAxis=yobj;
     var chartData=[];
     _.each(dateGroups, function(value, key) {
         var clickCount = value.length;
@@ -215,8 +241,9 @@ Summary.prototype={
         type: 'bar'
     };
     userSum.data=chartDataUserSum;
-    this.gSum.guanggao.series=[sum,userSum];
-    return this.gSum;
+    r.guanggao.series=[sum,userSum];
+    
+    return r;
   },
   getOption : function(data){
       var model="day";

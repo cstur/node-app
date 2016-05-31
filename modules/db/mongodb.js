@@ -2,7 +2,8 @@ var MongoClient = require('mongodb').MongoClient,
 	assert      = require('assert'),
     mongoose    = require('mongoose'),
     timestamps  = require('mongoose-timestamp'),
-	config      = require('./config/db.cfg.js');
+    AppModel    = require('../../models/AppModel');
+	config      = require('../../config/db.cfg.js');
 	//redisClient = require('redis').createClient,
     //redis       = redisClient(6379, 'localhost');
 
@@ -13,15 +14,12 @@ function Database(){
 	this.db.once('open', function() {
 		console.log('open mongodb');
 	});
-	this.AppSchema =  new mongoose.Schema({app:String,data:mongoose.Schema.Types.Mixed});
-	this.AppSchema.plugin(timestamps);
-	this.AppModel = this.db.model('AppModel',this.AppSchema);
 }
 
 Database.prototype={
 
 	saveApp : function(data){
-  		var appEntity = new this.AppModel(data);
+  		var appEntity = new AppModel(data);
   		console.log('save:'+JSON.stringify(data));
   		appEntity.save(); 
 	},
@@ -29,7 +27,7 @@ Database.prototype={
 	getApp : function(appid,gte,lte,callback){
 		var option={app:appid,updatedAt:{'$gte':new Date(gte),'$lte':new Date(lte)}};
 		console.log(option);
-		this.AppModel.find(option,callback);
+		AppModel.find(option,callback);
 	}
 	/*
 	getAppCached : function(appid,gte,lte,callback){

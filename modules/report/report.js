@@ -1,9 +1,9 @@
-var database = require('./mongodb.js');
-var summary = require('./report.summary.js');
+var database = require('../db/mongodb.js');
+var summary  = require('./report.summary.js');
 var _ = require('underscore');
 
-function Report(app,item){
-	var db=new database();
+function Report(app,item,database){
+	var db=database;
 	var sum=new summary();
 	var hourMapList={};
 

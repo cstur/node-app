@@ -1,5 +1,5 @@
 exports.init = function (app) {
-	var wechat_cfg = require('./config/wechat.cfg.js');
+	var wechat_cfg = require('../../config/wechat.cfg.js');
 	var http = require('http');
 	var cache = require('memory-cache');
 	var sha1 = require('sha1'); //签名算法
