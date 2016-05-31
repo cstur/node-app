@@ -191,10 +191,11 @@ Summary.prototype={
           boundaryGap: [0, 0.01]
       }
     };
-
+    /*
     if (addDoc==1) {
       r.doc=data;
     }
+    */
     
 
     var dateGroups = _.chain(data)
