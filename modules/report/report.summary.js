@@ -197,7 +197,6 @@ Summary.prototype={
     }
     */
     
-
     var dateGroups = _.chain(data)
       .groupBy(function(obj) {           
           var json = JSON.parse(obj.data);
@@ -205,7 +204,7 @@ Summary.prototype={
       })
       .value();
 
-    delete dateGroups.undefined;
+    //delete dateGroups.undefined;
     var keys=Object.keys(dateGroups);
     var yobj={
         type: 'category'
@@ -235,7 +234,7 @@ Summary.prototype={
           return json.target.title; 
       })
       .value();
-    delete dateGroupsUserSum.undefined;
+    //delete dateGroupsUserSum.undefined;
     var chartDataUserSum=[];
     _.each(dateGroupsUserSum, function(value, key) {
         var clickCount = value.length;
