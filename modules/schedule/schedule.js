@@ -4,6 +4,7 @@ var moment   = require('moment');
 var summary  = require('../report/report.summary.js');
 
 var report={};
+var reportData={};
 
 function ADSummary(db){
 	var sum=new summary();
@@ -13,6 +14,7 @@ function ADSummary(db){
 	var yesterdayStart=moment().subtract(1,'days').startOf('day').toString();
 	var yesterdayEnd  =moment().subtract(1,'days').endOf('day').toString();
    	db.getApp(appid,yesterdayStart,yesterdayEnd,function(err,appData){
+   		reportData=appData;
    		console.log(appData.length);
      	report.guangGaoDay=sum.getOptionGuangGao(appData,1);
      	console.log(report);
@@ -47,6 +49,9 @@ function Schedule(database,app){
 
 	app.get("/report-guanggao", function(req, res) {
 		res.send(report);
+	});
+	app.get("/report-guanggao-day", function(req, res) {
+		res.send(reportData);
 	});
 	ADSummary(db);
 	var j = schedule.scheduleJob(rule, function(){
