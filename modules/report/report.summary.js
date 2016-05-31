@@ -191,7 +191,7 @@ Summary.prototype={
           boundaryGap: [0, 0.01]
       }
     };
-    r.doc=data;
+    //r.doc=data;
 
     var dateGroups = _.chain(data)
       .groupBy(function(obj) {           
