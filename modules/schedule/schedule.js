@@ -14,29 +14,23 @@ function ADSummary(db){
 	var yesterdayStart=moment().subtract(1,'days').startOf('day').toString();
 	var yesterdayEnd  =moment().subtract(1,'days').endOf('day').toString();
    	db.getApp(appid,yesterdayStart,yesterdayEnd,function(err,appData){
-   		reportData=appData;
-   		console.log(appData.length);
+   		reportData.day=appData;
      	report.guangGaoDay=sum.getOptionGuangGao(appData,1);
-     	console.log(report);
   	});
 
-   	
  	//Week Range
 	var weekStart=moment().locale('zh-cn').subtract(1,'weeks').startOf('week').toString();
 	var weekEnd  =moment().locale('zh-cn').subtract(1,'weeks').endOf('week').toString();
    	db.getApp(appid,weekStart,weekEnd,function(err,appData){
-   		console.log(appData.length);
+   		reportData.week=appData;
      	report.guangGaoWeek=sum.getOptionGuangGao(appData,0);
-     	console.log(report);
   	});
 
  	//Month Range
 	var monthStart=moment().subtract(1,'months').startOf('month').toString();
 	var monthEnd  =moment().subtract(1,'months').endOf('month').toString();
    	db.getApp(appid,monthStart,monthEnd,function(err,appData){
-   		console.log(appData.length);
      	report.guangGaoMonth=sum.getOptionGuangGao(appData,0);
-     	console.log(report);
   	});	
   	
 }
