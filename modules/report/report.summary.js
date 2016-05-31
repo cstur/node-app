@@ -165,7 +165,7 @@ Summary.prototype={
       return dateGroups;
   },
 
-  getOptionGuangGao : function(data){
+  getOptionGuangGao : function(data,addDoc){
     var r={};
     r.guanggao = {
       title: {
@@ -191,7 +191,11 @@ Summary.prototype={
           boundaryGap: [0, 0.01]
       }
     };
-    //r.doc=data;
+
+    if (addDoc==1) {
+      r.doc=data;
+    }
+    
 
     var dateGroups = _.chain(data)
       .groupBy(function(obj) {           

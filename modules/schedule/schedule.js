@@ -14,7 +14,7 @@ function ADSummary(db){
 	var yesterdayEnd  =moment().subtract(1,'days').endOf('day').toString();
    	db.getApp(appid,yesterdayStart,yesterdayEnd,function(err,appData){
    		console.log(appData.length);
-     	report.guangGaoDay=sum.getOptionGuangGao(appData);
+     	report.guangGaoDay=sum.getOptionGuangGao(appData,1);
      	console.log(report);
   	});
 
@@ -24,7 +24,7 @@ function ADSummary(db){
 	var weekEnd  =moment().locale('zh-cn').subtract(1,'weeks').endOf('week').toString();
    	db.getApp(appid,weekStart,weekEnd,function(err,appData){
    		console.log(appData.length);
-     	report.guangGaoWeek=sum.getOptionGuangGao(appData);
+     	report.guangGaoWeek=sum.getOptionGuangGao(appData,0);
      	console.log(report);
   	});
 
@@ -33,7 +33,7 @@ function ADSummary(db){
 	var monthEnd  =moment().subtract(1,'months').endOf('month').toString();
    	db.getApp(appid,monthStart,monthEnd,function(err,appData){
    		console.log(appData.length);
-     	report.guangGaoMonth=sum.getOptionGuangGao(appData);
+     	report.guangGaoMonth=sum.getOptionGuangGao(appData,0);
      	console.log(report);
   	});	
   	
