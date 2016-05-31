@@ -49,7 +49,7 @@ function Schedule(database,app){
 	var app=app;
 	var db = database;
 　　 var rule = new schedule.RecurrenceRule();
-　　 rule.minute = 17;
+　　 rule.minute = 1;
 
 	app.get("/report", function(req, res) {
 		res.send(report);
