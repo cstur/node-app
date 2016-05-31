@@ -1,5 +1,7 @@
 var _ = require('underscore');
 var uaparser = require('ua-parser-js');
+var configAppHeader= require('./config.appheader.js');
+var configTotaloilHeader= require('./config.totaloil.js');
 
 function Summary(){
   this.gSum={};
@@ -165,37 +167,64 @@ Summary.prototype={
       return dateGroups;
   },
 
-  getOptionGuangGao : function(data,addDoc){
+  getOptionTotalOil:function(data,timeOpt){
     var r={};
-    r.guanggao = {
-      title: {
-          text: '首页广告点击量',
-      },
-      tooltip: {
-          trigger: 'axis',
-          axisPointer: {
-              type: 'shadow'
-          }
-      },
-      legend: {
-          data: ['总点击量', '用户点击量']
-      },
-      grid: {
-          left: '3%',
-          right: '4%',
-          bottom: '3%',
-          containLabel: true
-      },
-      xAxis: {
-          type: 'value',
-          boundaryGap: [0, 0.01]
-      }
+    r.totaloil = configTotaloilHeader;
+    var dateGroups = _.chain(data)
+    .groupBy(function(obj) { 
+        var d= new Date(obj.updatedAt);
+
+        if (timeOpt=='Month') {
+            return d.getMonth()+'月'+d.getDate()+'日'; 
+        }
+        if (timeOpt=='Year') {
+            return d.getFullYear()+'年'+d.getMonth()+'月';
+        }
+        return d.getDate()+'日'+d.getHours()+'时'; 
+    })
+    .value();
+    var chartData=[];
+    var chartUVData=[];
+    _.each(dateGroups, function(value, key) {
+        chartData.push({
+            name: key,
+            value: value.length
+        });
+        var uniqueList = _.uniq(value, function(item, key, a) { 
+            var json=JSON.parse(item.data);
+            return json.data.uid;
+        });  
+        chartUVData.push({
+            name:key,
+            value:uniqueList.length
+        });
+    });
+
+    var keys=Object.keys(dateGroups);
+    var xobj={
+        type: 'category',
+        boundaryGap: false
     };
-    /*
-    if (addDoc==1) {
-      r.doc=data;
-    }
-    */
+    xobj.data=keys;
+    r.totaloil.xAxis=xobj;
+    var pvSum= {
+        name:'PV',
+        type:'line'
+    };
+    var uvSum= {
+        name:'UV',
+        type:'line'
+    };
+    pvSum.data=chartData;
+    uvSum.data=chartUVData;
+
+    r.totaloil.series=[pvSum,uvSum];
+    return r;
+  },
+
+  getOptionGuangGao : function(data){
+    var r={};
+    r.guanggao = configAppHeader;
     
     var dateGroups = _.chain(data)
       .groupBy(function(obj) {           
@@ -203,9 +232,6 @@ Summary.prototype={
           return json.target.title; 
       })
       .value();
-
-    //delete dateGroups.undefined;
-    
     var keys=Object.keys(dateGroups);
     var yobj={
         type: 'category'
@@ -232,27 +258,6 @@ Summary.prototype={
       type: 'bar'
     };
     sum.data=chartData;
-    /*
-    var uniqueList = _.uniq(data, function(item, key, a) { 
-        var json=JSON.parse(item.data);
-        if (json.target) {
-          return json.target.uid; 
-        }
-    });   
-    var dateGroupsUserSum = _.chain(uniqueList)
-      .groupBy(function(obj) { 
-          var json = JSON.parse(obj.data);
-          return json.target.title; 
-      })
-      .value();
-    //delete dateGroupsUserSum.undefined;
-    var chartDataUserSum=[];
-    _.each(dateGroupsUserSum, function(value, key) {
-        var clickCount = value.length;
-        var obj={name:key,value:clickCount};
-        chartDataUserSum.push(obj);
-    });
-    */
     var userSum={
         name: '用户点击量',
         type: 'bar'
@@ -276,8 +281,8 @@ Summary.prototype={
       
       var keys=Object.keys(dateGroups);
       var xobj={
-              type : 'category',
-              boundaryGap : false
+          type : 'category',
+          boundaryGap : false
       };
       xobj.data=keys;
       this.sum.PVUV.xAxis=[xobj];
@@ -327,7 +332,6 @@ Summary.prototype={
       uv.data=chartDataUV;
       console.log(chartDataUV);
       this.sum.PVUV.series=[pv,uv];
-
 
       /* Pie */
       var pieDataBrowser=[];

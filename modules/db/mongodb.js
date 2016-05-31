@@ -26,7 +26,6 @@ Database.prototype={
 
 	getApp : function(appid,gte,lte,callback){
 		var option={app:appid,updatedAt:{'$gte':new Date(gte),'$lte':new Date(lte)}};
-		console.log(option);
 		AppModel.find(option,callback);
 	}
 	/*
