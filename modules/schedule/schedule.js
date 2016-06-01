@@ -5,6 +5,7 @@ var summary  = require('../report/report.summary.js');
 
 var report={};
 var reportData={};
+var reportActData={};
 
 function SummaryTask(db){
 	var sum=new summary();
@@ -22,6 +23,7 @@ function SummaryTask(db){
   	});
 
    	db.getApp(appTotalOil,yesterdayStart,yesterdayEnd,function(err,appData){
+   		reportActData=appData;
    		console.log('totalOil:'+appData.length);
     	report.totalOil=sum.getOptionTotalOil(appData,'Day');
   	});
@@ -56,6 +58,9 @@ function Schedule(database,app){
 	});
 	app.get("/report-guanggao-day", function(req, res) {
 		res.send(reportData);
+	});
+	app.get("/report-act-data", function(req, res) {
+		res.send(reportActData);
 	});
 
 	SummaryTask(db);
