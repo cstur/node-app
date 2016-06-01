@@ -170,6 +170,7 @@ Summary.prototype={
   getOptionTotalOil:function(data,timeOpt){
     var r={};
     r.totaloil = configTotaloilHeader;
+    r.totaloil.doc=data;
     var dateGroups = _.chain(data)
     .groupBy(function(obj) { 
         var d= new Date(obj.updatedAt);

@@ -23,7 +23,7 @@ function SummaryTask(db){
 
    	db.getApp(appTotalOil,yesterdayStart,yesterdayEnd,function(err,appData){
    		console.log('totalOil:'+appData.length);
-    	report.totalOil=sum.getOptionTotalOil(appData);
+    	report.totalOil=sum.getOptionTotalOil(appData,'Day');
   	});
 
  	//Week Range
