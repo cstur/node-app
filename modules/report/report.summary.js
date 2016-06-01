@@ -1,6 +1,6 @@
 var _ = require('underscore');
 var uaparser = require('ua-parser-js');
-var configAppHeader= require('./config.appheader.js');
+//var configAppHeader= require('./config.appheader.js');
 var configTotaloilHeader= require('./config.totaloil.js');
 
 function Summary(){
@@ -170,7 +170,7 @@ Summary.prototype={
   getOptionTotalOil:function(data,timeOpt){
     var r={};
     r.totaloil = configTotaloilHeader;
-    r.totaloil.doc=data;
+    //r.totaloil.doc=data;
     var dateGroups = _.chain(data)
     .groupBy(function(obj) { 
         var d= new Date(obj.updatedAt);
@@ -227,7 +227,7 @@ Summary.prototype={
 
   getOptionGuangGao : function(data){
     var r={};
-    r.guanggao = configAppHeader;
+    r.guanggao = require('./config.appheader.js');
     
     var dateGroups = _.chain(data)
       .groupBy(function(obj) {           

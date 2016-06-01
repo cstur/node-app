@@ -8,7 +8,7 @@ var reportData={};
 var reportActData={};
 
 function SummaryTask(db){
-	var sum=new summary();
+	
 	var appGuangGao='report-guanggao';
 	var appTotalOil='act-totaloil';
 	
@@ -16,22 +16,24 @@ function SummaryTask(db){
 	var yesterdayStart=moment().subtract(1,'days').startOf('day').toString();
 	var yesterdayEnd  =moment().subtract(1,'days').endOf('day').toString();
    	db.getApp(appGuangGao,yesterdayStart,yesterdayEnd,function(err,appData){
+   		var sum=new summary();
    		console.log('guangGaoDay:'+appData.length);
    		reportData.day=appData;
      	report.guangGaoDay=sum.getOptionGuangGao(appData);
-     	console.log(report.guangGaoDay.guanggao.series);
   	});
 
    	db.getApp(appTotalOil,yesterdayStart,yesterdayEnd,function(err,appData){
+   		var sum=new summary();
    		reportActData=appData;
    		console.log('totalOil:'+appData.length);
     	report.totalOil=sum.getOptionTotalOil(appData,'Day');
   	});
-
+/*
  	//Week Range
 	var weekStart=moment().locale('zh-cn').subtract(1,'weeks').startOf('week').toString();
 	var weekEnd  =moment().locale('zh-cn').subtract(1,'weeks').endOf('week').toString();
    	db.getApp(appGuangGao,weekStart,weekEnd,function(err,appData){
+   		var sum=new summary();
    		console.log('guangGaoWeek:'+appData.length);
    		reportData.week=appData;
      	report.guangGaoWeek=sum.getOptionGuangGao(appData);
@@ -41,10 +43,11 @@ function SummaryTask(db){
 	var monthStart=moment().subtract(1,'months').startOf('month').toString();
 	var monthEnd  =moment().subtract(1,'months').endOf('month').toString();
    	db.getApp(appGuangGao,monthStart,monthEnd,function(err,appData){
+   		var sum=new summary();
    		console.log('guangGaoMonth:'+appData.length);
      	report.guangGaoMonth=sum.getOptionGuangGao(appData);
   	});	
-  	
+ */	
 }
 
 function Schedule(database,app){
