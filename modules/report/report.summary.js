@@ -193,7 +193,9 @@ Summary.prototype={
         });
         var uniqueList = _.uniq(value, function(item, key, a) { 
             var json=JSON.parse(item.data);
-            return json.data.uid;
+            if (json.data) {
+              return json.data.uid;
+            }
         });  
         chartUVData.push({
             name:key,
