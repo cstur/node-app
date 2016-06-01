@@ -28,7 +28,7 @@ function SummaryTask(db){
    		console.log('totalOil:'+appData.length);
     	report.totalOil=sum.getOptionTotalOil(appData,'Day');
   	});
-/*
+
  	//Week Range
 	var weekStart=moment().locale('zh-cn').subtract(1,'weeks').startOf('week').toString();
 	var weekEnd  =moment().locale('zh-cn').subtract(1,'weeks').endOf('week').toString();
@@ -47,7 +47,7 @@ function SummaryTask(db){
    		console.log('guangGaoMonth:'+appData.length);
      	report.guangGaoMonth=sum.getOptionGuangGao(appData);
   	});	
- */	
+ 
 }
 
 function Schedule(database,app){
