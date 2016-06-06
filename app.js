@@ -61,9 +61,14 @@ app.post("/editText", function(req, res) {
 });
 
 app.get("/q", function(req, res) {
-  db.queryByTimeStamp(req.query.gte,req.query.lte,function(err,appData){
-    res.send(appData);
-  });
+  db.queryByTimeStamp(
+    req.query.gte,
+    req.query.lte,
+    req.query.limit,
+    req.query.page,
+    function(err,appData){
+      res.send(appData);
+    });
 });
 
 var port = process.env.PORT || 8080;

@@ -30,17 +30,31 @@ Database.prototype={
 		this.log.info("query option:"+JSON.stringify(option));
 		AppModel.find(option,callback);
 	},
-
-	queryByTimeStamp : function(gte,lte,callback){
+	getAppTimeStamp : function(appid,gte,lte,callback){
 		var start=new Date();
 		start.setTime(gte);
-
 		var end=new Date();
 		end.setTime(lte);
-
+		var option={app:appid,updatedAt:{'$gte':start,'$lte':end}};
+		this.log.info("getAppTimeStamp:"+JSON.stringify(option));
+		AppModel.find(option,callback);
+	},
+	queryByTimeStamp : function(gte,lte,per,page,callback){
+		var start=new Date();
+		start.setTime(gte);
+		var end=new Date();
+		end.setTime(lte);
 		var option={updatedAt:{'$gte':start,'$lte':end}};
 		this.log.info("query by timestamp:"+JSON.stringify(option));
-		AppModel.find(option,callback);
+		this.log.info("query limit "+per);
+		this.log.info("query page "+page);
+		AppModel.find(option)
+				.limit(Math.abs(per))    
+				.skip(Math.abs(per) * Math.abs(page))
+			    .sort({
+			        updatedAt: 'desc'
+			    })
+			    .exec(callback);
 	}
 	/*
 	getAppCached : function(appid,gte,lte,callback){

@@ -13,29 +13,29 @@ function SummaryTask(db,logger){
 	var appTotalOil='act-totaloil';
 	
 	//Yesterday Range
-	var yesterdayStart=moment().subtract(1,'days').startOf('day').toString();
-	var yesterdayEnd  =moment().subtract(1,'days').endOf('day').toString();
+	var yesterdayStart=moment().subtract(1,'days').startOf('day').valueOf();
+	var yesterdayEnd  =moment().subtract(1,'days').endOf('day').valueOf();
 	logger.info("Report GuangGao From:"+yesterdayStart+",To:"+yesterdayEnd);
-   	db.getApp(appGuangGao,yesterdayStart,yesterdayEnd,function(err,appData){
+   	db.getAppTimeStamp(appGuangGao,yesterdayStart,yesterdayEnd,function(err,appData){
    		var sum=new summary();
    		logger.info('guangGaoDay Length '+appData.length);
-   		reportData.day=appData;
+   		//reportData.day=appData;
      	report.guangGaoDay=sum.getOptionGuangGao(appData);
      	logger.info("report.guangGaoDay:"+JSON.stringify(report.guangGaoDay));
   	});
 
-   	db.getApp(appTotalOil,yesterdayStart,yesterdayEnd,function(err,appData){
+   	db.getAppTimeStamp(appTotalOil,yesterdayStart,yesterdayEnd,function(err,appData){
    		var sum=new summary();
    		logger.info('totaloilDay Length '+appData.length);
-   		reportActData=appData;
+   		//reportActData=appData;
     	report.totalOil=sum.getOptionTotalOil(appData,'Day');
     	logger.info("report.totalOil:"+JSON.stringify(report.totalOil));
   	});
 
  	//Week Range
-	var weekStart=moment().locale('zh-cn').subtract(1,'weeks').startOf('week').toString();
-	var weekEnd  =moment().locale('zh-cn').subtract(1,'weeks').endOf('week').toString();
-   	db.getApp(appGuangGao,weekStart,weekEnd,function(err,appData){
+	var weekStart=moment().locale('zh-cn').subtract(1,'weeks').startOf('week').valueOf();
+	var weekEnd  =moment().locale('zh-cn').subtract(1,'weeks').endOf('week').valueOf();
+   	db.getAppTimeStamp(appGuangGao,weekStart,weekEnd,function(err,appData){
    		var sum=new summary();
    		logger.info('guangGaoWeek Length '+appData.length);
      	report.guangGaoWeek=sum.getOptionGuangGao(appData);
@@ -43,9 +43,9 @@ function SummaryTask(db,logger){
   	});
 
  	//Month Range
-	var monthStart=moment().subtract(1,'months').startOf('month').toString();
-	var monthEnd  =moment().subtract(1,'months').endOf('month').toString();
-   	db.getApp(appGuangGao,monthStart,monthEnd,function(err,appData){
+	var monthStart=moment().subtract(1,'months').startOf('month').valueOf();
+	var monthEnd  =moment().subtract(1,'months').endOf('month').valueOf();
+   	db.getAppTimeStamp(appGuangGao,monthStart,monthEnd,function(err,appData){
    		var sum=new summary();
    		console.log('guangGaoMonth Length '+appData.length);
      	report.guangGaoMonth=sum.getOptionGuangGao(appData);
@@ -62,12 +62,6 @@ function Schedule(database,app,logger){
 
 	app.get("/report", function(req, res) {
 		res.send(report);
-	});
-	app.get("/report-guanggao-day", function(req, res) {
-		res.send(reportData);
-	});
-	app.get("/report-act-data", function(req, res) {
-		res.send(reportActData);
 	});
 
 	SummaryTask(db,logger);
