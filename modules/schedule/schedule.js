@@ -35,7 +35,7 @@ function SummaryTask(db){
    	db.getApp(appGuangGao,weekStart,weekEnd,function(err,appData){
    		var sum=new summary();
    		console.log('guangGaoWeek:'+appData.length);
-   		reportData.week=appData;
+   		//reportData.week=appData;
      	report.guangGaoWeek=sum.getOptionGuangGao(appData);
   	});
 
