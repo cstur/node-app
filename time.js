@@ -9,7 +9,7 @@ console.log("Date String:"+d.toDateString());
 console.log("GMT String:"+d.toGMTString());
 console.log("ISO String:"+d.toISOString());
 console.log("GMT to timestamp:"+Date.parse(new Date(d.toGMTString())));
-console.log("ISO to locale:"+new Date("2016-06-06T13:27:58.081Z").toLocaleString());
+console.log("ISO to locale:"+new Date("2016-06-06T15:10:09.315Z").toLocaleString());
 console.log("moment timestamp:"+moment().valueOf());
 console.log("date timestamp:"+Date.parse(new Date()));
 

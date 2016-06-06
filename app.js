@@ -71,6 +71,13 @@ app.get("/q", function(req, res) {
     });
 });
 
+app.get("/qCount", function(req, res) {
+  db.qCount(
+    req.query.gte,
+    req.query.lte,
+    res);
+});
+
 var port = process.env.PORT || 8080;
 
 process.on('uncaughtException', function(err) {

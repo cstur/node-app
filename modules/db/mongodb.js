@@ -49,12 +49,28 @@ Database.prototype={
 		this.log.info("query limit "+per);
 		this.log.info("query page "+page);
 		AppModel.find(option)
+				//.count(function(err, count){
+    				//console.log("Number of docs: ", count );
+				//})
 				.limit(Math.abs(per))    
 				.skip(Math.abs(per) * Math.abs(page))
 			    .sort({
 			        updatedAt: 'desc'
 			    })
 			    .exec(callback);
+	},
+	qCount : function(gte,lte,res){
+		var start=new Date();
+		start.setTime(gte);
+		var end=new Date();
+		end.setTime(lte);
+		var option={updatedAt:{'$gte':start,'$lte':end}};
+		this.log.info("query by timestamp:"+JSON.stringify(option));
+		AppModel.find(option)
+				.count(function(err, count){
+    				console.log("Number of docs: ", count );
+    				res.send({docNumber:count});
+				});
 	}
 	/*
 	getAppCached : function(appid,gte,lte,callback){
