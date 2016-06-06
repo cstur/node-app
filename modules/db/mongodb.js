@@ -7,13 +7,14 @@ var MongoClient = require('mongodb').MongoClient,
 	//redisClient = require('redis').createClient,
     //redis       = redisClient(6379, 'localhost');
 
-function Database(){
+function Database(logger){
 	mongoose.connect(config.connStr);
 	this.db = mongoose.connection;
 	this.db.on('error', console.error.bind(console, 'connection error:'));
 	this.db.once('open', function() {
 		console.log('open mongodb');
 	});
+	this.log=logger;
 }
 
 Database.prototype={
@@ -26,6 +27,7 @@ Database.prototype={
 
 	getApp : function(appid,gte,lte,callback){
 		var option={app:appid,updatedAt:{'$gte':new Date(gte),'$lte':new Date(lte)}};
+		this.log.info("query option:"+JSON.stringify(option));
 		AppModel.find(option,callback);
 	}
 	/*

@@ -17,7 +17,11 @@ log4js.configure({
       filename: 'logs/main.log', 
       maxLogSize: 1024*1024,
       backups:3,
-      category: 'normal' 
+      category: 'normal'
+      //layout: {
+        //type: 'pattern',
+        //pattern: "{data:%m}"
+      //}
     }
   ]
 });
@@ -45,7 +49,7 @@ app.all('*',function (req, res, next) {
 });
 
 require('./modules/weixin/weixin.js').init(app);
-var db=new database();
+var db=new database(logger);
 new report(app,item,db,logger);
 new ubtconfig(app,item,logger);
 new auth(app,logger);
