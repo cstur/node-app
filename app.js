@@ -17,10 +17,10 @@ log4js.configure({
       filename: 'logs/main.log', 
       maxLogSize: 1024*1024,
       backups:3,
-      category: 'normal'
+      category: 'normal',
       layout: {
         type: 'pattern',
-        pattern: "{time:%r,data:%m}"
+        pattern: "{time:%d,data:%m}"
       }
     }
   ]
