@@ -60,6 +60,12 @@ app.post("/editText", function(req, res) {
 	res.send(texts);
 });
 
+app.get("/q", function(req, res) {
+  db.queryByTimeStamp(req.query.gte,req.query.lte,function(err,appData){
+    res.send(appData);
+  });
+});
+
 var port = process.env.PORT || 8080;
 
 process.on('uncaughtException', function(err) {

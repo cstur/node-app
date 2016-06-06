@@ -12,7 +12,7 @@ function Database(logger){
 	this.db = mongoose.connection;
 	this.db.on('error', console.error.bind(console, 'connection error:'));
 	this.db.once('open', function() {
-		console.log('open mongodb');
+		logger.info('open mongodb');
 	});
 	this.log=logger;
 }
@@ -21,13 +21,25 @@ Database.prototype={
 
 	saveApp : function(data){
   		var appEntity = new AppModel(data);
-  		console.log('save:'+JSON.stringify(data));
+  		this.log.info('save:'+JSON.stringify(data));
   		appEntity.save(); 
 	},
 
 	getApp : function(appid,gte,lte,callback){
 		var option={app:appid,updatedAt:{'$gte':new Date(gte),'$lte':new Date(lte)}};
 		this.log.info("query option:"+JSON.stringify(option));
+		AppModel.find(option,callback);
+	},
+
+	queryByTimeStamp : function(gte,lte,callback){
+		var start=new Date();
+		start.setTime(gte);
+
+		var end=new Date();
+		end.setTime(lte);
+
+		var option={updatedAt:{'$gte':start,'$lte':end}};
+		this.log.info("query by timestamp:"+JSON.stringify(option));
 		AppModel.find(option,callback);
 	}
 	/*

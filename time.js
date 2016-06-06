@@ -1,5 +1,10 @@
-var moment   = require('moment');
 
-console.log(moment().subtract(10, 'days').calendar());
-console.log(moment().format());
-console.log(moment().subtract(1,'days').endOf('day').format());
+
+var timestamp="1465219604000";
+console.log("timestamp:"+timestamp);
+var d=new Date();
+d.setTime(timestamp);
+console.log("Date String:"+d.toDateString());
+console.log("GMT String:"+d.toGMTString());
+console.log("ISO String:"+d.toISOString());
+console.log("GMT to timestamp:"+Date.parse(new Date(d.toGMTString())));
