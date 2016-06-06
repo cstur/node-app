@@ -15,7 +15,7 @@ log4js.configure({
     {
       type: 'file', //文件输出
       filename: 'logs/main.log', 
-      maxLogSize: 1024,
+      maxLogSize: 1024*1024,
       backups:3,
       category: 'normal' 
     }
