@@ -17,11 +17,11 @@ log4js.configure({
       filename: 'logs/main.log', 
       maxLogSize: 1024*1024,
       backups:3,
-      category: 'normal',
-      layout: {
-        type: 'pattern',
-        pattern: "{time:%d,data:%m}"
-      }
+      category: 'normal'
+      //layout: {
+        //type: 'pattern',
+        //pattern: "{time:%d,data:%m}"
+      //}
     }
   ]
 });
