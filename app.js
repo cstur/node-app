@@ -69,6 +69,7 @@ app.post("/pv", function(req, res) {
 });
 
 app.post("/pv-test", function(req, res) {
+  logger.info(req.body);
   var json=req.body;
   var appName=json.app;
   appName=appName+'-test';
