@@ -21,7 +21,6 @@ Database.prototype={
 
 	saveApp : function(data){
   		var appEntity = new AppModel(data);
-  		this.log.info('save:'+JSON.stringify(data));
   		appEntity.save(); 
 	},
 

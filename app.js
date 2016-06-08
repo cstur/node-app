@@ -60,6 +60,23 @@ app.post("/editText", function(req, res) {
 	res.send(texts);
 });
 
+app.post("/pv", function(req, res) {
+  var json=req.body;
+  var appName=json.app;
+  var data={app:appName,data:json};
+  db.saveApp(data);
+  res.send('200');
+});
+
+app.post("/pv-test", function(req, res) {
+  var json=req.body;
+  var appName=json.app;
+  appName=appName+'-test';
+  var data={app:appName,data:json};
+  db.saveApp(data);
+  res.send('200');
+});
+
 app.get("/q", function(req, res) {
   db.queryByTimeStamp(
     req.query.gte,

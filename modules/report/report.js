@@ -54,12 +54,14 @@ function Report(app,item,database){
 		var json = getQueryString(req);
 		console.log(json);
 		var appName=JSON.parse(json).app||'ubt-pv';
+		/*
 		console.log("appName:"+appName);
 		if(validateApp(appName)==0){
 			console.log('not valid appname:'+appName);
 			res.send('500');
 			return;
 		}
+		*/
 		var data={app:appName,data:json};
 		db.saveApp(data);
 		res.send('200');
