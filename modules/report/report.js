@@ -33,48 +33,6 @@ function Report(app,item,database){
 		return json;
 	}
 
-	app.get("/jserror.gif", function(req, res) {
-		var json = getQueryString(req);
-		var appName='js-error';
-		var data={app:appName,data:json};
-		db.saveApp(data);
-		res.send('200');
-	});
-
-	app.get("/jserror-test.gif", function(req, res) {
-		var json = getQueryString(req);
-		var appName='js-error';
-		appName=appName+'-test';
-		var data={app:appName,data:json};
-		db.saveApp(data);
-		res.send('200');
-	});
-
-	app.get("/pv.gif", function(req, res) {
-		var json = getQueryString(req);
-		console.log(json);
-		var appName=JSON.parse(json).app||'ubt-pv';
-		/*
-		console.log("appName:"+appName);
-		if(validateApp(appName)==0){
-			console.log('not valid appname:'+appName);
-			res.send('500');
-			return;
-		}
-		*/
-		var data={app:appName,data:json};
-		db.saveApp(data);
-		res.send('200');
-	});
-
-	app.get("/pv-test.gif", function(req, res) {
-		var json = getQueryString(req);
-		var appName=JSON.parse(json).app||'ubt-pv';
-		appName=appName+'-test';
-		var data={app:appName,data:json};
-		db.saveApp(data);
-		res.send('200');
-	});
 
 	app.get("/query", function(req, res) {
 		var appid=req.query.appid||"";

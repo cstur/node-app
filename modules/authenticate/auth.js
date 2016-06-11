@@ -16,19 +16,14 @@ function ensureAuthorized(req, res, next) {
 
 function Authenticate(app) {
     app.post('/authenticate', function(req, res) {
-        console.log('authenticate:');
-        console.log(req.body);
         User.findOne({email: req.body.email, password: req.body.password}, function(err, user) {
             if (err) {
-                console.log("Error occured: " + err);
                 res.json({
                     type: false,
                     data: "Error occured: " + err
                 });
             } else {
                 if (user) {
-                    console.log('user:');
-                    console.log(user);
                    res.json({
                         type: true,
                         data: user,
@@ -48,16 +43,12 @@ function Authenticate(app) {
     app.post('/signin', function(req, res) {
         User.findOne({email: req.body.email, password: req.body.password}, function(err, user) {
             if (err) {
-                console.log('error');
-                console.log(err);
                 res.json({
                     type: false,
                     data: "Error occured: " + err
                 });
             } else {
                 if (user) {
-                    console.log('User already exists!');
-                    console.log(user);
                     res.json({
                         type: false,
                         data: "User already exists!"
@@ -65,8 +56,6 @@ function Authenticate(app) {
                 } else {
                     var userModel = new User();
                     if (!req.body.email || !req.body.password || !req.body.username) {
-                        console.log("Error occured: not valid user data");
-                        console.log(req.body);
                         res.json({
                             type: false,
                             data: "Error occured: not valid user data"
@@ -76,13 +65,8 @@ function Authenticate(app) {
                         userModel.password = req.body.password;
                         userModel.username = req.body.username;
 
-                        console.log('user:');
-                        console.log(userModel);
                         userModel.save(function(err, user) {
-                            //user.token = jwt.sign(user, process.env.JWT_SECRET);
-                            user.token = jwt.sign(user, 'Bearer');
-                            console.log('token:');
-                            console.log(user.token);
+                            user.token = jwt.sign(user, process.env.JWT_SECRET);
                             user.save(function(err, user1) {
                                 res.json({
                                     type: true,
@@ -99,8 +83,6 @@ function Authenticate(app) {
     });
 
     app.get('/me', ensureAuthorized, function(req, res) {
-        console.log('me:');
-        console.log(req.token);
         User.findOne({token: req.token}, function(err, user) {
             if (err) {
                 res.json({

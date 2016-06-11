@@ -1,19 +1,14 @@
 var express     = require("express"),
     bodyParser  = require('body-parser'),
-    morgan      = require("morgan"),
-    report      = require('./modules/report/report.js'),
-    items       = require('./app.items.js'),
-    auth        = require('./modules/authenticate/auth.js'),
-    schedule    = require('./modules/schedule/schedule.js'),
-    database    = require('./modules/db/mongodb.js'),
-    ubtconfig   = require('./config/ubtconfig.js'),
     log4js      = require('log4js');
+
+const config = require('config');
 
 log4js.configure({
   appenders: [
-    { type: 'console' }, //控制台输出
+    { type: 'console' },
     {
-      type: 'file', //文件输出
+      type: 'file',
       filename: 'logs/main.log', 
       maxLogSize: 1024*1024,
       backups:3,
@@ -32,11 +27,20 @@ var item= new items();
 var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(morgan("dev"));
 app.use(log4js.connectLogger(logger, {level:log4js.levels.INFO}));
 
 app.all('*',function (req, res, next) {
+  //TODO wait for enviroment ready
+
+  /*
+  if (config.env!='pro') {
+    res.header('Access-Control-Allow-Origin', '*');
+  }else{
+    res.header('Access-Control-Allow-Origin', 'r.ichezheng.com');
+  }
+  */
   res.header('Access-Control-Allow-Origin', '*');
+  
   res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
   res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
 
@@ -48,58 +52,30 @@ app.all('*',function (req, res, next) {
   }
 });
 
-require('./modules/weixin/weixin.js').init(app);
-var db=new database(logger);
-new report(app,item,db,logger);
-new ubtconfig(app,item,logger);
-new auth(app,logger);
-new schedule(db,app,logger);
+var routes={};
 
-app.post("/editText", function(req, res) {
-	texts=req.body.json;
-	res.send(texts);
-});
+routes.weixin = require('./route/weixin.js');
+app.post('/weixin', routes.weixin.signature);
 
-app.post("/pv", function(req, res) {
-  var json=req.body;
-  var appName=json.app;
-  var data={app:appName,data:json};
-  db.saveApp(data);
-  res.send('200');
-});
+routes.ubt = require('./route/ubt.js');
+/*
+  For Native App
+*/
+app.post("/pv", routes.ubt.pv);
+app.post("/pv-test", routes.ubt.pvtest);
+/*
+  For H5
+*/
+app.get("/pv.gif", routes.ubt.pvgif);
+app.get("/pv-test.gif", routes.ubt.pvgifTest);
+app.get("/q", routes.ubt.q);
 
-app.post("/pv-test", function(req, res) {
-  logger.info(req.body);
-  var json=req.body;
-  var appName=json.app;
-  appName=appName+'-test';
-  var data={app:appName,data:json};
-  db.saveApp(data);
-  res.send('200');
-});
+//app.get('/post/all', jwt({secret: secret.secretToken}), tokenManager.verifyToken, routes.posts.listAll);
 
-app.get("/q", function(req, res) {
-  db.queryByTimeStamp(
-    req.query.gte,
-    req.query.lte,
-    req.query.limit,
-    req.query.page,
-    function(err,appData){
-      res.send(appData);
-    });
-});
-
-app.get("/qCount", function(req, res) {
-  db.qCount(
-    req.query.gte,
-    req.query.lte,
-    res);
-});
-
-var port = process.env.PORT || 8080;
+var port = process.env.NODE_PORT || 8080;
 
 process.on('uncaughtException', function(err) {
-    logger.info(err);
+    logger.error(err);
 });
 
 app.listen(port, function() {
