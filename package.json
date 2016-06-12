@@ -10,9 +10,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "ampersand-state": "^5.0.2",
     "async": "^2.0.0-rc.6",
     "bcrypt": "^0.8.7",
     "body-parser": "^1.15.0",
+    "chance": "^1.0.3",
     "elasticsearch": "^11.0.1",
     "express": "^4.13.4",
     "express-jwt": "^3.4.0",

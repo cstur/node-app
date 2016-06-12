@@ -1,4 +1,5 @@
 var db = require('../modules/mongodb.js');
+var mapreduce = require('../modules/mapreduce.js');
 
 /*
 	Query PV
@@ -7,7 +8,9 @@ exports.q = function(req, res){
     var page = req.query.page || 1;
     var pageSize = req.query.pageSize || 10;
     var populate =  req.query.populate || '';
-    var queryParams =  req.query.queryParams || {};
+    var queryParams =  req.query.queryParams || {'pv.app':'cz'};
+    queryParams=JSON.parse(queryParams);
+    
     var sortParams = req.query.sortParams || {};
 
     var docName = req.query.docName || 'PV';
@@ -24,10 +27,25 @@ exports.q = function(req, res){
         }else{
             res.json({
                 records: $page.results,
-                pageCount: $page.pageCount
+                pageCount: $page.pageCount,
+                totalSize: $page.totalSize
             })
         }
     });
+}
+
+/*
+	Map Reduce Task
+*/
+exports.mr = function(req, res){
+	var period = req.query.period || 2;
+	var queryParams =  req.query.queryParams || {'pv.app':'cz'};
+	var o = mapreduce.pvuv(period,queryParams);
+
+	db.pvModel.mapReduce(o,function (err, data, stats) { 
+		if(err) throw err;
+	    res.json({processtime:stats.processtime,results:data});
+	});
 }
 
 /* Save PV */
@@ -48,7 +66,8 @@ exports.pv = function(req, res) {
 		return res.sendStatus(400);
 	}
 
-	var pv = new db.pvModel(pvData);
+	var pv = new db.pvModel();
+	pv.pv=pvData;
 	savePV(pv,res);
 }
 
@@ -59,7 +78,8 @@ exports.pvtest = function(req, res) {
 		return res.sendStatus(400);
 	}
 
-	var pv = new db.pvTestModel(pvData);
+	var pv = new db.pvTestModel();
+	pv.pv=pvData;
 	savePV(pv,res);
 }
 
@@ -70,8 +90,10 @@ exports.pvgif = function(req, res) {
 		return res.sendStatus(400);
 	}
 
-	var pvData =decodeURIComponent(queryStr) ;
-	var pv = new db.pvModel(pvData);
+	var pvData = JSON.parse(decodeURIComponent(queryStr));
+	var pv = new db.pvModel();
+	pv.pv=pvData;
+
 	savePV(pv,res);
 }
 
@@ -82,8 +104,9 @@ exports.pvgifTest = function(req, res) {
 		return res.sendStatus(400);
 	}
 
-	var pvData =decodeURIComponent(queryStr) ;
-	var pv = new db.pvTestModel(pvData);
+	var pvData = JSON.parse(decodeURIComponent(queryStr));
+	var pv = new db.pvTestModel();
+	pv.pv=pvData;
 	savePV(pv,res);
 }
 

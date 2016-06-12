@@ -24,3 +24,18 @@ console.log("timestampWeek:"+timestampWeek);
 var d2=new Date();
 d2.setTime(timestampWeek);
 console.log("timestampWeek to locale:"+d2.toLocaleString());
+
+var timestampHour=moment().subtract(1,'hours').valueOf();
+var d3=new Date();
+d3.setTime(timestampHour);
+console.log("moment to locale d3:"+d3.toLocaleString());
+
+
+var gte=moment().subtract(2,'hours').valueOf();
+var lte=moment().valueOf();
+var start=new Date();
+start.setTime(gte);
+var end=new Date();
+end.setTime(lte);
+var option={createdAt:{'$gte':start,'$lte':end}};
+console.log("option:"+JSON.stringify(option));

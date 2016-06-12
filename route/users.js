@@ -28,7 +28,7 @@ exports.signin = function(req, res) {
 				return res.sendStatus(401);
             }
 
-			var token = jwt.sign({id: user._id}, secret.secretToken, { expiresInMinutes: tokenManager.TOKEN_EXPIRATION });
+			var token = jwt.sign({id: user._id}, secret.secretToken, { expiresIn: tokenManager.TOKEN_EXPIRATION });
 			
 			return res.json({token:token,user:user});
 		});

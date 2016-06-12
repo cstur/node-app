@@ -1,16 +1,16 @@
 'use strict';
 
-const path = require('path');
-const extend = require('util')._extend;
+var path = require('path');
+var extend = require('util')._extend;
 
-const development = require('./env/development');
-const test = require('./env/test');
-const production = require('./env/production');
+var development = require('./env/dev.js');
+var test = require('./env/test.js');
+var production = require('./env/pro.js');
 
-const notifier = {
+var notifier = {
 };
 
-const defaults = {
+var defaults = {
   root: path.join(__dirname, '..'),
   notifier: notifier
 };

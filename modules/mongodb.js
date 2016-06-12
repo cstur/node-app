@@ -3,15 +3,15 @@ var bcrypt = require('bcrypt');
 var SALT_WORK_FACTOR = 10;
 var mongodbOptions = { };
 var timestamps   = require('mongoose-timestamp');
-const config = require('../../config');
+var config = require('../config/index.js');
 var async = require('async');
 
 mongoose.connect(config.db, mongodbOptions, function (err, res) {
     if (err) { 
-        console.log('Connection refused to ' + mongodbURL);
+        console.log('Connection refused to ' + config.db);
         console.log(err);
     } else {
-        console.log('Connection successful to: ' + mongodbURL);
+        console.log('Connection successful to: ' + config.db);
     }
 });
 
@@ -21,21 +21,26 @@ if (config.env!='pro') {
 
 var Schema = mongoose.Schema;
 
+/*
+    role: 
+        all   1
+        query 2
+*/
 var User = new Schema({
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     menu_list: [{type:String}],
-    role:{ type: Number, default: 0 }
+    role:{ type: Number, default: 2 }
 });
 User.plugin(timestamps);
 
 var PV = new Schema({ 
-    any: Schema.Types.Mixed 
+    pv: Schema.Types.Mixed 
 });
 PV.plugin(timestamps);
 
 var PVTest = new Schema({ 
-    any: Schema.Types.Mixed 
+    pv: Schema.Types.Mixed 
 });
 PVTest.plugin(timestamps);
 
@@ -72,6 +77,8 @@ var pvTestModel   = mongoose.model('PVTest', PVTest);
 
 //Define Query
 var pageQuery = function (page, pageSize, Model, populate, queryParams, sortParams, callback) {
+    page= Math.abs(page);
+    pageSize= Math.abs(pageSize);
     var start = (page - 1) * pageSize;
     var $page = {
         pageNumber: page
@@ -90,6 +97,7 @@ var pageQuery = function (page, pageSize, Model, populate, queryParams, sortPara
     }, function (err, results) {
         var count = results.count;
         $page.pageCount = (count - 1) / pageSize + 1;
+        $page.totalSize = count;
         $page.results = results.records;
         callback(err, $page);
     });
@@ -97,8 +105,8 @@ var pageQuery = function (page, pageSize, Model, populate, queryParams, sortPara
 
 // Export Models
 exports.userModel = userModel;
-exports.pvModel = pvModel;
+exports.pvModel   = pvModel;
 exports.pvTestModel = pvTestModel;
-exports.pvTestModel = pageQuery;
+exports.pageQuery   = pageQuery;
 
 
