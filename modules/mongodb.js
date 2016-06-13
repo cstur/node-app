@@ -77,8 +77,6 @@ var pvTestModel   = mongoose.model('PVTest', PVTest);
 
 //Define Query
 var pageQuery = function (page, pageSize, Model, populate, queryParams, sortParams, callback) {
-    page= Math.abs(page);
-    pageSize= Math.abs(pageSize);
     var start = (page - 1) * pageSize;
     var $page = {
         pageNumber: page

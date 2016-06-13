@@ -8,7 +8,7 @@ exports.q = function(req, res){
     var page = req.query.page || 1;
     var pageSize = req.query.pageSize || 10;
     var populate =  req.query.populate || '';
-    var queryParams =  req.query.queryParams || {'pv.app':'cz'};
+    var queryParams =  req.query.queryParams || "{}";
     queryParams=JSON.parse(queryParams);
     
     var sortParams = req.query.sortParams || {};
@@ -21,6 +21,11 @@ exports.q = function(req, res){
     	model = db.pvTestModel;
     }
 
+    page= Math.abs(page);
+    pageSize= Math.abs(pageSize);
+    if (pageSize>999) {
+    	return res.sendStatus(400);
+    }
     db.pageQuery(page, pageSize, model, populate, queryParams, sortParams, function(error, $page){
         if(error){
             return res.sendStatus(500);
@@ -42,7 +47,7 @@ exports.mr = function(req, res){
 	var taskid = req.query.taskid || 1;
 	var queryParams =  req.query.queryParams || {'pv.app':'cz'};
 	queryParams=JSON.parse(queryParams);
-	
+
 	var o = {};
 
 	if (taskid==1) {
