@@ -45,7 +45,7 @@ exports.q = function(req, res){
 exports.mr = function(req, res){
 	var period = req.query.period || 2;
 	var taskid = req.query.taskid || 1;
-	var queryParams =  req.query.queryParams || {'pv.app':'cz'};
+	var queryParams =  req.query.queryParams || "{'pv.app':'cz'}";
 	queryParams=JSON.parse(queryParams);
 
 	var o = {};
