@@ -52,6 +52,10 @@ app.all('*',function (req, res, next) {
   }
 });
 
+app.get("/healthcheck", function(req,res){
+  res.sendStatus(200);
+});
+
 var routes={};
 
 routes.weixin = require('./route/weixin.js');
