@@ -11,7 +11,7 @@ exports.q = function(req, res){
     var queryParams =  req.query.queryParams || "{}";
     queryParams=JSON.parse(queryParams);
     
-    var sortParams = req.query.sortParams || {};
+    var sortParams = req.query.sortParams || "{}";
 
     var docName = req.query.docName || 'PV';
     var model = db.pvModel;
