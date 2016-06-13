@@ -1,5 +1,8 @@
 
-exports.pvuv= function taskPVUV(p,q){
+/*
+	Task ID 1
+*/
+exports.pvuv = function taskPVUV(p,q){
 	var o = {}; 
 	o.scope={p:p};
 
@@ -15,12 +18,10 @@ exports.pvuv= function taskPVUV(p,q){
 			k=k+'-'+d.getMonth()+'-'+d.getDate()+'-'+d.getHours();
 		}
 
-	    //emit(k,{pv:1,uv:1,uid:this.pv.uid});
 	    emit(k,this.pv);
 	}    
 
 	o.reduce = function(key, values) {
-		
 		var uniqueList=[];
         for (var i = values.length - 1; i >= 0; i--) {
         	var find=0;
@@ -34,9 +35,26 @@ exports.pvuv= function taskPVUV(p,q){
         		uniqueList.push(values[i].uid);
         	}
         }
-	    return {pv:values.length,uv:uniqueList.length,uid:''};
-	    
-        //return {pv:values.length};
+	    return {pv:values.length,uv:uniqueList.length};
+	}
+
+	o.query  = q;  
+
+	return o;
+}
+
+/*
+	Task ID 2
+*/
+exports.convertion = function taskConvertionRate(q){
+	var o = {}; 
+
+	o.map = function() { 
+	    emit(this.pv.prePVID,1);
+	}    
+
+	o.reduce = function(prePVID, count) {
+	    return Array.sum(count);
 	}
 
 	o.query  = q;  

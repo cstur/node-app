@@ -8,8 +8,8 @@ function randomPV(){
 	var mockPV={
 	  "app":"cz",
 	  "ubt_client_version":"1.0.0",
-	  "pvid":"39903",
-	  "prePVID":"34567"
+	  "pvid":"abc",
+	  "prePVID":"123"
 	};
 	mockPV.app=chance.pickone(["cz", "laoyou"]);
 	mockPV.accessTime=timestamp1;
@@ -18,8 +18,8 @@ function randomPV(){
 	mockPV.ubt_client_type= chance.pickone(["h5", "android", "ios"]);
 
 	if (mockPV.ubt_client_type=="android") {
-		mockPV.pvid=chance.integer({min: 2000, max: 2999})+"";
-		mockPV.prePVID=chance.integer({min: 2000, max: 2999})+"";
+		//mockPV.pvid=chance.integer({min: 2000, max: 2999})+"";
+		//mockPV.prePVID=chance.integer({min: 2000, max: 2999})+"";
 		mockPV.data={
 	    "android":{
 	      "version":"4.1",
@@ -40,8 +40,8 @@ function randomPV(){
 	  	}	
 	}
 	else if (mockPV.ubt_client_type=="ios") {
-		mockPV.pvid=chance.integer({min: 1000, max: 1999});
-		mockPV.prePVID=chance.integer({min: 1000, max: 1999});	
+		//mockPV.pvid=chance.integer({min: 1000, max: 1999});
+		//mockPV.prePVID=chance.integer({min: 1000, max: 1999});	
 		mockPV.data={
 	    "ios":{
 	      "version":"4.1",
@@ -63,8 +63,8 @@ function randomPV(){
 	}
 
 	else{
-		mockPV.pvid=chance.integer({min: 3000, max: 3999});
-		mockPV.prePVID=chance.integer({min: 3000, max: 3999});	
+		//mockPV.pvid=chance.integer({min: 3000, max: 3999});
+		//mockPV.prePVID=chance.integer({min: 3000, max: 3999});	
 		mockPV.data={
 	    "web":{
 	      "ua":{},
@@ -110,7 +110,7 @@ function randomPV(){
 }
 
 console.time("dbsave");
-for (var i = 33 - 1; i >= 0; i--) {
+for (var i = 6; i >= 0; i--) {
 	randomPV();
 }
 console.timeEnd("dbsave");
