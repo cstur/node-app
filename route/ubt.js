@@ -75,14 +75,16 @@ function savePV(pv,res){
 }
 
 exports.pv = function(req, res) {
-  	var pvData = req.body || '';
+	var queryStr=req.query.pv || '';
 
-	if (pvData == '') {
+	if (queryStr == '') {
 		return res.sendStatus(400);
 	}
 
+	var pvData = JSON.parse(decodeURIComponent(queryStr));
 	var pv = new db.pvModel();
 	pv.pv=pvData;
+
 	savePV(pv,res);
 }
 

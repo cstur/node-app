@@ -3,6 +3,7 @@ var express     = require("express"),
     log4js      = require('log4js'),
     jwt         = require('express-jwt'),
     secret      = require('./config/secret'),
+    redisClient = require('./modules/redis.database.js').redisClient;
     config      = require('./config/index.js');
 
 log4js.configure({
@@ -28,7 +29,14 @@ var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(log4js.connectLogger(logger, {level:log4js.levels.INFO}));
-
+var limiter = require('express-limiter')(app, redisClient)
+limiter({
+  path: '*',
+  method: 'all',
+  lookup: ['connection.remoteAddress'],
+  total: 100,
+  expire: 1000 * 60
+});
 app.all('*',function (req, res, next) {
   //TODO wait for enviroment ready
 
