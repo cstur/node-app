@@ -29,14 +29,21 @@ var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(log4js.connectLogger(logger, {level:log4js.levels.INFO}));
+
+/*
 var limiter = require('express-limiter')(app, redisClient)
 limiter({
   path: '*',
   method: 'all',
   lookup: ['connection.remoteAddress'],
   total: 100,
-  expire: 1000 * 60
+  expire: 1000 * 60,
+  onRateLimited: function (req, res, next) {
+    return res.sendSatus(400);
+  }
 });
+*/
+
 app.all('*',function (req, res, next) {
   //TODO wait for enviroment ready
 
