@@ -1,5 +1,4 @@
 var db = require('../modules/mongodb.js');
-var mapreduce = require('../modules/mapreduce.js');
 
 /*
 	Query PV
@@ -17,8 +16,8 @@ exports.q = function(req, res){
     var model = db.pvModel;
     if (docName=='PV') {
     	model = db.pvModel;
-    }else if (docName=='PVTest') {
-    	model = db.pvTestModel;
+    }else if (docName=='AccessLog') {
+    	model = db.accessLogModel;
     }
 
     page= Math.abs(page);
@@ -37,30 +36,6 @@ exports.q = function(req, res){
             })
         }
     });
-}
-
-/*
-	Map Reduce Task
-*/
-exports.mr = function(req, res){
-	var period = req.query.period || 2;
-	var taskid = req.query.taskid || 1;
-	var queryParams =  req.query.queryParams || "{}";
-	queryParams=JSON.parse(queryParams);
-
-	var o = {};
-
-	if (taskid==1) {
-		o = mapreduce.pvuv(period,queryParams);
-	}
-	else if (taskid==2) {
-		o = mapreduce.convertion(queryParams);
-	}
-	
-	db.pvModel.mapReduce(o,function (err, data, stats) { 
-		if(err) throw err;
-	    res.json({processtime:stats.processtime,results:data});
-	});
 }
 
 /* Save PV */
@@ -88,18 +63,6 @@ exports.pv = function(req, res) {
 	savePV(pv,res);
 }
 
-exports.pvtest = function(req, res) {
-  	var pvData = req.body || '';
-
-	if (pvData == '') {
-		return res.sendStatus(400);
-	}
-
-	var pv = new db.pvTestModel();
-	pv.pv=pvData;
-	savePV(pv,res);
-}
-
 exports.pvgif = function(req, res) {
 	var queryStr=require('url').parse(req.url).query || '';
 
@@ -111,19 +74,6 @@ exports.pvgif = function(req, res) {
 	var pv = new db.pvModel();
 	pv.pv=pvData;
 
-	savePV(pv,res);
-}
-
-exports.pvgifTest = function(req, res) {
-	var queryStr=require('url').parse(req.url).query || '';
-
-	if (queryStr == '') {
-		return res.sendStatus(400);
-	}
-
-	var pvData = JSON.parse(decodeURIComponent(queryStr));
-	var pv = new db.pvTestModel();
-	pv.pv=pvData;
 	savePV(pv,res);
 }
 

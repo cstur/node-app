@@ -28,7 +28,7 @@ exports.signin = function(req, res) {
 				return res.sendStatus(401);
             }
 
-			var token = jwt.sign({id: user._id}, secret.secretToken, { expiresIn: tokenManager.TOKEN_EXPIRATION });
+			var token = jwt.sign({id: user._id,role:user.role}, secret.secretToken, { expiresIn: tokenManager.TOKEN_EXPIRATION });
 			
 			return res.json({token:token,user:user});
 		});
@@ -46,6 +46,25 @@ exports.logout = function(req, res) {
 	else {
 		return res.sendStatus(401);
 	}
+}
+
+exports.me = function(req, res) {
+	if (req.user) {
+
+	}
+	db.userModel.findOne({_id: req.user.id}, function (err, user) {
+		if (err) {
+			console.log(err);
+			return res.sendStatus(500);
+		}
+
+		if (user == undefined) {
+			return res.sendStatus(401);
+		}
+
+		return res.json({user:user});
+
+	});
 }
 
 exports.register = function(req, res) {

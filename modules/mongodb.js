@@ -29,7 +29,6 @@ var Schema = mongoose.Schema;
 var User = new Schema({
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    menu_list: [{type:String}],
     role:{ type: Number, default: 2 }
 });
 User.plugin(timestamps);
@@ -39,10 +38,10 @@ var PV = new Schema({
 });
 PV.plugin(timestamps);
 
-var PVTest = new Schema({ 
-    pv: Schema.Types.Mixed 
+var AccessLog = new Schema({ 
+    log: Schema.Types.Mixed 
 });
-PVTest.plugin(timestamps);
+AccessLog.plugin(timestamps);
 
 
 // Bcrypt middleware on UserSchema
@@ -73,7 +72,7 @@ User.methods.comparePassword = function(password, cb) {
 //Define Models
 var userModel = mongoose.model('User', User);
 var pvModel   = mongoose.model('PV', PV);
-var pvTestModel   = mongoose.model('PVTest', PVTest);
+var accessLogModel   = mongoose.model('AccessLog', AccessLog);
 
 //Define Query
 var pageQuery = function (page, pageSize, Model, populate, queryParams, sortParams, callback) {
@@ -104,7 +103,7 @@ var pageQuery = function (page, pageSize, Model, populate, queryParams, sortPara
 // Export Models
 exports.userModel = userModel;
 exports.pvModel   = pvModel;
-exports.pvTestModel = pvTestModel;
+exports.accessLogModel = accessLogModel;
 exports.pageQuery   = pageQuery;
 
 

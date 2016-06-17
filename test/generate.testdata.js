@@ -111,7 +111,7 @@ function randomPV(){
 }
 
 console.time("dbsave");
-for (var i = 101; i >= 0; i--) {
+for (var i = 5; i >= 0; i--) {
 	randomPV();
 }
 console.timeEnd("dbsave");
