@@ -10,12 +10,13 @@ exports.pvuv = function taskPVUV(p,q){
 		var d = new Date(this.createdAt);
 
 		var k=d.getFullYear();
+		var m=d.getMonth()+1;
 		if (p==1) {
-			k=k+'-'+d.getMonth();
+			k=k+'-'+m;
 		}else if (p==2) {
-			k=k+'-'+d.getMonth()+'-'+d.getDate();
+			k=k+'-'+m+'-'+d.getDate();
 		}else if (p==3) {
-			k=k+'-'+d.getMonth()+'-'+d.getDate()+'-'+d.getHours();
+			k=k+'-'+m+'-'+d.getDate()+'-'+d.getHours();
 		}
 
 	    emit(k,this.pv);
