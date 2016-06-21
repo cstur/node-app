@@ -20,7 +20,9 @@ exports.pvunique = function taskPVUnique(p,q,uniqueField){
 			k=k+'-'+m+'-'+d.getDate()+'-'+d.getHours();
 		}
 
-	    emit(k,this.pv);
+		if (this.pv) {
+			emit(k,this.pv);
+		}
 	}    
 
 	o.reduce = function(key, values) {
