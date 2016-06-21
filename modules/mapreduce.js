@@ -54,7 +54,9 @@ exports.convertion = function taskConvertionRate(q){
 	var o = {}; 
 
 	o.map = function() { 
-	    emit(this.pv.prePVID,1);
+		if (this.pv&&this.pv.prePVID) {
+			emit(this.pv.prePVID,1);
+		}
 	}    
 
 	o.reduce = function(prePVID, count) {
@@ -86,7 +88,9 @@ exports.pv = function taskPV(p,q){
 			k=k+'-'+m+'-'+d.getDate()+'-'+d.getHours();
 		}
 
-	    emit(k,this.pv);
+		if (this.pv) {
+			emit(k,this.pv);
+		}
 	}    
 
 	o.reduce = function(key, values) {
