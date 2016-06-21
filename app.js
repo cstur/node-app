@@ -97,7 +97,6 @@ var port = process.env.NODE_PORT || 8080;
 
 process.on('uncaughtException', function(err) {
     logger.error(err);
-    res.sendStatus(500);
 });
 
 app.listen(port, function() {
