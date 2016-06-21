@@ -81,7 +81,7 @@ app.post("/ubt/pv", routes.ubt.pv);
   For H5
 */
 app.get("/ubt/pv.gif", routes.ubt.pvgif);
-app.get("/ubt/error", function(req,res){res.sendStatus(200)});
+app.get("/ubt/error.gif", function(req,res){res.sendStatus(200)});
 app.get("/ubt/q", routes.ubt.q);
 
 routes.mapreduce = require('./route/mr.js');
