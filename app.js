@@ -81,6 +81,7 @@ app.post("/ubt/pv", routes.ubt.pv);
   For H5
 */
 app.get("/ubt/pv.gif", routes.ubt.pvgif);
+app.get("/ubt/error", function(req,res){res.sendStatus(200)});
 app.get("/ubt/q", routes.ubt.q);
 
 routes.mapreduce = require('./route/mr.js');
@@ -96,6 +97,7 @@ var port = process.env.NODE_PORT || 8080;
 
 process.on('uncaughtException', function(err) {
     logger.error(err);
+    res.sendStatus(500);
 });
 
 app.listen(port, function() {

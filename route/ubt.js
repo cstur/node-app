@@ -60,7 +60,7 @@ exports.pv = function(req, res) {
 	//var pvData = JSON.parse(queryStr);
 	var pv = new db.pvModel();
 	pv.pv=pvData;
-
+    
 	savePV(pv,res);
 }
 
