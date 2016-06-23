@@ -4,14 +4,17 @@ var express     = require("express"),
     jwt         = require('express-jwt'),
     secret      = require('./config/secret'),
     db          = require('./modules/mongodb.js'),
+    //heapdump    = require('heapdump'),
     config      = require('./config/index.js');
+
+console.log("current env:"+config.env);
 
 log4js.configure({
   appenders: [
     { type: 'console' },
     {
       type: 'file',
-      filename: 'logs/main.log', 
+      filename: config.logPath, 
       maxLogSize: 1024*1024,
       backups:3,
       category: 'normal'
@@ -102,3 +105,5 @@ process.on('uncaughtException', function(err) {
 app.listen(port, function() {
 	logger.info("Listening on " + port);
 });
+
+//heapdump.writeSnapshot();
