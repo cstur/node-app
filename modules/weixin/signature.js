@@ -6,6 +6,7 @@ var request = require('request'),
 exports.sign = function (url,callback) {
 	var noncestr = config.noncestr,
 		timestamp = Math.floor(Date.now()/1000), //精确到秒
+		access_token,
 		jsapi_ticket;
 	if(cache.get('ticket')&&cache.get('access_token')){
 		jsapi_ticket = cache.get('ticket');
