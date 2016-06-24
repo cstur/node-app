@@ -28,6 +28,7 @@ exports.sign = function (url,callback) {
 							noncestr:noncestr,
 							timestamp:timestamp,
 							url:url,
+							access_token:tokenMap.access_token,
 							jsapi_ticket:ticketMap.ticket,
 							signature:sha1('jsapi_ticket=' + ticketMap.ticket + '&noncestr=' + noncestr + '&timestamp=' + timestamp + '&url=' + url)
 						});
