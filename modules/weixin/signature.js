@@ -7,12 +7,14 @@ exports.sign = function (url,callback) {
 	var noncestr = config.noncestr,
 		timestamp = Math.floor(Date.now()/1000), //精确到秒
 		jsapi_ticket;
-	if(cache.get('ticket')){
+	if(cache.get('ticket')&&cache.get('access_token')){
 		jsapi_ticket = cache.get('ticket');
+		access_token = cache.get('access_token');
 		callback({
 			noncestr:noncestr,
 			timestamp:timestamp,
 			url:url,
+			access_token:access_token,
 			jsapi_ticket:jsapi_ticket,
 			signature:sha1('jsapi_ticket=' + jsapi_ticket + '&noncestr=' + noncestr + '&timestamp=' + timestamp + '&url=' + url)
 		});
@@ -24,6 +26,7 @@ exports.sign = function (url,callback) {
 					if (!error && response.statusCode == 200) {
 						var ticketMap = JSON.parse(json);
 						cache.put('ticket',ticketMap.ticket,config.cache_duration);  //加入缓存
+						cache.put('access_token',tokenMap.access_token);  //加入缓存
 						callback({
 							noncestr:noncestr,
 							timestamp:timestamp,
