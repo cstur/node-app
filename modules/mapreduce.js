@@ -71,6 +71,7 @@ exports.convertion = function taskConvertionRate(q){
 /*
 	Task ID 3
 */
+/*
 exports.pv = function taskPV(p,q){
 	var o = {}; 
 	o.scope={p:p};
@@ -95,6 +96,47 @@ exports.pv = function taskPV(p,q){
 
 	o.reduce = function(key, values) {
 	    return {pv:values.length};
+	}
+
+	o.query  = q;  
+
+	return o;
+}
+*/
+
+/*
+	Task ID 3
+*/
+exports.pv = function taskPV(p,q){
+	var o = {}; 
+	o.scope={p:p};
+
+	o.map = function() { 
+		var d = new Date(this.createdAt);
+
+		var k=d.getFullYear();
+		var m=d.getMonth()+1;
+		if (p==1) {
+			k=k+'-'+m;
+		}else if (p==2) {
+			k=k+'-'+m+'-'+d.getDate();
+		}else if (p==3) {
+			k=k+'-'+m+'-'+d.getDate()+'-'+d.getHours();
+		}
+
+		if (this.pv) {
+			emit({day: k}, {count: 1});
+		}
+	}    
+
+	o.reduce = function(key, values) {
+	    var count = 0;
+
+		values.forEach(function(v) {
+		    count += v['count'];
+		});
+
+		return {count: count};
 	}
 
 	o.query  = q;  

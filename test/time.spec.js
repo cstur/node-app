@@ -39,3 +39,6 @@ var end=new Date();
 end.setTime(lte);
 var option={createdAt:{'$gte':start,'$lte':end}};
 console.log("option:"+JSON.stringify(option));
+
+var d4=new Date();
+console.log("UTC:"+Date.UTC(d4.getFullYear(), d4.getMonth(), d4.getDate()));

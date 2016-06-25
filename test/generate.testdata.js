@@ -6,12 +6,11 @@ function randomPV(){
 	var timestamp1=moment().subtract(sHour,'hours').valueOf();
 
 	var mockPV={
-	  "app":"cz",
 	  "ubt_client_version":"1.0.0",
 	  "pvid":"k2",
 	  "prePVID":"123"
 	};
-	mockPV.app=chance.pickone(["cz", "laoyou"]);
+	mockPV.app=chance.pickone(["xxx"]);
 	mockPV.accessTime=timestamp1;
 	mockPV.leaveTime=timestamp1;
 	mockPV.uid = chance.integer({min: 340, max: 342})+"";
@@ -111,7 +110,7 @@ function randomPV(){
 }
 
 console.time("dbsave");
-for (var i = 5; i >= 0; i--) {
+for (var i = 10000; i >= 0; i--) {
 	randomPV();
 }
 console.timeEnd("dbsave");
