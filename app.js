@@ -49,10 +49,11 @@ app.all('*',function (req, res, next) {
   }
   else {
     
+    /* 暂时停止访问日志
     var accessLog = new db.accessLogModel();
     accessLog.log={url:req.url};
     accessLog.save();
-
+    */
     next();
   }
 });
