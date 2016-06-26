@@ -21,7 +21,7 @@ exports.pvunique = function taskPVUnique(p,q,uniqueField){
 		}
 
 		if (this.pv) {
-			emit(k,this.pv);
+			emit({time:k},this.pv);
 		}
 	}    
 
@@ -125,7 +125,7 @@ exports.pv = function taskPV(p,q){
 		}
 
 		if (this.pv) {
-			emit({day: k}, {count: 1});
+			emit({time: k}, {count: 1});
 		}
 	}    
 

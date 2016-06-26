@@ -13,18 +13,25 @@ exports.mr = function(req, res){
 
 	var o = {};
 
-	if (taskid==1) {
-		o = mapreduce.pvunique(period,queryParams,field);
+	if (taskid=="c") { //统计文档数量
+		db.pvModel.count(queryParams, function(err, c) {
+           	if(err) res.sendStatus(500);
+	    	return res.json({count:c});
+      	});
+	}else{
+		if (taskid==1) {
+			o = mapreduce.pvunique(period,queryParams,field);
+		}
+		else if (taskid==2) {
+			o = mapreduce.convertion(queryParams);
+		}
+		else if (taskid==3) {
+			o = mapreduce.pv(period,queryParams);
+		}
+		
+		db.pvModel.mapReduce(o,function (err, data, stats) { 
+			if(err) res.sendStatus(500);
+		    return res.json({processtime:stats.processtime,results:data});
+		});
 	}
-	else if (taskid==2) {
-		o = mapreduce.convertion(queryParams);
-	}
-	else if (taskid==3) {
-		o = mapreduce.pv(period,queryParams);
-	}
-	
-	db.pvModel.mapReduce(o,function (err, data, stats) { 
-		if(err) throw err;
-	    res.json({processtime:stats.processtime,results:data});
-	});
 }
