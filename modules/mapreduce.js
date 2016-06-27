@@ -39,7 +39,17 @@ exports.pvunique = function taskPVUnique(p,q,uniqueField){
         		uniqueList.push(values[i][field]);
         	}
         }
-	    return {pv:values.length,unique:uniqueList.length};
+
+       	var countP = 0;
+		values.forEach(function(v) {
+		    countP += 1;
+		});
+
+       	var countU = 0;
+		uniqueList.forEach(function(v) {
+		    countU += 1;
+		});
+	    return {pv:countP,unique:countU};
 	}
 
 	o.query  = q;  

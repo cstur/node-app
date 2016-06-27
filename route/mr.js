@@ -18,6 +18,15 @@ exports.mr = function(req, res){
            	if(err) res.sendStatus(500);
 	    	return res.json({count:c});
       	});
+	}else if(taskid=="d"){ // distinct results
+		if (queryParams.field) {
+			db.pvModel.find().distinct(queryParams.field, function(err, arr) {
+				if(err) res.sendStatus(500);
+    			res.json({result:arr});
+			});
+		}else{
+			res.sendStatus(400);
+		}
 	}else{
 		if (taskid==1) {
 			o = mapreduce.pvunique(period,queryParams,field);
