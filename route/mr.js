@@ -13,34 +13,39 @@ exports.mr = function(req, res){
 
 	var o = {};
 
-	if (taskid=="c") { //统计文档数量
-		db.pvModel.count(queryParams, function(err, c) {
-           	if(err) res.sendStatus(500);
-	    	return res.json({count:c});
-      	});
-	}else if(taskid=="d"){ // distinct results
-		if (queryParams.field) {
-			db.pvModel.find().distinct(queryParams.field, function(err, arr) {
-				if(err) res.sendStatus(500);
-    			res.json({result:arr});
-			});
+	db.pvModel.count(queryParams, function(err, c) {
+        if(err) res.sendStatus(500);
+	    	
+		if (taskid=="c") { //统计文档数量
+			return res.json({count:c});
 		}else{
-			res.sendStatus(400);
+			if (c>5000000) {
+				return res.json({msg:"document too large(exceed 5000000), please limit the query"});
+			}else if(taskid=="d"){ // distinct results
+				if (queryParams.field) {
+					db.pvModel.find().distinct(queryParams.field, function(err, arr) {
+						if(err) res.sendStatus(500);
+		    			res.json({result:arr});
+					});
+				}else{
+					res.sendStatus(400);
+				}
+			}else{
+				if (taskid==1) {
+					o = mapreduce.pvunique(period,queryParams,field);
+				}
+				else if (taskid==2) {
+					o = mapreduce.convertion(queryParams);
+				}
+				else if (taskid==3) {
+					o = mapreduce.pv(period,queryParams);
+				}
+				
+				db.pvModel.mapReduce(o,function (err, data, stats) { 
+					if(err) res.sendStatus(500);
+				    return res.json({processtime:stats.processtime,results:data});
+				});
+			}		
 		}
-	}else{
-		if (taskid==1) {
-			o = mapreduce.pvunique(period,queryParams,field);
-		}
-		else if (taskid==2) {
-			o = mapreduce.convertion(queryParams);
-		}
-		else if (taskid==3) {
-			o = mapreduce.pv(period,queryParams);
-		}
-		
-		db.pvModel.mapReduce(o,function (err, data, stats) { 
-			if(err) res.sendStatus(500);
-		    return res.json({processtime:stats.processtime,results:data});
-		});
-	}
+    });
 }

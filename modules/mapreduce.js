@@ -21,7 +21,7 @@ exports.pvunique = function taskPVUnique(p,q,uniqueField){
 		}
 
 		if (this.pv) {
-			emit({time:k},this.pv);
+			emit({time:k},{pv:1,uv:this.pv.uid});
 		}
 	}    
 
@@ -30,26 +30,26 @@ exports.pvunique = function taskPVUnique(p,q,uniqueField){
         for (var i = values.length - 1; i >= 0; i--) {
         	var find=0;
         	for (var j = uniqueList.length - 1; j >= 0; j--) {
-        		if (uniqueList[j]==values[i][field]) {
+        		if (uniqueList[j]==values[i].uv) {
         			find=1;
         			break;
         		}
         	}
         	if (find==0) {
-        		uniqueList.push(values[i][field]);
+        		uniqueList.push(values[i].uv);
         	}
         }
 
        	var countP = 0;
 		values.forEach(function(v) {
-		    countP += 1;
+		    countP += v['pv'];
 		});
 
        	var countU = 0;
 		uniqueList.forEach(function(v) {
 		    countU += 1;
 		});
-	    return {pv:countP,unique:countU};
+	    return {pv:countP,uv:countU};
 	}
 
 	o.query  = q;  

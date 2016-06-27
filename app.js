@@ -64,8 +64,11 @@ app.get("/healthcheck", function(req,res){
 
 var routes={};
 
-routes.weixin = require('./route/weixin.js');
-app.post('/weixin', routes.weixin.signature);
+if (config.env=='pro') {
+  routes.weixin = require('./route/weixin.js');
+  app.post('/weixin', routes.weixin.signature);
+}
+
 
 routes.ubt = require('./route/ubt.js');
 
