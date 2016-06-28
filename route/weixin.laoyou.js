@@ -1,4 +1,4 @@
-var wechat_cfg = require('../config/wechat.layou.cfg.js');
+var wechat_cfg = require('../config/wechat.laoyou.cfg.js');
 var signature  = require('../modules/weixin/signature.laoyou.js');
 
 exports.signature = function(req,res){

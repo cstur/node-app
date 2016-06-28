@@ -35,11 +35,11 @@ app.use(log4js.connectLogger(logger, {level:log4js.levels.INFO}));
 
 app.all('*',function (req, res, next) {
 
-  if (config.env!='pro') {
-    res.header('Access-Control-Allow-Origin', '*');
-  }else{
-    res.header('Access-Control-Allow-Origin', 'r.ichezheng.com');
-  }
+  //if (config.env!='pro') {
+  res.header('Access-Control-Allow-Origin', '*');
+  //}else{
+    //res.header('Access-Control-Allow-Origin', 'r.ichezheng.com');
+  //}
   
   res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
   res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
@@ -64,13 +64,13 @@ app.get("/healthcheck", function(req,res){
 
 var routes={};
 
-if (config.env=='pro') {
+//if (config.env=='pro') {
   routes.weixin = require('./route/weixin.js');
   app.post('/weixin', routes.weixin.signature);
 
   routes.wxlaoyou = require('./route/weixin.laoyou.js');
   app.post('/wxlaoyou', routes.wxlaoyou.signature);
-}
+//}
 
 
 routes.ubt = require('./route/ubt.js');
