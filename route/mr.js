@@ -19,8 +19,8 @@ exports.mr = function(req, res){
 		if (taskid=="c") { //统计文档数量
 			return res.json({count:c});
 		}else{
-			if (c>5000000) {
-				return res.json({msg:"document too large(exceed 5000000), please limit the query"});
+			if (c>500000) {
+				return res.json({msg:"document too large(exceed 500000), please limit the query"});
 			}else if(taskid=="d"){ // distinct results
 				if (queryParams.field) {
 					db.pvModel.find().distinct(queryParams.field, function(err, arr) {

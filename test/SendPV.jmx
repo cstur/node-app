@@ -258,7 +258,7 @@
         &quot;version&quot;: &quot;4.1.7&quot;&#xd;
       }&#xd;
     },&#xd;
-    &quot;leaveTime&quot;: &quot;1466585480674&quot;,&#xd;
+    &quot;leaveTime&quot;: &quot;${__time(,)}&quot;,&#xd;
     &quot;prePVID&quot;: &quot;ios-4.1.7-车挣保险&quot;,&#xd;
     &quot;pvid&quot;: &quot;78${__Random(0,9,random_num_0_9)}&quot;,&#xd;
     &quot;ubt_client_type&quot;: &quot;ios&quot;,&#xd;
@@ -269,7 +269,7 @@
               </elementProp>
             </collectionProp>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">localhost</stringProp>
+          <stringProp name="HTTPSampler.domain">101.201.102.76</stringProp>
           <stringProp name="HTTPSampler.port">8080</stringProp>
           <stringProp name="HTTPSampler.connect_timeout"></stringProp>
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
