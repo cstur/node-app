@@ -1,6 +1,6 @@
 module.exports = {
     grant_type: 'client_credential',
-    appid: 'wx903bcebe9afcdbc1',
+    appid: 'wx1063580e84d2c111',
     secret: '6840cf0089c141b3c578b86954a522fc',
     noncestr:'wx1063580e84d2c111',
     accessTokenUrl:'https://api.weixin.qq.com/cgi-bin/token',
