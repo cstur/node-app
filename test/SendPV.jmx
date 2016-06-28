@@ -15,13 +15,13 @@
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">1000</stringProp>
+          <intProp name="LoopController.loops">-1</intProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">100</stringProp>
+        <stringProp name="ThreadGroup.num_threads">500</stringProp>
         <stringProp name="ThreadGroup.ramp_time">10</stringProp>
         <longProp name="ThreadGroup.start_time">1466922704000</longProp>
         <longProp name="ThreadGroup.end_time">1466923904000</longProp>
-        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <boolProp name="ThreadGroup.scheduler">true</boolProp>
         <stringProp name="ThreadGroup.duration">3600</stringProp>
         <stringProp name="ThreadGroup.delay"></stringProp>
       </ThreadGroup>
@@ -237,7 +237,7 @@
           <stringProp name="filename"></stringProp>
         </ResultCollector>
         <hashTree/>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="POST-Local-SendPV" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="POST-Local-SendPV" enabled="false">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
@@ -259,8 +259,8 @@
       }&#xd;
     },&#xd;
     &quot;leaveTime&quot;: &quot;${__time(,)}&quot;,&#xd;
-    &quot;prePVID&quot;: &quot;ios-4.1.7-车挣保险&quot;,&#xd;
-    &quot;pvid&quot;: &quot;78${__Random(0,9,random_num_0_9)}&quot;,&#xd;
+    &quot;prePVID&quot;: &quot;&quot;,&#xd;
+    &quot;pvid&quot;: &quot;${__Random(0,9,random_num_0_9)}78${__Random(0,9,random_num_0_9)}&quot;,&#xd;
     &quot;ubt_client_type&quot;: &quot;ios&quot;,&#xd;
     &quot;ubt_client_version&quot;: &quot;1.0.0&quot;,&#xd;
     &quot;uid&quot;: &quot;245562${__Random(0,9,random_num_0_9)}&quot;&#xd;
@@ -286,7 +286,7 @@
           <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
         </HTTPSamplerProxy>
         <hashTree>
-          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP信息头管理器" enabled="true">
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP信息头管理器" enabled="false">
             <collectionProp name="HeaderManager.headers">
               <elementProp name="" elementType="Header">
                 <stringProp name="Header.name">Content-Type</stringProp>
@@ -317,6 +317,65 @@
           <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
         </HTTPSamplerProxy>
         <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="POST-Zeus-SendPV" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+    &quot;accessTime&quot;: &quot;${__time(,)}&quot;,&#xd;
+    &quot;app&quot;: &quot;jmeter&quot;,&#xd;
+    &quot;data&quot;: {&#xd;
+      &quot;ios&quot;: {&#xd;
+        &quot;click&quot;: [&#xd;
+          {&#xd;
+            &quot;ele&quot;: &quot;首页H5页面&quot;,&#xd;
+            &quot;id&quot;: &quot;APP_HOMEPAGE_H5-车挣保险&quot;,&#xd;
+            &quot;time&quot;: &quot;1466585480100&quot;&#xd;
+          }&#xd;
+        ],&#xd;
+        &quot;version&quot;: &quot;4.1.7&quot;&#xd;
+      }&#xd;
+    },&#xd;
+    &quot;leaveTime&quot;: &quot;${__time(,)}&quot;,&#xd;
+    &quot;prePVID&quot;: &quot;&quot;,&#xd;
+    &quot;pvid&quot;: &quot;${__Random(0,9,random_num_0_9)}78${__Random(0,9,random_num_0_9)}&quot;,&#xd;
+    &quot;ubt_client_type&quot;: &quot;ios&quot;,&#xd;
+    &quot;ubt_client_version&quot;: &quot;1.0.0&quot;,&#xd;
+    &quot;uid&quot;: &quot;245562${__Random(0,9,random_num_0_9)}&quot;&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">112.124.48.253</stringProp>
+          <stringProp name="HTTPSampler.port">8080</stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
+          <stringProp name="HTTPSampler.path">/ubt/pv</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.implementation">Java</stringProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP信息头管理器" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+        </hashTree>
       </hashTree>
     </hashTree>
   </hashTree>

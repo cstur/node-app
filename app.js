@@ -67,6 +67,9 @@ var routes={};
 if (config.env=='pro') {
   routes.weixin = require('./route/weixin.js');
   app.post('/weixin', routes.weixin.signature);
+
+  routes.wxlaoyou = require('./route/weixin.laoyou.js');
+  app.post('/wxlaoyou', routes.wxlaoyou.signature);
 }
 
 
