@@ -22,8 +22,8 @@ exports.mr = function(req, res){
 			if (c>500000) {
 				return res.sendStatus(411);
 			}else if(taskid=="d"){ // distinct results
-				if (queryParams.field) {
-					db.pvModel.find().distinct(queryParams.field, function(err, arr) {
+				if (field) {
+					db.pvModel.find(queryParams).distinct(field, function(err, arr) {
 						if(err) res.sendStatus(500);
 		    			res.json({result:arr});
 					});
