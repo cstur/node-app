@@ -109,6 +109,9 @@ routes.shorten = require('./route/shorten.js');
 app.post("/shorten", routes.shorten.shorten);
 app.get("/s/:encoded_id", routes.shorten.redirect);
 
+routes.kefu = require('./route/kefu.js');
+app.get("/kefu", routes.kefu.sign);
+
 var port = process.env.NODE_PORT || 8080;
 
 process.on('uncaughtException', function(err) {
