@@ -105,6 +105,10 @@ app.get("/users/logout", jwt({secret: secret.secretToken}), routes.users.logout)
 app.post("/users/register", routes.users.register);
 app.get("/users/me", jwt({secret: secret.secretToken}),routes.users.me);
 
+routes.shorten = require('./route/shorten.js');
+app.post("/shorten", routes.shorten.shorten);
+app.get("/s/:encoded_id", routes.shorten.redirect);
+
 var port = process.env.NODE_PORT || 8080;
 
 process.on('uncaughtException', function(err) {
