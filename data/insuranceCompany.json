@@ -1,0 +1,116 @@
+{
+  "info": [
+    {
+      "logo": "http://baodan.qichekb.com/upload/img/20160607025548958.jpg",
+      "phone": "95518",
+      "baodan": 0,
+      "cardno": 1,
+      "code": "renbao",
+      "sfid": 1,
+      "zone": 0,
+      "info": "人保车险"
+    },
+    {
+      "logo": "http://baodan.qichekb.com/upload/img/20160607025718869.jpg",
+      "phone": "95500",
+      "baodan": 0,
+      "cardno": 1,
+      "code": "cpic",
+      "sfid": 1,
+      "zone": 0,
+      "info": "太平洋车险"
+    },
+    {
+      "logo": "http://baodan.qichekb.com/upload/img/20160607025753052.jpg",
+      "phone": "95510",
+      "baodan": 1,
+      "cardno": 0,
+      "code": "sunshine",
+      "sfid": 1,
+      "zone": 0,
+      "info": "阳光车险"
+    },
+    {
+      "logo": "http://baodan.qichekb.com/upload/img/20160607025842275.jpg",
+      "phone": "95550",
+      "baodan": 1,
+      "cardno": 0,
+      "code": "axatp",
+      "sfid": 1,
+      "zone": 0,
+      "info": "安盛天平"
+    },
+    {
+      "logo": "http://baodan.qichekb.com/upload/img/20160607025907162.jpg",
+      "phone": "4006095509",
+      "baodan": 1,
+      "cardno": 0,
+      "code": "huatai",
+      "sfid": 1,
+      "zone": 0,
+      "info": "华泰车险"
+    },
+    {
+      "logo": "http://baodan.qichekb.com/upload/img/20160607070529968.jpg",
+      "phone": "95512",
+      "baodan": 1,
+      "cardno": 0,
+      "code": "pingan",
+      "sfid": 1,
+      "zone": 0,
+      "info": "平安车险"
+    },
+    {
+      "logo": "http://baodan.qichekb.com/upload/img/20160613064732334.jpg",
+      "phone": "95519",
+      "baodan": 1,
+      "cardno": 0,
+      "code": "renshou",
+      "sfid": 1,
+      "zone": 0,
+      "info": "人寿车险"
+    },
+    {
+      "logo": "http://baodan.qichekb.com/upload/img/20160613064847360.jpg",
+      "phone": "95589",
+      "baodan": 1,
+      "cardno": 0,
+      "code": "taiping",
+      "sfid": 1,
+      "zone": 0,
+      "info": "太平车险"
+    },
+    {
+      "logo": "http://baodan.qichekb.com/upload/img/20160613064929425.jpg",
+      "phone": "95552",
+      "baodan": 1,
+      "cardno": 0,
+      "code": "yongcheng",
+      "sfid": 1,
+      "zone": 0,
+      "info": "永诚车险"
+    },
+    {
+      "logo": "http://baodan.qichekb.com/upload/img/20160616053718879.jpg",
+      "phone": "95590",
+      "baodan": 1,
+      "cardno": 0,
+      "code": "dadi",
+      "sfid": 1,
+      "zone": 0,
+      "info": "大地车险"
+    },
+    {
+      "logo": "http://baodan.qichekb.com/upload/img/20160616053820713.jpg",
+      "phone": "95556",
+      "baodan": 1,
+      "cardno": 0,
+      "code": "huaan",
+      "sfid": 1,
+      "zone": 0,
+      "info": "华安车险"
+    }
+  ],
+  "status": 0,
+  "message": "OK"
+}

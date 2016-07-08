@@ -1,7 +1,14 @@
 var request = require('request'),
 	cache   = require('memory-cache'),
-	sha1    = require('sha1'),
-	config  = require('../../config/wechat.cfg.js');
+	sha1    = require('sha1');
+	env     = require('../../config/index.js');
+
+var config;
+if (env.env=='pro') {
+	config  = require('../../config/wechat.cfg.js');	
+}else{
+	config  = require('../../config/wechat.test.cfg.js');
+}	
 
 exports.sign = function (url,callback) {
 	var noncestr = config.noncestr,

@@ -1,0 +1,366 @@
+{
+  "info": [
+    {
+      "claims": [],
+      "detail": [
+        {
+          "rate": 0.9,
+          "insuredAmount": 122000,
+          "premium": 855,
+          "name": "交强险"
+        }
+      ],
+      "policy": {
+        "insuredAmount": 122000,
+        "insuredName": "唐华",
+        "applicantIdNo": null,
+        "carSeats": 5,
+        "carUse": "家庭自用车",
+        "type": 1,
+        "ownerIdNo": null,
+        "payTime": 1409155200000,
+        "insuredIdNo": null,
+        "carType": "6座以下客车",
+        "paidPremium": 855,
+        "name": "交强险",
+        "year": null,
+        "effectiveDate": 1409155200000,
+        "plateNo": "川XE2766",
+        "ownerName": null,
+        "status": "期满",
+        "premium": 855,
+        "number": "ACHDD50CTP14X004242K",
+        "engineNo": "LS***********3970",
+        "carModel": null,
+        "company": "太平洋车险",
+        "expireDate": 1440604800000,
+        "payablePremium": 855,
+        "payType": null,
+        "arrearPremium": 0,
+        "frameNo": "13*****47",
+        "applicantName": "唐华"
+      }
+    },
+    {
+      "claims": [],
+      "detail": [
+        {
+          "rate": 0.4335,
+          "insuredAmount": 1,
+          "premium": 111.91,
+          "name": "三责不计免赔率条款"
+        },
+        {
+          "rate": 0.4335,
+          "insuredAmount": 1,
+          "premium": 100.14,
+          "name": "车损不计免赔率条款"
+        },
+        {
+          "rate": 0.4335,
+          "insuredAmount": 20000,
+          "premium": 35.55,
+          "name": "机动车车上人员责任保险-司机"
+        },
+        {
+          "rate": 0.4335,
+          "insuredAmount": 1,
+          "premium": 13.53,
+          "name": "机动车车上人员责任保险-乘客不计免赔率条款"
+        },
+        {
+          "rate": 0.4335,
+          "insuredAmount": 80000,
+          "premium": 90.17,
+          "name": "机动车车上人员责任保险-乘客"
+        },
+        {
+          "rate": 0.4335,
+          "insuredAmount": 55932,
+          "premium": 667.62,
+          "name": "机动车损失保险综合型"
+        },
+        {
+          "rate": 0.4335,
+          "insuredAmount": 1,
+          "premium": 5.33,
+          "name": "机动车车上人员责任保险-司机不计免赔率条款"
+        },
+        {
+          "rate": 0.4335,
+          "insuredAmount": 500000,
+          "premium": 746.05,
+          "name": "机动车第三者责任保险"
+        }
+      ],
+      "policy": {
+        "insuredAmount": 655932,
+        "insuredName": "唐华",
+        "applicantIdNo": null,
+        "carSeats": 5,
+        "carUse": "",
+        "type": 2,
+        "ownerIdNo": null,
+        "payTime": 1467129600000,
+        "insuredIdNo": null,
+        "carType": "",
+        "paidPremium": 1770.3,
+        "name": "机动车商业行业示范汽车保险条款",
+        "year": null,
+        "effectiveDate": 1472313600000,
+        "plateNo": "川XE2766",
+        "ownerName": null,
+        "status": "有效",
+        "premium": 1770.3,
+        "number": "ACHDD50Y1416B004135O",
+        "engineNo": "LS***********3970",
+        "carModel": null,
+        "company": "太平洋车险",
+        "expireDate": 1503763200000,
+        "payablePremium": 1770.3,
+        "payType": null,
+        "arrearPremium": 0,
+        "frameNo": "13*****47",
+        "applicantName": "唐华"
+      }
+    },
+    {
+      "claims": [],
+      "detail": [
+        {
+          "rate": 0.8,
+          "insuredAmount": 122000,
+          "premium": 760,
+          "name": "交强险"
+        }
+      ],
+      "policy": {
+        "insuredAmount": 122000,
+        "insuredName": "唐华",
+        "applicantIdNo": null,
+        "carSeats": 5,
+        "carUse": "家庭自用车",
+        "type": 1,
+        "ownerIdNo": null,
+        "payTime": 1440345600000,
+        "insuredIdNo": null,
+        "carType": "6座以下客车",
+        "paidPremium": 760,
+        "name": "交强险",
+        "year": null,
+        "effectiveDate": 1440691200000,
+        "plateNo": "川XE2766",
+        "ownerName": null,
+        "status": "有效",
+        "premium": 760,
+        "number": "ACHDD50CTP15X006480E",
+        "engineNo": "LS***********3970",
+        "carModel": null,
+        "company": "太平洋车险",
+        "expireDate": 1472227200000,
+        "payablePremium": 760,
+        "payType": null,
+        "arrearPremium": 0,
+        "frameNo": "13*****47",
+        "applicantName": "唐华"
+      }
+    },
+    {
+      "claims": [],
+      "detail": [
+        {
+          "rate": 0.7,
+          "insuredAmount": 122000,
+          "premium": 665,
+          "name": "交强险"
+        }
+      ],
+      "policy": {
+        "insuredAmount": 122000,
+        "insuredName": "唐华",
+        "applicantIdNo": null,
+        "carSeats": 5,
+        "carUse": "家庭自用车",
+        "type": 1,
+        "ownerIdNo": null,
+        "payTime": 1467129600000,
+        "insuredIdNo": null,
+        "carType": "6座以下客车",
+        "paidPremium": 665,
+        "name": "交强险",
+        "year": null,
+        "effectiveDate": 1472313600000,
+        "plateNo": "川XE2766",
+        "ownerName": null,
+        "status": "有效",
+        "premium": 665,
+        "number": "ACHDD50CTP16B012271A",
+        "engineNo": "LS***********3970",
+        "carModel": null,
+        "company": "太平洋车险",
+        "expireDate": 1503763200000,
+        "payablePremium": 665,
+        "payType": null,
+        "arrearPremium": 0,
+        "frameNo": "13*****47",
+        "applicantName": "唐华"
+      }
+    },
+    {
+      "claims": [],
+      "detail": [
+        {
+          "rate": 0.8,
+          "insuredAmount": 20000,
+          "premium": 55.76,
+          "name": "机动车车上人员责任保险（电话营销专用）条款-司机"
+        },
+        {
+          "rate": 0.799992,
+          "insuredAmount": 76900,
+          "premium": 1027.3,
+          "name": "机动车损失保险（电话营销专用）条款"
+        },
+        {
+          "rate": 0.799992,
+          "insuredAmount": 500000,
+          "premium": 1170.39,
+          "name": "机动车第三者责任保险（电话营销专用）条款"
+        },
+        {
+          "rate": 0.799992,
+          "insuredAmount": 80000,
+          "premium": 141.44,
+          "name": "机动车车上人员责任保险（电话营销专用）条款-乘客"
+        },
+        {
+          "rate": 1,
+          "insuredAmount": 0,
+          "premium": 154.1,
+          "name": "车损不计免赔条款"
+        },
+        {
+          "rate": 1,
+          "insuredAmount": 0,
+          "premium": 175.56,
+          "name": "三责不计免赔条款"
+        },
+        {
+          "rate": 1,
+          "insuredAmount": 0,
+          "premium": 29.58,
+          "name": "车责不计免赔条款"
+        }
+      ],
+      "policy": {
+        "insuredAmount": 676900,
+        "insuredName": "唐华",
+        "applicantIdNo": null,
+        "carSeats": 5,
+        "carUse": "家庭自用车",
+        "type": 2,
+        "ownerIdNo": null,
+        "payTime": 1440345600000,
+        "insuredIdNo": null,
+        "carType": "6座以下客车",
+        "paidPremium": 2754.13,
+        "name": "神行车保机动车保险（电话营销专用）条款（09版）",
+        "year": null,
+        "effectiveDate": 1440691200000,
+        "plateNo": "川XE2766",
+        "ownerName": null,
+        "status": "有效",
+        "premium": 2754.13,
+        "number": "ACHDD50DX915X002524L",
+        "engineNo": "LS***********3970",
+        "carModel": null,
+        "company": "太平洋车险",
+        "expireDate": 1472227200000,
+        "payablePremium": 2754.13,
+        "payType": null,
+        "arrearPremium": 0,
+        "frameNo": "13*****47",
+        "applicantName": "唐华"
+      }
+    },
+    {
+      "claims": [],
+      "detail": [
+        {
+          "rate": 0.81,
+          "insuredAmount": 20000,
+          "premium": 56.46,
+          "name": "机动车车上人员责任保险（电话营销专用）条款-司机"
+        },
+        {
+          "rate": 1,
+          "insuredAmount": 0,
+          "premium": 156.02,
+          "name": "车损不计免赔条款"
+        },
+        {
+          "rate": 0.81,
+          "insuredAmount": 200000,
+          "premium": 875.61,
+          "name": "机动车第三者责任保险（电话营销专用）条款"
+        },
+        {
+          "rate": 0.81,
+          "insuredAmount": 80000,
+          "premium": 143.21,
+          "name": "机动车车上人员责任保险（电话营销专用）条款-乘客"
+        },
+        {
+          "rate": 0.81,
+          "insuredAmount": 76900,
+          "premium": 1040.15,
+          "name": "机动车损失保险（电话营销专用）条款"
+        },
+        {
+          "rate": 1,
+          "insuredAmount": 0,
+          "premium": 131.34,
+          "name": "三责不计免赔条款"
+        },
+        {
+          "rate": 1,
+          "insuredAmount": 0,
+          "premium": 29.95,
+          "name": "车责不计免赔条款"
+        }
+      ],
+      "policy": {
+        "insuredAmount": 376900,
+        "insuredName": "唐华",
+        "applicantIdNo": null,
+        "carSeats": 5,
+        "carUse": "家庭自用车",
+        "type": 2,
+        "ownerIdNo": null,
+        "payTime": 1409155200000,
+        "insuredIdNo": null,
+        "carType": "6座以下客车",
+        "paidPremium": 2432.74,
+        "name": "神行车保机动车保险（电话营销专用）条款（09版）",
+        "year": null,
+        "effectiveDate": 1409155200000,
+        "plateNo": "川XE2766",
+        "ownerName": null,
+        "status": "期满",
+        "premium": 2432.74,
+        "number": "ACHDD50DX914X001986J",
+        "engineNo": "LS***********3970",
+        "carModel": null,
+        "company": "太平洋车险",
+        "expireDate": 1440604800000,
+        "payablePremium": 2432.74,
+        "payType": null,
+        "arrearPremium": 0,
+        "frameNo": "13*****47",
+        "applicantName": "唐华"
+      }
+    }
+  ],
+  "status": 0,
+  "message": "OK"
+}

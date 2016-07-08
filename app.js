@@ -5,6 +5,7 @@ var express     = require("express"),
     secret      = require('./config/secret'),
     db          = require('./modules/mongodb.js'),
     //heapdump    = require('heapdump'),
+    path    = require('path'),
     config      = require('./config/index.js');
 
 console.log("current env:"+config.env);
@@ -109,6 +110,11 @@ app.get("/s/:encoded_id", routes.shorten.redirect);
 
 routes.kefu = require('./route/kefu.js');
 app.get("/kefu", routes.kefu.sign);
+
+app.get("/data/:filename",function(req,res){
+  var filename = req.params.filename;
+  res.sendFile(path.normalize(__dirname + '/data/'+filename));
+})
 
 var port = process.env.NODE_PORT || 8080;
 
