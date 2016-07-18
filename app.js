@@ -34,7 +34,7 @@ app.use(bodyParser.urlencoded({ extended: true,limit: '5mb', parameterLimit:50 }
 
 if (config.env=='pro') {
   logger.setLevel('WARN');
-  app.use(log4js.connectLogger(logger, {level:log4js.levels.WARN}));
+  //app.use(log4js.connectLogger(logger, {level:log4js.levels.WARN}));
 }else{
   logger.setLevel('INFO');
   app.use(log4js.connectLogger(logger, {level:log4js.levels.INFO}));
