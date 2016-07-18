@@ -27,12 +27,19 @@ log4js.configure({
   ]
 });
 var logger = log4js.getLogger('normal');
-logger.setLevel('INFO');
 
 var app = express();
 app.use(bodyParser.json({limit: '5mb'}));
 app.use(bodyParser.urlencoded({ extended: true,limit: '5mb', parameterLimit:50 }));
-app.use(log4js.connectLogger(logger, {level:log4js.levels.INFO}));
+
+if (config.env=='pro') {
+  logger.setLevel('WARN');
+  app.use(log4js.connectLogger(logger, {level:log4js.levels.WARN}));
+}else{
+  logger.setLevel('INFO');
+  app.use(log4js.connectLogger(logger, {level:log4js.levels.INFO}));
+}
+
 
 app.all('*',function (req, res, next) {
 
@@ -114,7 +121,7 @@ app.get("/kefu", routes.kefu.sign);
 app.get("/data/:filename",function(req,res){
   var filename = req.params.filename;
   res.sendFile(path.normalize(__dirname + '/data/'+filename));
-})
+});
 
 var port = process.env.NODE_PORT || 8080;
 

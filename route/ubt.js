@@ -1,5 +1,6 @@
 var db = require('../modules/mongodb.js');
-
+var log4js = require('log4js');
+var logger = log4js.getLogger('normal');
 /*
 	Query PV
 */
@@ -50,31 +51,40 @@ function savePV(pv,res){
 }
 
 exports.pv = function(req, res) {
-	//var queryStr=req.query.pv || '';
-    var pvData=req.body || "{}";
+    try{
+        //var queryStr=req.query.pv || '';
+        var pvData=req.body || "{}";
 
-	if (pvData == "{}") {
-		return res.sendStatus(400);
-	}
+        if (pvData == "{}") {
+            return res.sendStatus(400);
+        }
 
-	//var pvData = JSON.parse(queryStr);
-	var pv = new db.pvModel();
-	pv.pv=pvData;
-    
-	savePV(pv,res);
+        //var pvData = JSON.parse(queryStr);
+        var pv = new db.pvModel();
+        pv.pv=pvData;
+        
+        savePV(pv,res);
+    }catch(e){
+        logger.error(e);
+        return res.sendStatus(500);
+    }
 }
 
 exports.pvgif = function(req, res) {
-	var queryStr=require('url').parse(req.url).query || '';
+    try {
+        var queryStr=require('url').parse(req.url).query || '';
 
-	if (queryStr == '') {
-		return res.sendStatus(400);
-	}
+        if (queryStr == '') {
+            return res.sendStatus(400);
+        }
+        var pvData = JSON.parse(decodeURIComponent(queryStr));
+        var pv = new db.pvModel();
+        pv.pv=pvData;
 
-	var pvData = JSON.parse(decodeURIComponent(queryStr));
-	var pv = new db.pvModel();
-	pv.pv=pvData;
-
-	savePV(pv,res);
+        savePV(pv,res);
+    } catch (e) {
+        logger.error(e);
+        return res.sendStatus(500);
+    }
 }
 
