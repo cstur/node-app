@@ -76,6 +76,7 @@ var routes={};
 routes.weixin = require('./route/weixin.js');
 app.post('/weixin', routes.weixin.signature);
 app.get('/weixin/validateToken', routes.weixin.validateToken);
+app.get('/weixin/getUserInfo', routes.weixin.getUserInfo);
 
   //routes.wxlaoyou = require('./route/weixin.laoyou.js');
   //app.post('/wxlaoyou', routes.wxlaoyou.signature);

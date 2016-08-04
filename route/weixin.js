@@ -2,6 +2,8 @@ var wechat_cfg = require('../config/wechat.cfg.js');
 var signature  = require('../modules/weixin/signature.js');
 var url = require("url");
 var crypto = require("crypto");
+var OAuth = require('wechat-oauth');
+var client = new OAuth('wx22c8641086c52351', 'a821ab36f981060789f353f73b6ccf6b');
 
 exports.signature = function(req,res){
 	var url=req.body.targetUrl;
@@ -9,6 +11,24 @@ exports.signature = function(req,res){
 		signatureMap.appId = wechat_cfg.appid;
 		res.send(signatureMap);
 	});
+};
+
+exports.getUserInfo = function(req,res){
+  var openid = req.query.openid || "";
+  client.getAccessToken(openid, function (err, result) {
+      var accessToken = result.data.access_token;
+      var openid = result.data.openid;
+      console.log("-------------------------");
+      console.log(accessToken);
+      console.log("-------------------------");
+      console.log(openid);
+      client.getUser(openid, function (err, result) {
+        var userInfo = result;
+        console.log("-------------------------");
+        console.log(userInfo);
+        res.json(userInfo);
+      });
+  });
 };
 
 function sha1(str){
