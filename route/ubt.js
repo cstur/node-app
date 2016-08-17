@@ -88,3 +88,41 @@ exports.pvgif = function(req, res) {
     }
 }
 
+exports.aggre =function(req, res){
+    var gte = req.query.gte||'';
+    var lt = req.query.lt||''; 
+    if (gte == ''||lt == '') {
+        return res.sendStatus(400);
+    }
+
+    var dGte=new Date();
+    dGte.setTime(gte);
+    var dLt=new Date();
+    dLt.setTime(lt);
+
+    db.pvModel.aggregate([
+        { 
+            $match: {
+                "pv.pvid":"mobile-home",
+                "createdAt":{"$gte":dGte,"$lt":dLt}
+            } 
+        },
+        { 
+            $group : {
+                _id: {
+                    year : { $year : {$add:['$createdAt',28800000]} },          
+                    month : { $month : {$add:['$createdAt',28800000]} },        
+                    day : { $dayOfMonth : {$add:['$createdAt',28800000]} }
+                },
+                count: { $sum: 1 }
+            }
+        },
+        { $sort: { _id: -1 } }
+    ],
+    function(err,result) {
+        if (err) {return res.sendStatus(500);}
+        res.json(result);
+    }
+    );
+}
+

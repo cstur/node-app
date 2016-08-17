@@ -102,6 +102,7 @@ app.post("/ubt/pv", routes.ubt.pv);
 app.get("/ubt/pv.gif", routes.ubt.pvgif);
 app.get("/ubt/error.gif", function(req,res){res.sendStatus(200)});
 app.get("/ubt/q", routes.ubt.q);
+app.get("/ubt/aggre", routes.ubt.aggre);
 
 routes.mapreduce = require('./route/mr.js');
 app.get("/ubt/mr", routes.mapreduce.mr);
