@@ -1,20 +1,31 @@
-
+/* 按钮点击 */
 db.getCollection('pvs').find({"pv.pvid":"mobile-home","pv.data.web.click.0.ele.name":"applybutton"}).count()
+db.getCollection('pvs').find({"pv.pvid":"mobile-home","pv.data.web.click.0.ele.name":"applybutton"})
+db.getCollection('pvs').find({"pv.pvid":"mobile-home","pv.data.web.click":{ $elemMatch: { "ele.name": "payorder" } }}).count()
+
+db.getCollection('pvs').find({"pv.pvid":"mobile-home",$where: "this.pv.data.web.routes.length > 1","pv.uid":{"$ne": ""}}).count()
+
+db.getCollection('pvs').find({"pv.pvid":"mobile-home","this.pv.data.web.routes":{"$exists" : true},$where: "this.pv.data.web.routes.length > 1"})
+db.getCollection('pvs').find({"pv.pvid":"mobile-home","pv.data.web.routes":{"$exists" : true},$where: "this.pv.data.web.routes.length > 1"})
+
+
+db.getCollection('pvs').find({"pv.pvid":"mobile-home","pv.data.web.routes.0.toState.name":"entry.index"}).count()
+
+db.getCollection('pvs').find({"pv.pvid":"mobile-home","pv.uid":{"$exists" : true, "$ne" : ""}})
 
 db.getCollection('pvs').find({"pv.pvid":"mobile-home"}).count()
 
 db.getCollection('pvs').find(
 {
     "pv.pvid":"mobile-home",
-    "createdAt":{"$gte":ISODate(new Date(2016,7,15,0,0,0).toISOString()) },
-    "createdAt":{"$lte":ISODate(new Date(2016,7,15,23,59,59).toISOString()) },
+    "createdAt":{"$gte":ISODate(new Date(2016,7,18,11,0,0).toISOString()),"$lte":ISODate(new Date(2016,7,18,23,59,59).toISOString()) }
 }).count()
 
 db.getCollection('pvs').aggregate([
 { 
     $match: {
         "pv.pvid":"mobile-home",
-        "createdAt":{"$gte":ISODate(new Date(2016,7,11).toISOString()),"$lt":ISODate(new Date(2016,7,16).toISOString())}
+        "createdAt":{"$gte":ISODate(new Date(2016,7,11).toISOString()),"$lt":ISODate(new Date(2016,7,26).toISOString())}
     } 
 },
 { 
