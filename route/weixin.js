@@ -14,8 +14,8 @@ exports.signature = function(req,res){
 };
 
 exports.getUserInfo = function(req,res){
-  var openid = req.query.openid || "";
-  client.getAccessToken(openid, function (err, result) {
+  var code = req.query.code || "";
+  client.getAccessToken(code, function (err, result) {
       var accessToken = result.data.access_token;
       var openid = result.data.openid;
       console.log("-------------------------");
