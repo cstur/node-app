@@ -1,6 +1,9 @@
 /* 按钮点击 */
 db.getCollection('pvs').find({"pv.pvid":"mobile-home","pv.data.web.click.0.ele.name":"applybutton"}).count()
 db.getCollection('pvs').find({"pv.pvid":"mobile-home","pv.data.web.click.0.ele.name":"applybutton"})
+
+db.getCollection('pvs').find({"pv.pvid":"mobile-home","pv.data.web.referrer":"http://mp.weixinbridge.com/mp/wapredirect?url=http%3A%2F%2Fm.ichezheng.com"})
+
 db.getCollection('pvs').find({"pv.pvid":"mobile-home","pv.data.web.click":{ $elemMatch: { "ele.name": "payorder" } }}).count()
 
 db.getCollection('pvs').find({"pv.pvid":"mobile-home",$where: "this.pv.data.web.routes.length > 1","pv.uid":{"$ne": ""}}).count()
@@ -78,6 +81,40 @@ db.getCollection('pvs').aggregate([
 },
 { $sort: { _id: -1 } }
 ]);
+
+db.getCollection('pvs').aggregate([
+{ 
+    $match: {
+        "pv.app":"mobile-home",
+        "pv.data.web.referrer":{"$ne":""},
+        "createdAt":{"$gte":ISODate(new Date(2016,5,17).toISOString()),"$lt":ISODate(new Date(2016,10,18).toISOString())}
+    } 
+},
+{ 
+    $group : {
+        _id:"$pv.data.web.referrer",
+        count: { $sum: 1 }
+    }
+},
+{ $sort: { _id: -1 } }
+]);
+
+db.getCollection('pvs').aggregate([
+{ 
+    $match: {
+        "pv.pvid":"mobile-home",
+        "pv.data.web.referrer":{"$ne":""}
+    } 
+},
+{ 
+    $group : {
+        _id:"$pv.data.web.referrer",
+        count: { $sum: 1 }
+    }
+},
+{ $sort: { _id: -1 } }
+]);
+
 
 
 db.getCollection('pvs').find({"pv.pvid":"mobile-home","pv.data.web.referrer":{"$ne":""}},{"pv.data.web.referrer":1}).map( function(u) { return u.pv.data.web.referrer; } );
