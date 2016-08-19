@@ -150,7 +150,7 @@ exports.aggre =function(req, res){
                         count: { $sum: 1 }
                     }
                 },
-                { $sort: { _id: 1 } }
+                { $sort: { count: 1 } }
             ],
             function (err,result){
                 if (err) {return res.sendStatus(500);}
