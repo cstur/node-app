@@ -88,10 +88,16 @@ exports.pvgif = function(req, res) {
     }
 }
 
+function aggregateCallback(err,result){
+    if (err) {return res.sendStatus(500);}
+    res.json(result);
+}
+
 exports.aggre =function(req, res){
     var gte = req.query.gte||'';
     var lt = req.query.lt||''; 
-    if (gte == ''||lt == '') {
+    var script = req.query.script||'';//聚合脚本
+    if (gte == ''||lt == ''||script=='') {
         return res.sendStatus(400);
     }
 
@@ -100,29 +106,60 @@ exports.aggre =function(req, res){
     var dLt=new Date();
     dLt.setTime(lt);
 
-    db.pvModel.aggregate([
-        { 
-            $match: {
-                "pv.pvid":"mobile-home",
-                "createdAt":{"$gte":dGte,"$lt":dLt}
-            } 
-        },
-        { 
-            $group : {
-                _id: {
-                    year : { $year : {$add:['$createdAt',28800000]} },          
-                    month : { $month : {$add:['$createdAt',28800000]} },        
-                    day : { $dayOfMonth : {$add:['$createdAt',28800000]} }
+    if (script=="mobilehome") {
+        db.pvModel.aggregate([
+                { 
+                    $match: {
+                        "pv.pvid":"mobile-home",
+                        "createdAt":{"$gte":dGte,"$lt":dLt}
+                    } 
                 },
-                count: { $sum: 1 }
+                { 
+                    $group : {
+                        _id: {
+                            year : { $year : {$add:['$createdAt',28800000]} },          
+                            month : { $month : {$add:['$createdAt',28800000]} },        
+                            day : { $dayOfMonth : {$add:['$createdAt',28800000]} }
+                        },
+                        count: { $sum: 1 }
+                    }
+                },
+                { $sort: { _id: 1 } }
+            ],
+            function (err,result){
+                if (err) {return res.sendStatus(500);}
+                res.json(result);
             }
-        },
-        { $sort: { _id: 1 } }
-    ],
-    function(err,result) {
-        if (err) {return res.sendStatus(500);}
-        res.json(result);
+        );      
+    }else if (script=="appPV") {
+        var regPVID = req.query.regPVID||'';
+        if (regPVID == '') {
+            return res.sendStatus(400);
+        }
+        db.pvModel.aggregate([
+                { 
+                    $match: {
+                        "pv.app":"cz",
+                        "pv.pvid":{$regex:regPVID},
+                        "createdAt":{"$gte":dGte,"$lt":dLt}
+                    } 
+                },
+                { 
+                    $group : {
+                        _id:"$pv.pvid",
+                        count: { $sum: 1 }
+                    }
+                },
+                { $sort: { _id: 1 } }
+            ],
+            function (err,result){
+                if (err) {return res.sendStatus(500);}
+                res.json(result);
+            }
+        );
+    }else{
+        return res.sendStatus(400);
     }
-    );
+
 }
 

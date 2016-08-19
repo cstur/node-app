@@ -14,18 +14,22 @@ var url = client.getAuthorizeURL('http://test.ichezheng.com/cz/appinsur/www/inde
 console.log(url);
 
 
-/*
-client.getAccessToken('0418080Q0JSd0f23e3YP01T40Q080805', function (err, result) {
+
+client.getAccessToken('011b6QbE1BU1zf0UtdeE1m8LbE1b6Qbf', function (err, result) {
+	console.log(err);
+	console.log(result);
   	var accessToken = result.data.access_token;
   	var openid = result.data.openid;
   	console.log("-------------------------");
   	console.log(accessToken);
   	console.log("-------------------------");
   	console.log(openid);
+  	/*
 	client.getUser(openid, function (err, result) {
 	  var userInfo = result;
 	  console.log("-------------------------");
 	  console.log(userInfo);
 	});
+	*/
 });
-*/
+

@@ -9,7 +9,7 @@ start.setTime(gte);
 var end=new Date();
 end.setTime(lt);
 
-var cursor = db.pvModel.aggregate([
+var script1=[
 { 
     $match: {
         "pv.pvid":"mobile-home",
@@ -27,7 +27,25 @@ var cursor = db.pvModel.aggregate([
     }
 },
 { $sort: { _id: -1 } }
-],
+];
+
+var script2=[
+{ 
+    $match: {
+        "pv.app":"cz",
+        "pv.pvid":{$regex:"ios-4.2.0"},
+        "createdAt":{"$gte":new Date(2016,5,12),"$lt":new Date(2016,7,17)}
+    } 
+},
+{ 
+    $group : {
+        _id:"$pv.pvid",
+        count: { $sum: 1 }
+    }
+},
+{ $sort: { _id: -1 } }
+];
+var cursor = db.pvModel.aggregate(script2,
 function(err,result) {
 	console.log("err:"+err);
    	console.log("result:");
