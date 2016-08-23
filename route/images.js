@@ -9,7 +9,7 @@ exports.uploadImage = function(req, res) {
     var dataBuffer = new Buffer(base64Data, 'base64');
     var pre=moment().format('YYYY-MM-DD');
     var fileName=pre+'-'+uuid.v4()+".png";
-    var file='./data/uploadimages/'+pre+'-'+uuid.v4()+".png";
+    var file='./data/uploadimages/'+fileName;
     console.log(file);
 
     fs.writeFile(file, dataBuffer, function(err) {
