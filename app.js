@@ -125,6 +125,14 @@ app.get("/data/:filename",function(req,res){
   res.sendFile(path.normalize(__dirname + '/data/'+filename));
 });
 
+app.get("/data/uploadimages/:filename",function(req,res){
+  var filename = req.params.filename;
+  res.sendFile(path.normalize(__dirname + '/data/uploadimages/'+filename));
+});
+
+routes.images = require('./route/images.js');
+app.post('/img/upload', routes.images.uploadImage);
+
 var port = process.env.NODE_PORT || 8080;
 
 process.on('uncaughtException', function(err) {

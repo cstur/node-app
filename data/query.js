@@ -119,7 +119,7 @@ db.getCollection('pvs').aggregate([
 
 db.getCollection('pvs').find({"pv.pvid":"mobile-home","pv.data.web.referrer":{"$ne":""}},{"pv.data.web.referrer":1}).map( function(u) { return u.pv.data.web.referrer; } );
 
-db.getCollection('pvs').distinct("pv.pvid",{"pv.app":"cz"}).sort()
+db.getCollection('pvs').distinct("pv.pvid",{"pv.app":"cz","pv.ubt_client_type":"ios"}).sort()
 
 db.getCollection('pvs').find({"pv.pvid":{$regex:"ios-4.2.1"}});
 
