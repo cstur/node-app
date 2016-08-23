@@ -8,14 +8,15 @@ exports.uploadImage = function(req, res) {
     var base64Data = imgData.replace(/^data:image\/\w+;base64,/, "");
     var dataBuffer = new Buffer(base64Data, 'base64');
     var pre=moment().format('YYYY-MM-DD');
-    var fileName='./data/uploadimages/'+pre+'-'+uuid.v4()+".png";
-    console.log(fileName);
+    var fileName=pre+'-'+uuid.v4()+".png";
+    var file='./data/uploadimages/'+pre+'-'+uuid.v4()+".png";
+    console.log(file);
 
-    fs.writeFile(fileName, dataBuffer, function(err) {
+    fs.writeFile(file, dataBuffer, function(err) {
         if(err){
           res.send(err);
         }else{
-          res.send("保存成功！");
+          res.send(fileName);
         }
     });
 }
