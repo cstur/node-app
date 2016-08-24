@@ -108,7 +108,7 @@ exports.aggre =function(req, res){
     var dLt=new Date();
     dLt.setTime(lt);
 
-    if (script=="h5PV") {
+    if (script=="groupByTime") {
         db.pvModel.aggregate([
                 { 
                     $match: {
@@ -133,8 +133,7 @@ exports.aggre =function(req, res){
                 res.json(result);
             }
         );      
-    }else if (script=="appPV") {
-
+    }else if (script=="groupByPVID") {
         db.pvModel.aggregate([
                 { 
                     $match: {
