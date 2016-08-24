@@ -97,20 +97,22 @@ exports.aggre =function(req, res){
     var gte = req.query.gte||'';
     var lt = req.query.lt||''; 
     var script = req.query.script||'';//聚合脚本
-    if (gte == ''||lt == ''||script=='') {
+    var regPVID = req.query.regPVID||'';
+
+    if (gte == ''||lt == ''||script==''||regPVID == '') {
         return res.sendStatus(400);
     }
-
+        
     var dGte=new Date();
     dGte.setTime(gte);
     var dLt=new Date();
     dLt.setTime(lt);
 
-    if (script=="mobilehome") {
+    if (script=="h5PV") {
         db.pvModel.aggregate([
                 { 
                     $match: {
-                        "pv.pvid":"mobile-home",
+                        "pv.pvid":{$regex:regPVID},
                         "createdAt":{"$gte":dGte,"$lt":dLt}
                     } 
                 },
@@ -132,10 +134,7 @@ exports.aggre =function(req, res){
             }
         );      
     }else if (script=="appPV") {
-        var regPVID = req.query.regPVID||'';
-        if (regPVID == '') {
-            return res.sendStatus(400);
-        }
+
         db.pvModel.aggregate([
                 { 
                     $match: {
