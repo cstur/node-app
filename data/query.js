@@ -1,6 +1,7 @@
 /* 按钮点击 */
 db.getCollection('pvs').find({"pv.pvid":"mobile-home","pv.data.web.click.0.ele.name":"applybutton"}).count()
 db.getCollection('pvs').find({"pv.pvid":"mobile-home","pv.data.web.click.0.ele.name":"applybutton"})
+db.getCollection('pvs').find({"pv.pvid":"ubao"})
 
 db.getCollection('pvs').find({"pv.pvid":"mobile-home","pv.data.web.referrer":"http://mp.weixinbridge.com/mp/wapredirect?url=http%3A%2F%2Fm.ichezheng.com"})
 
@@ -27,7 +28,7 @@ db.getCollection('pvs').find(
 db.getCollection('pvs').aggregate([
 { 
     $match: {
-        "pv.pvid":"mobile-home",
+        "pv.pvid":"ubao",
         "createdAt":{"$gte":ISODate(new Date(2016,7,11).toISOString()),"$lt":ISODate(new Date(2016,7,26).toISOString())}
     } 
 },
