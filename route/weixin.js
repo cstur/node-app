@@ -31,6 +31,34 @@ exports.getUserInfo = function(req,res){
   });
 };
 
+exports.auth=function(req,res){
+    var auth_callback_url = "http://zeus.ichezheng.com/weixin/callback";
+    var url = client.getAuthorizeURL(auth_callback_url, '', 'snsapi_userinfo');
+    console.log(url);
+    res.redirect(url);
+}
+
+exports.callback=function(req,res){
+    var code = req.query.code;
+    client.getAccessToken(code, function (err, result) {
+        console.log(result)
+        var accessToken = result.data.access_token;
+        var openid = result.data.openid;
+        var url='http://test.ichezheng.com/cz/iomobile/www/vip.html?openid='+openid;
+        res.writeHead(302, {
+          'Location': url
+        });
+        res.end();
+        /*
+        client.getUser(openid, function (err, result) {
+            var userInfo = result;
+            // save or other opration
+            res.json(userInfo)
+        });
+        */
+    });
+}
+
 function sha1(str){
   var md5sum = crypto.createHash("sha1");
   md5sum.update(str);

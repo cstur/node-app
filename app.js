@@ -78,7 +78,8 @@ routes.weixin = require('./route/weixin.js');
 app.post('/weixin', routes.weixin.signature);
 app.get('/weixin/validateToken', routes.weixin.validateToken);
 app.get('/weixin/getUserInfo', routes.weixin.getUserInfo);
-
+app.get('/weixin/auth', routes.weixin.auth);
+app.get('/weixin/callback', routes.weixin.callback);
   //routes.wxlaoyou = require('./route/weixin.laoyou.js');
   //app.post('/wxlaoyou', routes.wxlaoyou.signature);
 //}
@@ -133,16 +134,6 @@ app.get("/data/uploadimages/:filename",function(req,res){
 
 routes.images = require('./route/images.js');
 app.post('/img/upload', routes.images.uploadImage);
-
-app.use('/weixinbrige', function(req, res) {  
-  //req.pipe(request("http://115.159.49.124:10007/wxInsurance/home/index")).pipe(res);
-  request('http://115.159.49.124:10007/wxInsurance/home/index', function (error, response, body) {
-      //console.log(error);
-      //console.log(response);
-      //console.log(body);
-      res.send({error:error,response:response,body:body});
-  });
-});
 
 var port = process.env.NODE_PORT || 8080;
 
