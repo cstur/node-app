@@ -4,6 +4,7 @@ var express     = require("express"),
     jwt         = require('express-jwt'),
     secret      = require('./config/secret'),
     db          = require('./modules/mongodb.js'),
+    request     = require('request'),
     //heapdump    = require('heapdump'),
     path    = require('path'),
     config      = require('./config/index.js');
@@ -132,6 +133,10 @@ app.get("/data/uploadimages/:filename",function(req,res){
 
 routes.images = require('./route/images.js');
 app.post('/img/upload', routes.images.uploadImage);
+
+app.use('/weixinbrige', function(req, res) {  
+  req.pipe(request("http://115.159.49.124:10007/wxInsurance/home/index")).pipe(res);
+});
 
 var port = process.env.NODE_PORT || 8080;
 
