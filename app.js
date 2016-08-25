@@ -140,7 +140,7 @@ app.use('/weixinbrige', function(req, res) {
       //console.log(error);
       //console.log(response);
       //console.log(body);
-      res.send(body);
+      res.send({error:error,response:response,body:body});
   });
 });
 
