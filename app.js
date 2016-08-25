@@ -135,7 +135,13 @@ routes.images = require('./route/images.js');
 app.post('/img/upload', routes.images.uploadImage);
 
 app.use('/weixinbrige', function(req, res) {  
-  req.pipe(request("http://115.159.49.124:10007/wxInsurance/home/index")).pipe(res);
+  //req.pipe(request("http://115.159.49.124:10007/wxInsurance/home/index")).pipe(res);
+  request('http://115.159.49.124:10007/wxInsurance/home/index', function (error, response, body) {
+      //console.log(error);
+      //console.log(response);
+      //console.log(body);
+      res.send(response);
+  });
 });
 
 var port = process.env.NODE_PORT || 8080;
