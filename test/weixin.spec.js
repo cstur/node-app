@@ -4,7 +4,7 @@ var client = new OAuth('wx22c8641086c52351', 'a821ab36f981060789f353f73b6ccf6b')
 
 /* snsapi_base,snsapi_userinfo */
 
-var url = client.getAuthorizeURL('http://test.ichezheng.com/cz/iomobile/www/mobile.html#/openid'
+var url = client.getAuthorizeURL('http://zeus.ichezheng.com/weixin/callback'
 	, 'state', 'snsapi_base');
 	
 	/*
@@ -13,7 +13,7 @@ var url = client.getAuthorizeURL('http://test.ichezheng.com/cz/appinsur/www/inde
 	*/
 console.log(url);
 
-
+/*
 
 client.getAccessToken('011b6QbE1BU1zf0UtdeE1m8LbE1b6Qbf', function (err, result) {
 	console.log(err);
@@ -31,5 +31,5 @@ client.getAccessToken('011b6QbE1BU1zf0UtdeE1m8LbE1b6Qbf', function (err, result)
 	  console.log(userInfo);
 	});
 	*/
-});
+//});
 

@@ -9,6 +9,7 @@ db.getCollection('pvs').find({"pv.pvid":"ubao","pv.data.web.click":{ $elemMatch:
 db.getCollection('pvs').distinct("pv.uid",{"pv.pvid":"ubao","pv.data.web.click":{ $elemMatch: { "ele.name": "getorder" } }})
 
 db.getCollection('pvs').find({"pv.pvid":"mobile-home",$where: "this.pv.data.web.routes.length > 1","pv.uid":{"$ne": ""}}).count()
+db.getCollection('pvs').find({"pv.pvid":"vip","pv.uid":{"$exists" : true, "$ne" : ""},"pv.tel":{"$exists" : true, "$ne" : ""}}).count()
 db.getCollection('pvs').find({"pv.pvid":"mobile-home",$where: "this.pv.data.web.click.length > 1"}).count()
 
 db.getCollection('pvs').find({"pv.pvid":"mobile-home","this.pv.data.web.routes":{"$exists" : true},$where: "this.pv.data.web.routes.length > 1"})
@@ -123,6 +124,12 @@ db.getCollection('pvs').aggregate([
 db.getCollection('pvs').find({"pv.pvid":"mobile-home","pv.data.web.referrer":{"$ne":""}},{"pv.data.web.referrer":1}).map( function(u) { return u.pv.data.web.referrer; } );
 
 db.getCollection('pvs').distinct("pv.pvid",{"pv.app":"cz","pv.ubt_client_type":"ios"}).sort()
+db.getCollection('pvs').distinct("pv.tel",
+{
+    "pv.pvid":"vip",
+    "pv.uid":{"$exists" : true, "$ne" : ""},
+    "pv.tel":{"$exists" : true, "$ne" : ""}
+}).sort()
 
 db.getCollection('pvs').find({"pv.pvid":{$regex:"ios-4.2.1"}});
 
