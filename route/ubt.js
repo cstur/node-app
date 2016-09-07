@@ -88,6 +88,24 @@ exports.pvgif = function(req, res) {
     }
 }
 
+exports.pverror = function(req, res) {
+    try {
+        var queryStr=require('url').parse(req.url).query || '';
+
+        if (queryStr == '') {
+            return res.sendStatus(400);
+        }
+        var pvData = JSON.parse(decodeURIComponent(queryStr));
+        var pv = new db.pvErrorModel();
+        pv.pv=pvData;
+
+        savePV(pv,res);
+    } catch (e) {
+        logger.error(e);
+        return res.sendStatus(500);
+    }
+}
+
 function aggregateCallback(err,result){
     if (err) {return res.sendStatus(500);}
     res.json(result);

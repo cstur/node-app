@@ -38,6 +38,11 @@ var PV = new Schema({
 });
 PV.plugin(timestamps);
 
+var PVError = new Schema({ 
+    pv: Schema.Types.Mixed 
+});
+PVError.plugin(timestamps);
+
 var AccessLog = new Schema({ 
     log: Schema.Types.Mixed 
 });
@@ -72,6 +77,7 @@ User.methods.comparePassword = function(password, cb) {
 //Define Models
 var userModel = mongoose.model('User', User);
 var pvModel   = mongoose.model('PV', PV);
+var pvErrorModel   = mongoose.model('PVError', PVError);
 var accessLogModel   = mongoose.model('AccessLog', AccessLog);
 
 //Define Query
@@ -133,6 +139,7 @@ var Url = mongoose.model('Url', urlSchema);
 // Export Models
 exports.userModel = userModel;
 exports.pvModel   = pvModel;
+exports.pvErrorModel   = pvErrorModel;
 exports.accessLogModel = accessLogModel;
 exports.pageQuery   = pageQuery;
 exports.Url = Url;
