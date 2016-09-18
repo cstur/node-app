@@ -16,6 +16,10 @@ module.exports = {
     //test-stur
     appid: 'wx22c8641086c52351',
     secret: 'a821ab36f981060789f353f73b6ccf6b',
+
+    //stur
+    appid: 'wxa5bf04425e7c2205',
+    secret: 'ee018e5705a02d8cfcac3d1ec065f620',
     
     noncestr:'Wm3WZYTPz0wzccnW',
     accessTokenUrl:'https://api.weixin.qq.com/cgi-bin/token',
