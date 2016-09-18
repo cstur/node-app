@@ -10,9 +10,13 @@ module.exports = {
     //secret: '6840cf0089c141b3c578b86954a522fc',
 
     //xinshi
-    appid: 'wx1b3ada37970d5fb3',
-    secret: '9f2edc0e4502136ad28d632664fb9a24',
+    //appid: 'wx1b3ada37970d5fb3',
+    //secret: '9f2edc0e4502136ad28d632664fb9a24',
 
+    //test-stur
+    appid: 'wx22c8641086c52351',
+    secret: 'a821ab36f981060789f353f73b6ccf6b',
+    
     noncestr:'Wm3WZYTPz0wzccnW',
     accessTokenUrl:'https://api.weixin.qq.com/cgi-bin/token',
     ticketUrl:'https://api.weixin.qq.com/cgi-bin/ticket/getticket',
