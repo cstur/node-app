@@ -195,6 +195,28 @@ exports.aggre =function(req, res){
                 res.json(result);
             }
         );
+    }else if (script=="groupByPageURL") {
+        db.pvModel.aggregate([
+                { 
+                    $match: {
+                        "pv.pvid":{$regex:regPVID},
+                        "pv.data.web.page_url":{"$ne":""},
+                        "createdAt":{"$gte":dGte,"$lt":dLt}
+                    } 
+                },
+                { 
+                    $group : {
+                        _id:"$pv.data.web.page_url",
+                        count: { $sum: 1 }
+                    }
+                },
+                { $sort: { count: -1 } }
+            ],
+            function (err,result){
+                if (err) {return res.sendStatus(500);}
+                res.json(result);
+            }
+        );
     }else{
         return res.sendStatus(400);
     }

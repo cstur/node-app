@@ -1,7 +1,7 @@
 /* 按钮点击 */
 db.getCollection('pvs').find({"pv.pvid":"mobile-home","pv.data.web.click.0.ele.name":"applybutton"}).count()
 db.getCollection('pvs').find({"pv.pvid":"m","pv.data.web.click.0.ele.name":"payorder"})
-db.getCollection('pvs').find({"pv.pvid":"ubao"})
+db.getCollection('pvs').find({"pv.pvid":"vip_responsive"}).count()
 
 db.getCollection('pvs').find({"pv.pvid":"mobile-home","pv.data.web.referrer":"http://mp.weixinbridge.com/mp/wapredirect?url=http%3A%2F%2Fm.ichezheng.com"})
 
