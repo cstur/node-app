@@ -1,7 +1,7 @@
 /* 按钮点击 */
 db.getCollection('pvs').find({"pv.pvid":"mobile-home","pv.data.web.click.0.ele.name":"applybutton"}).count()
 db.getCollection('pvs').find({"pv.pvid":"m","pv.data.web.click.0.ele.name":"payorder"})
-db.getCollection('pvs').find({"pv.pvid":"vip_responsive"}).count()
+db.getCollection('pvs').find({"pv.app":"/.*ios*/"}).count()
 
 db.getCollection('pvs').find({"pv.pvid":"mobile-home","pv.data.web.referrer":"http://mp.weixinbridge.com/mp/wapredirect?url=http%3A%2F%2Fm.ichezheng.com"})
 
@@ -86,6 +86,35 @@ db.getCollection('pvs').aggregate([
 { $sort: { _id: -1 } }
 ]);
 
+db.getCollection('pvs').find({"pv.pvid":"vip_responsive"}).count()
+db.getCollection('pvs').aggregate([
+{ 
+    $match: {
+        "pv.app":"cz",
+        "pv.pvid":"vip_responsive",
+        "createdAt":{"$gte":ISODate(new Date(2016,9,18).toISOString()),"$lt":ISODate(new Date(2016,9,19).toISOString())}
+    } 
+},
+{ 
+    $group : {
+        _id:"$pv.data.web.page_url",
+        count: { $sum: 1 }
+    }
+},
+{ $sort: { _id: -1 } }
+]);
+
+db.getCollection('pvs').mapReduce( 
+   function() { 
+       emit(this.pv.data.web.page_url,1); 
+   }, 
+   function(key, values) {return Array.sum(values)}, 
+      {  
+         query:{"pv.pvid":"vip_responsive"},  
+         out:"url_total" 
+      }
+).find()
+
 db.getCollection('pvs').aggregate([
 { 
     $match: {
@@ -131,6 +160,39 @@ db.getCollection('pvs').distinct("pv.tel",
     "pv.tel":{"$exists" : true, "$ne" : ""}
 }).sort()
 
-db.getCollection('pvs').find({"pv.pvid":{$regex:"ios-4.2.1"}});
+db.getCollection('pvs').find({
+    "pv.pvid":{$regex:"android"},
+    "pv.data.android.click.0.id":{"$regex":".*APP_REWARD_AD-众安*"},
+    "createdAt":{"$gte":ISODate(new Date(2016,9,18).toISOString()),"$lt":ISODate(new Date(2016,9,19).toISOString())}
+    }).count();
+
+db.getCollection('pvs').aggregate([
+{ 
+    $match: {
+        "pv.app":"cz",
+        "pv.pvid":/.*android*/,
+        "pv.data.android.click.0.id":{"$regex":".*APP_REWARD_AD-*"},
+        "createdAt":{"$gte":ISODate(new Date(2016,9,1).toISOString()),"$lt":ISODate(new Date(2016,9,29).toISOString())}
+    } 
+},
+{ 
+    $group : {
+        _id: {
+            year : { $year : {$add:['$createdAt',28800000]} },          
+            month : { $month : {$add:['$createdAt',28800000]} },        
+            day : { $dayOfMonth : {$add:['$createdAt',28800000]} }
+        },
+        count: { $sum: 1 }
+    }
+},
+{ $sort: { _id: -1 } }
+]);
+
+
+db.getCollection('pvs').find({
+    "pv.pvid":{$regex:"android"},
+    "pv.data.android.click.0.id":{"$regex":".*APP_REWARD_AD-*"},
+    "createdAt":{"$gte":ISODate(new Date(2016,7,18).toISOString()),"$lt":ISODate(new Date(2016,9,20).toISOString())}
+    }).count();
 
 

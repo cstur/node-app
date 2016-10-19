@@ -114,7 +114,7 @@ function aggregateCallback(err,result){
 exports.aggre =function(req, res){
     var gte = req.query.gte||'';
     var lt = req.query.lt||''; 
-    var script = req.query.script||'';//聚合脚本
+    var script = req.query.script||'';//聚合脚本名
     var regPVID = req.query.regPVID||'';
 
     if (gte == ''||lt == ''||script==''||regPVID == '') {
@@ -207,6 +207,28 @@ exports.aggre =function(req, res){
                 { 
                     $group : {
                         _id:"$pv.data.web.page_url",
+                        count: { $sum: 1 }
+                    }
+                },
+                { $sort: { count: -1 } }
+            ],
+            function (err,result){
+                if (err) {return res.sendStatus(500);}
+                res.json(result);
+            }
+        );
+    }else if (script=="groupByUA") {
+        db.pvModel.aggregate([
+                { 
+                    $match: {
+                        "pv.pvid":{$regex:regPVID},
+                        "pv.data.web.ua":{"$ne":""},
+                        "createdAt":{"$gte":dGte,"$lt":dLt}
+                    } 
+                },
+                { 
+                    $group : {
+                        _id:"$pv.data.web.ua",
                         count: { $sum: 1 }
                     }
                 },
