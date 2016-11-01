@@ -86,13 +86,16 @@ db.getCollection('pvs').aggregate([
 { $sort: { _id: -1 } }
 ]);
 
-db.getCollection('pvs').find({"pv.pvid":"vip_responsive"}).count()
+db.getCollection('pvs').find({
+    "pv.pvid":"vip_responsive",
+    "pv.data.web.referrer":{"$exists" : true, "$ne" : ""}
+ }).count()
 db.getCollection('pvs').aggregate([
 { 
     $match: {
         "pv.app":"cz",
         "pv.pvid":"vip_responsive",
-        "createdAt":{"$gte":ISODate(new Date(2016,9,18).toISOString()),"$lt":ISODate(new Date(2016,9,19).toISOString())}
+        "createdAt":{"$gte":ISODate(new Date(2016,9,23).toISOString()),"$lt":ISODate(new Date(2016,9,24).toISOString())}
     } 
 },
 { 
