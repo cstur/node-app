@@ -87,6 +87,19 @@ db.getCollection('pvs').aggregate([
 ]);
 
 db.getCollection('pvs').find({
+    "pv.app":"weixin_login", 
+    "pv.phoneNumbber":{"$exists" : true, "$ne" : ""},
+    "createdAt":{"$gte":ISODate(new Date(2016,10,1).toISOString()),"$lt":ISODate(new Date(2016,10,7).toISOString())}
+ }).count()
+    
+  db.getCollection('pvs').find({
+    "pv.app":"weixin_login", 
+    "pv.phoneNumbber":{"$exists" : true, "$ne" : ""},
+    "createdAt":{"$gte":ISODate("2016-11-06T13:20:28.423+08:00")}
+ }).count()
+    
+    
+db.gtCollection('pvs').find({
     "pv.pvid":"vip_responsive",
     "pv.data.web.referrer":{"$exists" : true, "$ne" : ""}
  }).count()

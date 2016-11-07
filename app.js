@@ -115,6 +115,10 @@ app.get("/users/logout", jwt({secret: secret.secretToken}), routes.users.logout)
 app.post("/users/register", routes.users.register);
 app.get("/users/me", jwt({secret: secret.secretToken}),routes.users.me);
 
+routes.announce = require('./route/announce.js');
+app.post("/announce/update", routes.announce.announceUpdate);
+app.post("/announce/query", routes.announce.announceQuery);
+
 routes.shorten = require('./route/shorten.js');
 app.post("/shorten", routes.shorten.shorten);
 app.get("/s/:encoded_id", routes.shorten.redirect);

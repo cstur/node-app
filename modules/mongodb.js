@@ -48,6 +48,12 @@ var AccessLog = new Schema({
 });
 AccessLog.plugin(timestamps);
 
+var Announce = new Schema({ 
+    openid: { type: String },
+    tel: { type: String},
+    action: []
+});
+Announce.plugin(timestamps);
 
 // Bcrypt middleware on UserSchema
 User.pre('save', function(next) {
@@ -79,6 +85,7 @@ var userModel = mongoose.model('User', User);
 var pvModel   = mongoose.model('PV', PV);
 var pvErrorModel   = mongoose.model('PVError', PVError);
 var accessLogModel   = mongoose.model('AccessLog', AccessLog);
+var Announce   = mongoose.model('Announce', Announce);
 
 //Define Query
 var pageQuery = function (page, pageSize, Model, populate, queryParams, sortParams, callback) {
@@ -143,5 +150,6 @@ exports.pvErrorModel   = pvErrorModel;
 exports.accessLogModel = accessLogModel;
 exports.pageQuery   = pageQuery;
 exports.Url = Url;
+exports.Announce = Announce;
 
 
