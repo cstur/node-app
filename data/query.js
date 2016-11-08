@@ -211,6 +211,16 @@ db.getCollection('pvs').find({
     "createdAt":{"$gte":ISODate(new Date(2016,7,18).toISOString()),"$lt":ISODate(new Date(2016,9,20).toISOString())}
     }).count();
 
-db.getCollection('announces').find({})
+db.getCollection('announces').find({
+    "action.data.click.id":"goPay"
+})
 
-db.getCollection('announces').remove({})
+db.getCollection('announces').find(
+{"action.serverTime":{"$gte":ISODate(new Date(2016,10,7).toISOString()),"$lt":ISODate(new Date(2016,10,9).toISOString())}}
+)
+
+db.getCollection('announces').find({
+    "tel" : "15921584900"
+})
+
+db.getCollection('announces').find({}).count()

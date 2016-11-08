@@ -34,6 +34,7 @@ exports.announceUpdate = function(req, res) {
 			});
 		}else{ // Update user
 			if (action!='') {
+				action.serverTime=new Date();
 				db.Announce.update(q, {$push:{"action":action}}, {safe: true, upsert: true}, function(err, doc){
 					if (err) {
 						console.log(err);
