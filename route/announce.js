@@ -49,18 +49,12 @@ exports.announceUpdate = function(req, res) {
 exports.announceQuery = function(req, res) {
 	var doc = req.body||'';
 	var tel = req.body.tel || '';
-	var openid = req.body.openid || '';
 
-	if (doc == '' || (tel == ''&&openid=='')) {
+	if (doc == '' || tel == '') {
 		return res.sendStatus(400);
 	}
 
-	var q={};
-	if (tel=='') {
-		q={openid:openid};
-	}else{
-		q={tel:tel};
-	}
+	var q={tel:tel};
 
 	db.Announce.findOne(q, function (err, doc) {
 		if (err) {
@@ -73,6 +67,5 @@ exports.announceQuery = function(req, res) {
 		}
 
 		return res.json({doc:doc});
-
 	});
 }
