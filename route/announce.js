@@ -3,21 +3,13 @@ var db = require('../modules/mongodb.js');
 exports.announceUpdate = function(req, res) {
 	var doc = req.body||'';
 	var tel = req.body.tel || '';
-	var openid = req.body.openid || '';
 	var action = req.body.action || '';
 
-	if (doc == '' || (tel == ''&&openid=='')) {
+	if (doc == '' || tel == '') {
 		return res.sendStatus(400);
 	}
 
-	var q={};
-	if (tel=='') {
-		q={"openid":openid};
-	}else{
-		q={"tel":tel};
-	}
-
-	console.log(q);
+	q={"tel":tel};
 	db.Announce.findOne(q, function (err, user) {
 		if (err) {
 			console.log(err);
@@ -25,10 +17,9 @@ exports.announceUpdate = function(req, res) {
 		}
 
 		if (!user) { // Insert new user
-			console.log(user);
+			if (true) {}
 			var announce = new db.Announce();
 			announce.tel=doc.tel;
-			announce.openid=doc.openid;
 			announce.action=[];
 			if (action!='') {
 				announce.action.push(req.body.action);
@@ -52,7 +43,6 @@ exports.announceUpdate = function(req, res) {
 				});	
 			}
 		}
-
 	});
 }
 

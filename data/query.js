@@ -211,4 +211,6 @@ db.getCollection('pvs').find({
     "createdAt":{"$gte":ISODate(new Date(2016,7,18).toISOString()),"$lt":ISODate(new Date(2016,9,20).toISOString())}
     }).count();
 
+db.getCollection('announces').find({})
 
+db.getCollection('announces').remove({})
