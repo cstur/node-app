@@ -111,6 +111,8 @@ function aggregateCallback(err,result){
     res.json(result);
 }
 
+
+
 exports.aggre =function(req, res){
     var gte = req.query.gte||'';
     var lt = req.query.lt||''; 

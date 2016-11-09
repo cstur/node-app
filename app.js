@@ -118,6 +118,8 @@ app.get("/users/me", jwt({secret: secret.secretToken}),routes.users.me);
 routes.announce = require('./route/announce.js');
 app.post("/announce/update", routes.announce.announceUpdate);
 app.post("/announce/query", routes.announce.announceQuery);
+app.get("/announce/activeuser", routes.announce.activeuser);
+
 
 routes.shorten = require('./route/shorten.js');
 app.post("/shorten", routes.shorten.shorten);

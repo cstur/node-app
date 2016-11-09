@@ -1,9 +1,9 @@
 db.getCollection('pvs').find({"pv.pvid":"vip"}).count()
 
 db.getCollection('pvs').find({
-    "pv.pvid":"vip",
-    "pv.data.web.page_url":{$regex:"sid=44"},
-    "createdAt":{"$gte":ISODate(new Date(2016,9,12).toISOString()),"$lt":ISODate(new Date(2016,9,13).toISOString())}
+    "pv.pvid":"vip_responsive",
+    "pv.data.web.page_url":{$regex:"sid=taobao"},
+    "createdAt":{"$gte":ISODate(new Date(2016,9,12).toISOString()),"$lt":ISODate(new Date(2016,10,13).toISOString())}
 }).count()
 
 db.getCollection('pvs').find({

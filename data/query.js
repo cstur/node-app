@@ -164,7 +164,21 @@ db.getCollection('pvs').aggregate([
 { $sort: { _id: -1 } }
 ]);
 
+db.getCollection('announces').find({
+"tel":"15921584900"
+})
 
+db.getCollection('announces').find({}).count()
+
+db.getCollection('announces').aggregate([
+{ $unwind : "$action" },
+{ 
+    $group : {
+        _id:"$action.data.weixinLogin.info.id"
+    }
+},
+{ $sort: { _id: -1 } }
+]);
 
 db.getCollection('pvs').find({"pv.pvid":"mobile-home","pv.data.web.referrer":{"$ne":""}},{"pv.data.web.referrer":1}).map( function(u) { return u.pv.data.web.referrer; } );
 
@@ -216,8 +230,10 @@ db.getCollection('announces').find({
 })
 
 db.getCollection('announces').find(
-{"action.serverTime":{"$gte":ISODate(new Date(2016,10,7).toISOString()),"$lt":ISODate(new Date(2016,10,9).toISOString())}}
-)
+{"action.serverTime":{"$gte":ISODate(new Date(2016,10,8).toISOString()),"$lt":ISODate(new Date(2016,10,9).toISOString())}}
+).count()
+
+db.getCollection('announces').distinct("tel",{})
 
 db.getCollection('announces').find({
     "tel" : "15921584900"
