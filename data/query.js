@@ -230,13 +230,19 @@ db.getCollection('announces').find({
 })
 
 db.getCollection('announces').find(
-{"action.serverTime":{"$gte":ISODate(new Date(2016,10,8).toISOString()),"$lt":ISODate(new Date(2016,10,9).toISOString())}}
+{"action.serverTime":{"$gte":ISODate(new Date(2016,10,11).toISOString()),"$lt":ISODate(new Date(2016,10,12).toISOString())}}
 ).count()
 
-db.getCollection('announces').distinct("tel",{})
-
-db.getCollection('announces').find({
-    "tel" : "15921584900"
+db.getCollection('announces').distinct("tel",{
+    "action.data.click.id":"goPay"    
 })
 
-db.getCollection('announces').find({}).count()
+db.getCollection('announces').find({
+    "action.data.click.id":"goPay"
+}).count()
+
+db.getCollection('announces').find({
+
+}).count()
+
+db.getCollection('announces').find( { $where: "this.action.length > 1000" }).count()

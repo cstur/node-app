@@ -44,7 +44,7 @@ exports.callback=function(req,res){
         console.log(result)
         var accessToken = result.data.access_token;
         var openid = result.data.openid;
-        var url='http://test.ichezheng.com/cz/iomobile/www/vip.html#/preorder?openid='+openid;
+        var url='http://test.ichezheng.com/cz/iomobile/www/mobile.html#/openid?openid='+openid+'&code='+code;
         res.writeHead(302, {
           'Location': url
         });
