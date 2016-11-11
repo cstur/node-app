@@ -33,7 +33,7 @@ exports.getUserInfo = function(req,res){
 
 exports.auth=function(req,res){
     var auth_callback_url = "http://zeus.ichezheng.com/weixin/callback";
-    var url = client.getAuthorizeURL(auth_callback_url, 'state', 'snsapi_base');
+    var url = client.getAuthorizeURL(auth_callback_url, 'state', 'snsapi_userinfo');
     console.log(url);
     res.redirect(url);
 }
