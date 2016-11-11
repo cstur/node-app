@@ -3,8 +3,8 @@ var signature  = require('../modules/weixin/signature.js');
 var url = require("url");
 var crypto = require("crypto");
 var OAuth = require('wechat-oauth');
-//var client = new OAuth('wx22c8641086c52351', 'a821ab36f981060789f353f73b6ccf6b');
-var client = new OAuth('wx903bcebe9afcdbc1', '46c459184a9c545773e5bf1ad6ee3a7a');
+var client = new OAuth('wx22c8641086c52351', 'a821ab36f981060789f353f73b6ccf6b');
+//var client = new OAuth('wx903bcebe9afcdbc1', '46c459184a9c545773e5bf1ad6ee3a7a');
     //appid: 'wx903bcebe9afcdbc1',
     //secret: '46c459184a9c545773e5bf1ad6ee3a7a',
 
