@@ -31,8 +31,8 @@ db.getCollection('pvs').find(
 db.getCollection('pvs').aggregate([
 { 
     $match: {
-        "pv.pvid":"ubao",
-        "createdAt":{"$gte":ISODate(new Date(2016,7,11).toISOString()),"$lt":ISODate(new Date(2016,7,26).toISOString())}
+        "pv.pvid":"act_baobiao",
+        "createdAt":{"$gte":ISODate(new Date(2016,10,1).toISOString()),"$lt":ISODate(new Date(2016,10,26).toISOString())}
     } 
 },
 { 
@@ -53,7 +53,7 @@ db.getCollection('pvs').aggregate([
     $match: {
         "pv.app":"cz",
         "pv.pvid":/.*ios*/,
-        "createdAt":{"$gte":ISODate(new Date(2016,7,1).toISOString()),"$lt":ISODate(new Date(2016,7,29).toISOString())}
+        "createdAt":{"$gte":ISODate(new Date(2016,11,21).toISOString()),"$lt":ISODate(new Date(2016,11,22).toISOString())}
     } 
 },
 { 
@@ -180,6 +180,17 @@ db.getCollection('announces').aggregate([
 { $sort: { _id: -1 } }
 ]);
 
+
+db.getCollection('announces').aggregate([
+{ $unwind : "$action" },
+{ 
+    $group : {
+        _id:"$action.data.click.ele.name"
+    }
+},
+{ $sort: { _id: -1 } }
+]);
+
 db.getCollection('pvs').find({"pv.pvid":"mobile-home","pv.data.web.referrer":{"$ne":""}},{"pv.data.web.referrer":1}).map( function(u) { return u.pv.data.web.referrer; } );
 
 db.getCollection('pvs').distinct("pv.pvid",{"pv.app":"cz","pv.ubt_client_type":"ios"}).sort()
@@ -193,7 +204,7 @@ db.getCollection('pvs').distinct("pv.tel",
 db.getCollection('pvs').find({
     "pv.pvid":{$regex:"android"},
     "pv.data.android.click.0.id":{"$regex":".*APP_REWARD_AD-众安*"},
-    "createdAt":{"$gte":ISODate(new Date(2016,9,18).toISOString()),"$lt":ISODate(new Date(2016,9,19).toISOString())}
+    "createdAt":{"$gte":ISODate(new Date(2016,10,1).toISOString()),"$lt":ISODate(new Date(2016,10,19).toISOString())}
     }).count();
 
 db.getCollection('pvs').aggregate([
@@ -230,19 +241,56 @@ db.getCollection('announces').find({
 })
 
 db.getCollection('announces').find(
-{"action.serverTime":{"$gte":ISODate(new Date(2016,10,11).toISOString()),"$lt":ISODate(new Date(2016,10,12).toISOString())}}
+{"action.serverTime":{"$gte":ISODate(new Date(2016,10,16).toISOString()),"$lt":ISODate(new Date(2016,10,13).toISOString())}}
 ).count()
 
-db.getCollection('announces').distinct("tel",{
-    "action.data.click.id":"goPay"    
+db.getCollection('announces').distinct("tel",{  
+    "action.data.click.ele.id":"wallet-but",
+    "action.serverTime":{"$gte":ISODate(new Date(2016,10,21).toISOString()),"$lt":ISODate(new Date(2016,10,22).toISOString())} 
+}).length
+
+db.getCollection('announces').find({
+    "action.data.click.ele.id":"wallet-but",
+    "action.serverTime":{"$gte":ISODate(new Date(2016,10,21).toISOString()),"$lt":ISODate(new Date(2016,10,22).toISOString())}
+}).count()
+
+db.getCollection('announces').find({
+    "action.serverTime":{"$gte":ISODate(new Date(2016,10,16).toISOString()),"$lt":ISODate(new Date(2016,10,17).toISOString())}
 })
 
 db.getCollection('announces').find({
-    "action.data.click.id":"goPay"
+    "action":{$elemMatch:{serverTime:{"$gte":ISODate(new Date(2016,10,21).toISOString()),"$lt":ISODate(new Date(2016,10,22).toISOString())}}}
 }).count()
 
 db.getCollection('announces').find({
+    "action.data.carno":{"$exists" : true, "$ne" : ""}
+})
 
+db.getCollection('announces').find({
+    "action.data.carno":{"$regex":".*11*"}
+})
+
+db.getCollection('announces').find({}).count()
+
+//刘党敏13761287634
+//15806123097
+
+
+db.getCollection('announces').find({
+'tel':'15806123097'
 }).count()
+
+db.getCollection('announces').find({
+'tel':'15806123097'
+})
+
+db.getCollection('announces').find({
+'tel':'15806123097'
+})
+
+db.getCollection('announces').find({
+'tel':'15921584900'
+})
+
 
 db.getCollection('announces').find( { $where: "this.action.length > 1000" }).count()

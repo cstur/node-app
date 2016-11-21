@@ -1,15 +1,30 @@
 var db = require('../modules/mongodb.js');
 
-exports.announceUpdate = function(req, res) {
-	var doc = req.body||'';
-	var tel = req.body.tel || '';
-	var action = req.body.action || '';
 
-	if (doc == '' || tel == '') {
+exports.announceUpdate = function(req, res) {
+	var tel = req.body.tel || '';
+	var fingerprint = req.body.fingerprint || '';
+
+	if (tel != '') {
+		return innerAnnounceUpdate(req,res,{"tel":tel},"t",tel);
+	}else if (fingerprint != '') {
+		return innerAnnounceUpdate(req,res,{"fingerprint":fingerprint},"f",tel);
+	}else{
+		return res.sendStatus(400);
+	}
+}
+
+function innerAnnounceUpdate(req, res, query, field, fieldValue) {
+	var doc = req.body||'';
+	var action = req.body.action || '';
+	var keyField=field;
+	var keyFieldValue=fieldValue;
+	var q=query;
+
+	if (doc == '') {
 		return res.sendStatus(400);
 	}
 
-	q={"tel":tel};
 	db.Announce.findOne(q, function (err, user) {
 		if (err) {
 			console.log(err);
@@ -17,9 +32,15 @@ exports.announceUpdate = function(req, res) {
 		}
 
 		if (!user) { // Insert new user
-			if (true) {}
+
 			var announce = new db.Announce();
-			announce.tel=doc.tel;
+
+			if (keyField=="f") {
+				announce.fingerprint=fieldValue;
+			}else{
+				announce.tel=fieldValue;
+			}
+			
 			announce.action=[];
 			if (action!='') {
 				announce.action.push(req.body.action);
