@@ -8,7 +8,7 @@ exports.announceUpdate = function(req, res) {
 	if (tel != '') {
 		return innerAnnounceUpdate(req,res,{"tel":tel},"t",tel);
 	}else if (fingerprint != '') {
-		return innerAnnounceUpdate(req,res,{"fingerprint":fingerprint},"f",tel);
+		return innerAnnounceUpdate(req,res,{"fingerprint":fingerprint},"f",fingerprint);
 	}else{
 		return res.sendStatus(400);
 	}
