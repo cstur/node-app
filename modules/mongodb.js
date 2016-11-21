@@ -51,6 +51,7 @@ AccessLog.plugin(timestamps);
 var Announce = new Schema({ 
     openid: { type: String },
     tel: { type: String},
+    fingerprint: { type: String},
     action: []
 });
 Announce.plugin(timestamps);

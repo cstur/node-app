@@ -245,8 +245,8 @@ db.getCollection('announces').find(
 ).count()
 
 db.getCollection('announces').distinct("tel",{  
-    "action.data.click.ele.id":"wallet-but",
-    "action.serverTime":{"$gte":ISODate(new Date(2016,10,21).toISOString()),"$lt":ISODate(new Date(2016,10,22).toISOString())} 
+    "action.data.click.id":"goPay",
+    "action.serverTime":{"$gte":ISODate(new Date(2016,10,14).toISOString()),"$lt":ISODate(new Date(2016,10,20).toISOString())} 
 }).length
 
 db.getCollection('announces').find({
