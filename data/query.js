@@ -98,7 +98,9 @@ db.getCollection('pvs').find({
     "createdAt":{"$gte":ISODate("2016-11-06T13:20:28.423+08:00")}
  }).count()
     
-    
+
+
+ 
 db.gtCollection('pvs').find({
     "pv.pvid":"vip_responsive",
     "pv.data.web.referrer":{"$exists" : true, "$ne" : ""}
@@ -108,7 +110,7 @@ db.getCollection('pvs').aggregate([
     $match: {
         "pv.app":"cz",
         "pv.pvid":"vip_responsive",
-        "createdAt":{"$gte":ISODate(new Date(2016,9,23).toISOString()),"$lt":ISODate(new Date(2016,9,24).toISOString())}
+        "createdAt":{"$gte":ISODate(new Date(2016,10,21).toISOString()),"$lt":ISODate(new Date(2016,10,22).toISOString())}
     } 
 },
 { 
@@ -117,7 +119,7 @@ db.getCollection('pvs').aggregate([
         count: { $sum: 1 }
     }
 },
-{ $sort: { _id: -1 } }
+{ $sort: { count: -1 } }
 ]);
 
 db.getCollection('pvs').mapReduce( 
@@ -275,8 +277,11 @@ db.getCollection('announces').find({
 })
 
 db.getCollection('announces').find({
-    "action":{$elemMatch:{serverTime:{"$gte":ISODate(new Date(2016,10,19).toISOString()),"$lt":ISODate(new Date(2016,10,20).toISOString())}}}
+    "tel":{"$exists" : true, "$ne" : ""},
+    "action":{$elemMatch:{serverTime:{"$gte":ISODate(new Date(2016,10,21).toISOString()),"$lt":ISODate(new Date(2016,10,22).toISOString())}}}
 }).count()
+
+
 
 db.getCollection('announces').find({
     "fingerprint":{"$exists" : true, "$ne" : ""}
@@ -310,6 +315,9 @@ db.getCollection('announces').find({
 db.getCollection('announces').find({
 'tel':'15806123097'
 })
+
+
+
 
 
 db.getCollection('announces').find( { $where: "this.action.length > 800" }).count()

@@ -111,7 +111,45 @@ function aggregateCallback(err,result){
     res.json(result);
 }
 
+exports.distinct =function(req, res){
+    var gte = req.query.gte||'';
+    var lt = req.query.lt||''; 
+    var script = req.query.script||'';//聚合脚本名
+    var pageName = req.query.pageName||'';
 
+    if (gte == ''||lt == ''||script==''||pageName == '') {
+        return res.sendStatus(400);
+    }
+        
+    var dGte=new Date();
+    dGte.setTime(gte);
+    var dLt=new Date();
+    dLt.setTime(lt);
+
+    if (script=="fingerprint") {
+        db.pvModel.find({
+            "pv.pvid":"vip_responsive",
+            "pv.data.web.page_url":{$regex:pageName},
+            "pv.fingerprint":{"$exists" : true, "$ne" : ""},
+            "createdAt":{"$gte":dGte,"$lt":dLt}
+        }).distinct('pv.fingerprint', function(err, fingerprints) {
+            if (err) {return res.sendStatus(500);}
+            res.json(fingerprints);
+        });
+    }else if(script=="tel"){
+        db.pvModel.find({
+            "pv.pvid":"vip_responsive",
+            "pv.data.web.page_url":{$regex:pageName},
+            "pv.tel":{"$exists" : true, "$ne" : ""},
+            "createdAt":{"$gte":dGte,"$lt":dLt}
+        }).distinct('pv.fingerprint', function(err, tels) {
+            if (err) {return res.sendStatus(500);}
+            res.json(tels);
+        });
+    }else{
+        return res.sendStatus(400);
+    }
+}
 
 exports.aggre =function(req, res){
     var gte = req.query.gte||'';

@@ -71,12 +71,9 @@ function innerAnnounceUpdate(req, res, query, field, fieldValue) {
 exports.activeuser =function(req, res){
     var gte = req.query.gte||'';
     var lt = req.query.lt||''; 
+    var script = req.query.script||'';
 
-  	var outerHTMLRegText = req.query.outerHTMLRegText||'';
-  	var clickID = req.query.clickID||'';
-  	var clickName = req.query.clickName||'';
-
-	if (gte == '' || lt == '') {
+	if (gte == '' || lt == ''||script=='') {
 		return res.sendStatus(400);
 	}
 
@@ -85,18 +82,30 @@ exports.activeuser =function(req, res){
     var dLt=new Date();
     dLt.setTime(lt);
 
-	var q={"action.serverTime":{"$gte":dGte,"$lt":dLt}};
-	if (outerHTMLRegText!='') {
-		q["action.data.click.ele.outerHTML"]={$regex:outerHTMLRegText};
-	}
+    var q={};
 
-	if (clickID!='') {
-		q["action.data.click.id"]=clickID;
-	}
-
-	if (clickName!='') {
-		q["action.data.click.ele.name"]=clickName;
-	}
+    if (script=='tel') {
+		q={
+			"tel":{"$exists" : true, "$ne" : ""},
+			"action.serverTime":{"$gte":dGte,"$lt":dLt}
+		};
+    }else if (script=='fingerprint') {
+		q={
+			"fingerprint":{"$exists" : true, "$ne" : ""},
+			"action.serverTime":{"$gte":dGte,"$lt":dLt}
+		};
+    }else if(script=='click'){
+    	var clickName = req.query.clickName||'';
+		if (clickName == '') {
+			return res.sendStatus(400);
+		}
+		q={
+			"action.data.click.friendlyName":clickName,
+			"action.serverTime":{"$gte":dGte,"$lt":dLt}
+		};
+    }else{
+    	return res.sendStatus(400);
+    }
 
 	db.Announce.count(q, function (err, c) {
 		if (err) {
@@ -111,6 +120,30 @@ exports.activeuser =function(req, res){
 		return res.json({count:c});
 	});
 }
+
+exports.aggreFriendlyName =function(req, res){
+    db.Announce.aggregate([
+            { $unwind : "$action" },
+			{
+			    "$match": {
+			        "action.data.click.friendlyName": { "$exists": true, "$ne": null },
+			        "action.data.click.friendlyName": { "$exists": true, "$ne": "" }
+			    }
+			},
+			{ 
+			    $group : {
+			        _id:"$action.data.click.friendlyName"
+			    }
+			},
+            { $sort: { _id: 1 } }
+        ],
+        function (err,result){
+            if (err) {return res.sendStatus(500);}
+            res.json(result);
+        }
+    );  
+}
+
 
 exports.announceQuery = function(req, res) {
 	var doc = req.body||'';

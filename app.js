@@ -105,6 +105,7 @@ app.get("/ubt/pv.gif", routes.ubt.pvgif);
 app.get("/ubt/error.gif", routes.ubt.pverror);
 app.get("/ubt/q", routes.ubt.q);
 app.get("/ubt/aggre", routes.ubt.aggre);
+app.get("/ubt/distinct", routes.ubt.distinct);
 
 routes.mapreduce = require('./route/mr.js');
 app.get("/ubt/mr", routes.mapreduce.mr);
@@ -119,7 +120,7 @@ routes.announce = require('./route/announce.js');
 app.post("/announce/update", routes.announce.announceUpdate);
 app.post("/announce/query", routes.announce.announceQuery);
 app.get("/announce/activeuser", routes.announce.activeuser);
-
+app.get("/announce/aggreFriendlyName", routes.announce.aggreFriendlyName);
 
 routes.shorten = require('./route/shorten.js');
 app.post("/shorten", routes.shorten.shorten);
