@@ -185,7 +185,7 @@ db.getCollection('announces').aggregate([
 { $unwind : "$action" },
 { 
     $group : {
-        _id:"$action.data.click.ele.name"
+        _id:"$action.data.click.ele.id"
     }
 },
 { $sort: { _id: -1 } }
@@ -250,34 +250,53 @@ db.getCollection('announces').distinct("tel",{
 }).length
 
 db.getCollection('announces').find({
-    "action.data.click.ele.id":"wallet-but",
+    "action.data.click.ele.outerHTML":{"$regex":".*产品了解*"},
     "action.serverTime":{"$gte":ISODate(new Date(2016,10,21).toISOString()),"$lt":ISODate(new Date(2016,10,22).toISOString())}
 }).count()
+
+db.getCollection('announces').find({
+    "action.data.click.ele.outerHTML":{"$regex":".*立即注册*"},
+    "action.serverTime":{"$gte":ISODate(new Date(2016,10,21).toISOString()),"$lt":ISODate(new Date(2016,10,22).toISOString())}
+}).count()
+
+db.getCollection('announces').find({
+    "action.data.click.ele.outerHTML":{"$regex":".*立即注册*"},
+    "action":{$elemMatch:{serverTime:{"$gte":ISODate(new Date(2016,10,21).toISOString()),"$lt":ISODate(new Date(2016,10,22).toISOString())}}}
+}).count()
+
+
+db.getCollection('announces').find({
+    "action.serverTime":{"$gte":ISODate(new Date(2016,10,20).toISOString()),"$lt":ISODate(new Date(2016,10,21).toISOString())}
+}).count()
+
 
 db.getCollection('announces').find({
     "action.serverTime":{"$gte":ISODate(new Date(2016,10,16).toISOString()),"$lt":ISODate(new Date(2016,10,17).toISOString())}
 })
 
 db.getCollection('announces').find({
-    "action":{$elemMatch:{serverTime:{"$gte":ISODate(new Date(2016,10,21).toISOString()),"$lt":ISODate(new Date(2016,10,22).toISOString())}}}
+    "action":{$elemMatch:{serverTime:{"$gte":ISODate(new Date(2016,10,19).toISOString()),"$lt":ISODate(new Date(2016,10,20).toISOString())}}}
 }).count()
 
 db.getCollection('announces').find({
-    "action.data.carno":{"$exists" : true, "$ne" : ""}
-})
+    "fingerprint":{"$exists" : true, "$ne" : ""}
+}).count()
 
 db.getCollection('announces').find({
     "action.data.carno":{"$regex":".*11*"}
 })
 
 db.getCollection('announces').find({}).count()
+db.getCollection('announces').find({
+   "tel":{"$exists" : true, "$ne" : ""}
+}).count()
 
 //刘党敏13761287634
 //15806123097
 
 
 db.getCollection('announces').find({
-'tel':'15806123097'
+'tel':'15921584900'
 }).count()
 
 db.getCollection('announces').find({
@@ -289,8 +308,9 @@ db.getCollection('announces').find({
 })
 
 db.getCollection('announces').find({
-'tel':'15921584900'
+'tel':'15806123097'
 })
 
 
-db.getCollection('announces').find( { $where: "this.action.length > 1000" }).count()
+db.getCollection('announces').find( { $where: "this.action.length > 800" }).count()
+db.getCollection('announces').remove( { $where: "this.action.length > 1000" })

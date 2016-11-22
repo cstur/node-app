@@ -72,6 +72,10 @@ exports.activeuser =function(req, res){
     var gte = req.query.gte||'';
     var lt = req.query.lt||''; 
 
+  	var outerHTMLRegText = req.query.outerHTMLRegText||'';
+  	var clickID = req.query.clickID||'';
+  	var clickName = req.query.clickName||'';
+
 	if (gte == '' || lt == '') {
 		return res.sendStatus(400);
 	}
@@ -82,6 +86,17 @@ exports.activeuser =function(req, res){
     dLt.setTime(lt);
 
 	var q={"action.serverTime":{"$gte":dGte,"$lt":dLt}};
+	if (outerHTMLRegText!='') {
+		q["action.data.click.ele.outerHTML"]={$regex:outerHTMLRegText};
+	}
+
+	if (clickID!='') {
+		q["action.data.click.id"]=clickID;
+	}
+
+	if (clickName!='') {
+		q["action.data.click.ele.name"]=clickName;
+	}
 
 	db.Announce.count(q, function (err, c) {
 		if (err) {
