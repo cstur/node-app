@@ -122,12 +122,15 @@ exports.activeuser =function(req, res){
 }
 
 exports.aggreFriendlyName =function(req, res){
+	var d=new Date();
+	d.setMonth(d.getMonth()-1);
     db.Announce.aggregate([
             { $unwind : "$action" },
 			{
 			    "$match": {
 			        "action.data.click.friendlyName": { "$exists": true, "$ne": null },
-			        "action.data.click.friendlyName": { "$exists": true, "$ne": "" }
+			        "action.data.click.friendlyName": { "$exists": true, "$ne": "" },
+			        "action.serverTime":{"$gte":d}
 			    }
 			},
 			{ 

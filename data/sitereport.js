@@ -7,7 +7,7 @@ db.getCollection('pvs').find({
 //注册用户单页UV
 db.getCollection('pvs').distinct("pv.tel",{
     "pv.pvid":"vip_responsive",
-    "pv.data.web.page_url":{"$regex":".*product/orderList.html*"},
+    "pv.data.web.page_url":{"$regex":".*product/carMsg.html*"},
     "pv.tel":{"$exists" : true, "$ne" : ""},
     "createdAt":{"$gte":ISODate(new Date(2016,10,22).toISOString()),"$lt":ISODate(new Date(2016,10,23).toISOString())}
 }).length

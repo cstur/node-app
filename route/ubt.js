@@ -142,7 +142,7 @@ exports.distinct =function(req, res){
             "pv.data.web.page_url":{$regex:pageName},
             "pv.tel":{"$exists" : true, "$ne" : ""},
             "createdAt":{"$gte":dGte,"$lt":dLt}
-        }).distinct('pv.fingerprint', function(err, tels) {
+        }).distinct('pv.tel', function(err, tels) {
             if (err) {return res.sendStatus(500);}
             res.json(tels);
         });
