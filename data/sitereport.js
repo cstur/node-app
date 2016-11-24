@@ -1,22 +1,44 @@
+
+
 //整站PV
 db.getCollection('pvs').find({
     "pv.pvid":"vip_responsive",
-    "createdAt":{"$gte":ISODate(new Date(2016,10,22).toISOString()),"$lt":ISODate(new Date(2016,10,23).toISOString())}
+    "createdAt":{"$gte":ISODate(new Date(2016,10,22).toISOString()),"$lt":ISODate(new Date(2016,10,30).toISOString())}
  }).count()
+ 
+db.getCollection('pvs').aggregate([
+{ 
+    $match: {
+        "pv.pvid":"vip_responsive",
+        "createdAt":{"$gte":ISODate(new Date(2016,10,1).toISOString()),"$lt":ISODate(new Date(2016,10,30).toISOString())}
+    } 
+},
+{ 
+    $group : {
+        _id: {
+            year : { $year : {$add:['$createdAt',28800000]} },          
+            month : { $month : {$add:['$createdAt',28800000]} },        
+            day : { $dayOfMonth : {$add:['$createdAt',28800000]} }
+        },
+        count: { $sum: 1 }
+    }
+},
+{ $sort: { _id: -1 } }
+]);
 
 //注册用户单页UV
 db.getCollection('pvs').distinct("pv.tel",{
     "pv.pvid":"vip_responsive",
-    "pv.data.web.page_url":{"$regex":".*product/carMsg.html*"},
+    "pv.data.web.page_url":{"$regex":".*product/paysuccess.html*"},
     "pv.tel":{"$exists" : true, "$ne" : ""},
-    "createdAt":{"$gte":ISODate(new Date(2016,10,22).toISOString()),"$lt":ISODate(new Date(2016,10,23).toISOString())}
+    "createdAt":{"$gte":ISODate(new Date(2016,10,23).toISOString()),"$lt":ISODate(new Date(2016,10,24).toISOString())}
 }).length
 //非注册用户单页UV
 db.getCollection('pvs').distinct("pv.fingerprint",{
     "pv.pvid":"vip_responsive",
-    "pv.data.web.page_url":{"$regex":".*product/orderList.html*"},
+    "pv.data.web.page_url":{"$regex":".*product/paysuccess.html*"},
     "pv.fingerprint":{"$exists" : true, "$ne" : ""},
-    "createdAt":{"$gte":ISODate(new Date(2016,10,22).toISOString()),"$lt":ISODate(new Date(2016,10,23).toISOString())}
+    "createdAt":{"$gte":ISODate(new Date(2016,10,23).toISOString()),"$lt":ISODate(new Date(2016,10,24).toISOString())}
 }).length
  
 //注册用户活跃数
@@ -85,3 +107,5 @@ db.getCollection('announces').aggregate([
 { $sort: { _id: -1 } }
 ]);
 
+//历史文档数
+db.getCollection('announces').find({}).count()

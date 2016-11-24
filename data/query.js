@@ -261,6 +261,8 @@ db.getCollection('announces').find({
     "action.serverTime":{"$gte":ISODate(new Date(2016,10,21).toISOString()),"$lt":ISODate(new Date(2016,10,22).toISOString())}
 }).count()
 
+
+
 db.getCollection('announces').find({
     "action.data.click.ele.outerHTML":{"$regex":".*立即注册*"},
     "action":{$elemMatch:{serverTime:{"$gte":ISODate(new Date(2016,10,21).toISOString()),"$lt":ISODate(new Date(2016,10,22).toISOString())}}}
@@ -281,10 +283,13 @@ db.getCollection('announces').find({
     "action":{$elemMatch:{serverTime:{"$gte":ISODate(new Date(2016,10,21).toISOString()),"$lt":ISODate(new Date(2016,10,22).toISOString())}}}
 }).count()
 
+db.getCollection('announces').find({
+    "action.data.feedback":{"$exists" : true, "$ne" : ""}
+}).count()
 
 
 db.getCollection('announces').find({
-    "fingerprint":{"$exists" : true, "$ne" : ""}
+    "action.data.uploadImageError":{"$exists" : true, "$ne" : ""}
 }).count()
 
 db.getCollection('announces').find({
@@ -313,12 +318,8 @@ db.getCollection('announces').find({
 })
 
 db.getCollection('announces').find({
-'tel':'15806123097'
+'tel':'13866715066'
 })
-
-
-
-
 
 db.getCollection('announces').find( { $where: "this.action.length > 800" }).count()
 db.getCollection('announces').remove( { $where: "this.action.length > 1000" })

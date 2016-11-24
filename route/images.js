@@ -14,6 +14,7 @@ exports.uploadImage = function(req, res) {
 
     fs.writeFile(file, dataBuffer, function(err) {
         if(err){
+          console.log(err);
           res.send(err);
         }else{
           res.send(fileName);
