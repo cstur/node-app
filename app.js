@@ -174,6 +174,9 @@ wss.on('connection', function connection(ws) {
       if (client !== ws) client.send(data);
     });
   });
+  ws.on("close", function (code, reason) {
+      console.log("Connection closed")
+  });
 });
 
 /*
