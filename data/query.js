@@ -287,6 +287,19 @@ db.getCollection('announces').find({
     "action.data.feedback":{"$exists" : true, "$ne" : ""}
 }).count()
 
+db.getCollection('announces').aggregate([
+{
+    $match:{
+            "action.data.feedback":{"$exists" : true, "$ne" : ""}
+        }
+},
+{
+        $project:{
+            "tel":1,
+            "feedback":"$action.data.feedback"
+        }
+}
+]);
 
 db.getCollection('announces').find({
     "action.data.uploadImageError":{"$exists" : true, "$ne" : ""}

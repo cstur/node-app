@@ -142,6 +142,12 @@ app.get("/data/uploadimages/:filename",function(req,res){
 routes.images = require('./route/images.js');
 app.post('/img/upload', routes.images.uploadImage);
 
+app.get("/broadcast", function(req,res){
+  var msg=req.query.msg;
+  wss.broadcast(msg);
+  res.sendStatus(200);
+});
+
 var port = process.env.NODE_PORT || 8080;
 
 process.on('uncaughtException', function(err) {
@@ -152,9 +158,26 @@ app.listen(port, function() {
 	logger.info("Listening on " + port);
 });
 
-var ws = require("nodejs-websocket")
+var WebSocketServer = require('ws').Server
+  , wss = new WebSocketServer({ port: 8001 });
 
-// Scream server example: "hi" -> "HI!!!"
+wss.broadcast = function broadcast(data) {
+  wss.clients.forEach(function each(client) {
+    console.log('send');
+    client.send(data);
+  });
+};
+
+wss.on('connection', function connection(ws) {
+  ws.on('message', function message(data) {
+    wss.clients.forEach(function each(client) {
+      if (client !== ws) client.send(data);
+    });
+  });
+});
+
+/*
+var ws = require("nodejs-websocket")
 var server = ws.createServer(function (conn) {
     console.log("New connection")
     conn.on("text", function (str) {
@@ -165,5 +188,5 @@ var server = ws.createServer(function (conn) {
         console.log("Connection closed")
     })
 }).listen(8001)
-
+*/
 //heapdump.writeSnapshot();
