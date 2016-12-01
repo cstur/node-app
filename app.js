@@ -7,6 +7,9 @@ var express     = require("express"),
     request     = require('request'),
     //heapdump    = require('heapdump'),
     path    = require('path'),
+    fs    = require('fs'),
+    http = require('http'),
+    https = require('https'),
     config      = require('./config/index.js');
 
 console.log("current env:"+config.env);
@@ -154,9 +157,20 @@ process.on('uncaughtException', function(err) {
     logger.error(err);
 });
 
+/*
 app.listen(port, function() {
 	logger.info("Listening on " + port);
 });
+*/
+var privateKey  = fs.readFileSync('sslcert/ssl.key', 'utf8');
+var certificate = fs.readFileSync('sslcert/ssl.crt', 'utf8');
+
+var credentials = {key: privateKey, cert: certificate};
+var httpServer = http.createServer(app);
+var httpsServer = https.createServer(credentials, app);
+
+httpServer.listen(port);
+httpsServer.listen(8443);
 
 var WebSocketServer = require('ws').Server
   , wss = new WebSocketServer({ port: 8001 });

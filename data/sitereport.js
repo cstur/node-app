@@ -1,14 +1,14 @@
 //整站PV
 db.getCollection('pvs').find({
     "pv.pvid":"vip_responsive",
-    "createdAt":{"$gte":ISODate(new Date(2016,10,25).toISOString()),"$lt":ISODate(new Date(2016,10,30).toISOString())}
+    "createdAt":{"$gte":ISODate(new Date(2016,10,30).toISOString()),"$lt":ISODate(new Date(2016,11,1).toISOString())}
  }).count()
  
 db.getCollection('pvs').aggregate([
 { 
     $match: {
         "pv.pvid":"vip_responsive",
-        "createdAt":{"$gte":ISODate(new Date(2016,10,1).toISOString()),"$lt":ISODate(new Date(2016,10,30).toISOString())}
+        "createdAt":{"$gte":ISODate(new Date(2016,10,20).toISOString()),"$lt":ISODate(new Date(2016,11,1).toISOString())}
     } 
 },
 { 
@@ -30,26 +30,26 @@ db.getCollection('pvs').distinct("pv.tel",{
     "pv.pvid":"vip_responsive",
     "pv.data.web.page_url":{"$regex":".*product/paysuccess.html*"},
     "pv.tel":{"$exists" : true, "$ne" : ""},
-    "createdAt":{"$gte":ISODate(new Date(2016,10,24).toISOString()),"$lt":ISODate(new Date(2016,10,25).toISOString())}
+    "createdAt":{"$gte":ISODate(new Date(2016,10,30).toISOString()),"$lt":ISODate(new Date(2016,11,1).toISOString())}
 }).length
 //非注册用户单页UV
 db.getCollection('pvs').distinct("pv.fingerprint",{
     "pv.pvid":"vip_responsive",
     "pv.data.web.page_url":{"$regex":".*product/paysuccess.html*"},
     "pv.fingerprint":{"$exists" : true, "$ne" : ""},
-    "createdAt":{"$gte":ISODate(new Date(2016,10,23).toISOString()),"$lt":ISODate(new Date(2016,10,24).toISOString())}
+    "createdAt":{"$gte":ISODate(new Date(2016,10,29).toISOString()),"$lt":ISODate(new Date(2016,10,30).toISOString())}
 }).length
  
 //注册用户活跃数
 db.getCollection('announces').find({
     "tel":{"$exists" : true, "$ne" : ""},
-    "action":{$elemMatch:{serverTime:{"$gte":ISODate(new Date(2016,10,24).toISOString()),"$lt":ISODate(new Date(2016,10,25).toISOString())}}}
+    "action":{$elemMatch:{serverTime:{"$gte":ISODate(new Date(2016,10,27).toISOString()),"$lt":ISODate(new Date(2016,10,28).toISOString())}}}
 }).count()
 
 //非注册用户活跃数
 db.getCollection('announces').find({
     "fingerprint":{"$exists" : true, "$ne" : ""},
-    "action":{$elemMatch:{serverTime:{"$gte":ISODate(new Date(2016,10,24).toISOString()),"$lt":ISODate(new Date(2016,10,25).toISOString())}}}
+    "action":{$elemMatch:{serverTime:{"$gte":ISODate(new Date(2016,10,27).toISOString()),"$lt":ISODate(new Date(2016,10,28).toISOString())}}}
 }).count()
 
 //分页PV统计
@@ -57,7 +57,7 @@ db.getCollection('pvs').aggregate([
 { 
     $match: {
         "pv.pvid":"vip_responsive",
-        "createdAt":{"$gte":ISODate(new Date(2016,10,22).toISOString()),"$lt":ISODate(new Date(2016,10,23).toISOString())}
+        "createdAt":{"$gte":ISODate(new Date(2016,10,22).toISOString()),"$lt":ISODate(new Date(2016,11,1).toISOString())}
     } 
 },
 { 
@@ -68,6 +68,29 @@ db.getCollection('pvs').aggregate([
 },
 { $sort: { count: -1 } }
 ]);
+
+db.getCollection('pvs').aggregate([
+{ 
+    $match: {
+        "pv.pvid":"vip_responsive",
+        "pv.data.web.referrer":{"$regex":".*product/wallet.html*"},
+        "createdAt":{"$gte":ISODate(new Date(2016,10,22).toISOString()),"$lt":ISODate(new Date(2016,11,1).toISOString())}
+    } 
+},
+{ 
+    $group : {
+        _id:"$pv.data.web.page_url",
+        count: { $sum: 1 }
+    }
+},
+{ $sort: { count: -1 } }
+]);
+
+db.getCollection('pvs').find({
+    "pv.pvid":"vip_responsive",
+    "pv.data.web.page_url":{"$regex":".*wallet.html*"},
+    "createdAt":{"$gte":ISODate(new Date(2016,10,22).toISOString()),"$lt":ISODate(new Date(2016,11,1).toISOString())}
+ }).count()
 
 //渠道查询
 db.getCollection('pvs').fid({
