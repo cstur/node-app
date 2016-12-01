@@ -169,8 +169,8 @@ var credentials = {key: privateKey, cert: certificate};
 var httpServer = http.createServer(app);
 var httpsServer = https.createServer(credentials, app);
 
-//httpServer.listen(port);
-httpsServer.listen(port,"0.0.0.0");
+httpServer.listen(port);
+httpsServer.listen(8443,"0.0.0.0");
 
 var WebSocketServer = require('ws').Server
   , wss = new WebSocketServer({ port: 8001 });
