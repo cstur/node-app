@@ -148,6 +148,7 @@ app.get("/broadcast", function(req,res){
 });
 
 var port = process.env.NODE_PORT || 8080;
+console.log('listen port:'+port);
 
 process.on('uncaughtException', function(err) {
     logger.error(err);
