@@ -168,7 +168,7 @@ var httpServer = http.createServer(app);
 //var httpsServer = https.createServer(credentials, app);
 //httpsServer.listen(port,"0.0.0.0");
 
-httpServer.listen(port,"0.0.0.0");
+httpServer.listen(port,"127.0.0.1");
 
 var WebSocketServer = require('ws').Server
   , wss = new WebSocketServer({ port: 8001 });
