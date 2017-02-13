@@ -154,20 +154,21 @@ process.on('uncaughtException', function(err) {
     logger.error(err);
 });
 
-
+/*
 app.listen(port, function() {
 	logger.info("Listening on " + port);
 });
+*/
 
 //var privateKey  = fs.readFileSync('sslcert/ssl.key', 'utf8');
 //var certificate = fs.readFileSync('sslcert/ssl.crt', 'utf8');
 
 //var credentials = {key: privateKey, cert: certificate};
-//var httpServer = http.createServer(app);
+var httpServer = http.createServer(app);
 //var httpsServer = https.createServer(credentials, app);
+//httpsServer.listen(port,"0.0.0.0");
 
-//httpServer.listen(port);
-//httpsServer.listen(8443,"0.0.0.0");
+httpServer.listen(port,"0.0.0.0");
 
 var WebSocketServer = require('ws').Server
   , wss = new WebSocketServer({ port: 8001 });
