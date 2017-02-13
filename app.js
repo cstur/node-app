@@ -147,7 +147,7 @@ app.get("/broadcast", function(req,res){
   res.sendStatus(200);
 });
 
-var port = process.env.NODE_PORT || 8080;
+var port = process.env.NODE_PORT || 7033;
 console.log('listen port:'+port);
 
 process.on('uncaughtException', function(err) {
