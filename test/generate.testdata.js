@@ -90,7 +90,7 @@ function randomPV(){
 	var http = require('http');
 	var querystring = require("querystring");
 	var queryStr=encodeURIComponent(JSON.stringify(mockPV));
-	var url="http://localhost:8080/pv.gif?"+queryStr;
+	var url="http://localhost:8080/ubt/pv.gif?"+queryStr;
 	//var url="http://139.196.31.108:7003/pv.gif?"+queryStr;
 	console.log(url);
 	var req = http.get(url, function(res) {
@@ -110,7 +110,7 @@ function randomPV(){
 }
 
 console.time("dbsave");
-for (var i = 10000; i >= 0; i--) {
+for (var i = 1; i >= 0; i--) {
 	randomPV();
 }
 console.timeEnd("dbsave");

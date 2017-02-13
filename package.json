@@ -15,7 +15,6 @@
     "bcrypt": "^0.8.7",
     "body-parser": "^1.15.0",
     "bufferutil": "^1.2.1",
-    "canvas": "^1.4.0",
     "chance": "^1.0.3",
     "cheerio": "^0.22.0",
     "elasticsearch": "^11.0.1",

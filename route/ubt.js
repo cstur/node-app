@@ -43,9 +43,9 @@ exports.q = function(req, res){
 function savePV(pv,res){
 	pv.save(function(err) {
 		if (err) {
+            console.log(err);
 			return res.sendStatus(500);
 		}	
-		
 		return res.sendStatus(200);
 	});
 }

@@ -89,14 +89,6 @@ app.get('/weixin/callback', routes.weixin.callback);
 
 routes.ubt = require('./route/ubt.js');
 
-/* 
-  Deprecated
-  just let app version <=4.1.4 work, delete if all user upgrade app
-*/
-app.get("/pv.gif", function(req,res){
-  res.sendStatus(200);
-});
-
 /*
   For Native App
 */
@@ -124,6 +116,10 @@ app.post("/announce/update", routes.announce.announceUpdate);
 app.post("/announce/query", routes.announce.announceQuery);
 app.get("/announce/activeuser", routes.announce.activeuser);
 app.get("/announce/aggreFriendlyName", routes.announce.aggreFriendlyName);
+
+routes.testdata = require('./route/testdata.js');
+app.get("/user_data", routes.testdata.users);
+
 
 routes.shorten = require('./route/shorten.js');
 app.post("/shorten", routes.shorten.shorten);
@@ -162,15 +158,15 @@ app.listen(port, function() {
 	logger.info("Listening on " + port);
 });
 */
-var privateKey  = fs.readFileSync('sslcert/ssl.key', 'utf8');
-var certificate = fs.readFileSync('sslcert/ssl.crt', 'utf8');
+//var privateKey  = fs.readFileSync('sslcert/ssl.key', 'utf8');
+//var certificate = fs.readFileSync('sslcert/ssl.crt', 'utf8');
 
-var credentials = {key: privateKey, cert: certificate};
+//var credentials = {key: privateKey, cert: certificate};
 var httpServer = http.createServer(app);
-var httpsServer = https.createServer(credentials, app);
+//var httpsServer = https.createServer(credentials, app);
 
 httpServer.listen(port);
-httpsServer.listen(8443,"0.0.0.0");
+//httpsServer.listen(8443,"0.0.0.0");
 
 var WebSocketServer = require('ws').Server
   , wss = new WebSocketServer({ port: 8001 });

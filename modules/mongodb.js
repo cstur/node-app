@@ -87,6 +87,9 @@ var pvModel   = mongoose.model('PV', PV);
 var pvErrorModel   = mongoose.model('PVError', PVError);
 var accessLogModel   = mongoose.model('AccessLog', AccessLog);
 var Announce   = mongoose.model('Announce', Announce);
+var TestData = mongoose.model('TestData', 
+               new Schema({ results: Schema.Types.Mixed }), 
+               'test_json'); 
 
 //Define Query
 var pageQuery = function (page, pageSize, Model, populate, queryParams, sortParams, callback) {
@@ -152,5 +155,5 @@ exports.accessLogModel = accessLogModel;
 exports.pageQuery   = pageQuery;
 exports.Url = Url;
 exports.Announce = Announce;
-
+exports.TestData = TestData;
 
